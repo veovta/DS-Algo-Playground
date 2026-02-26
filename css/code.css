@@ -1,0 +1,105 @@
+/* Code block container */
+.code-block {
+  background: var(--bg-code);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin: var(--space-md) 0;
+}
+
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.code-block__tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.code-block__tab {
+  padding: var(--space-xs) var(--space-sm);
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-speed);
+}
+
+.code-block__tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.code-block__tab--active {
+  color: var(--accent-primary);
+  background: var(--bg-primary);
+}
+
+.code-block__copy {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-speed);
+}
+
+.code-block__copy:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.code-block__copy--copied {
+  color: var(--accent-success);
+  border-color: var(--accent-success);
+}
+
+.code-block__body {
+  padding: var(--space-md);
+  overflow-x: auto;
+}
+
+.code-block__pre {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  tab-size: 4;
+  white-space: pre;
+}
+
+.code-block__panel {
+  display: none;
+}
+
+.code-block__panel--active {
+  display: block;
+}
+
+/* Syntax highlighting tokens */
+.syn-keyword { color: var(--syn-keyword); font-weight: 600; }
+.syn-string { color: var(--syn-string); }
+.syn-number { color: var(--syn-number); }
+.syn-comment { color: var(--syn-comment); font-style: italic; }
+.syn-function { color: var(--syn-function); }
+.syn-type { color: var(--syn-type); }
+.syn-operator { color: var(--syn-operator); }
+
+/* Inline code */
+code:not(.code-block__pre code) {
+  background: var(--bg-code);
+  padding: 1px 6px;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--accent-primary);
+}

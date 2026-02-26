@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - DS-Algo-Playground</title>
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-title">Overview</div>
+      <a href="index.html" class="sidebar__link">Home</a>
+      <a href="complexity.html" class="sidebar__link">Complexity Cheat Sheet</a>
+      <a href="about.html" class="sidebar__link sidebar__link--active">About</a>
+      <div class="sidebar__section-title">Data Structures</div>
+      <a href="topics/arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
+      <a href="topics/linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
+      <div class="sidebar__section-title">Sorting</div>
+      <a href="topics/bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
+      <div class="sidebar__section-title">Searching</div>
+      <a href="topics/binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
+    </nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+  <div class="sidebar-overlay"></div>
+
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>About</span>
+      </div>
+
+      <h1 class="section-title">About DS-Algo Playground</h1>
+
+      <div class="topic-section__content">
+        <p><strong>DS-Algo Playground</strong> is an interactive educational website for learning Data Structures and Algorithms. It combines visual animations, multi-language code examples, and knowledge quizzes to create an engaging study experience.</p>
+
+        <h2 style="font-size:var(--font-size-xl);font-weight:700;margin:var(--space-xl) 0 var(--space-md);">How to Use</h2>
+        <ul>
+          <li><strong>Browse Topics</strong> &mdash; Use the sidebar or home page grid to navigate to any topic.</li>
+          <li><strong>Watch Visualizations</strong> &mdash; Use play/pause, step forward/backward, and speed controls to understand how algorithms work step-by-step.</li>
+          <li><strong>Read Code</strong> &mdash; Toggle between Python, Java, and C++ implementations. Click "Copy" to grab the code.</li>
+          <li><strong>Take Quizzes</strong> &mdash; Test your understanding with multiple-choice questions. Your scores are saved locally.</li>
+          <li><strong>Track Progress</strong> &mdash; The progress bar on the home page shows your overall completion across all topics.</li>
+          <li><strong>Use Shortcuts</strong> &mdash; Press <strong>?</strong> to view all keyboard shortcuts.</li>
+        </ul>
+
+        <h2 style="font-size:var(--font-size-xl);font-weight:700;margin:var(--space-xl) 0 var(--space-md);">Tech Stack</h2>
+        <ul>
+          <li>Vanilla HTML, CSS, and JavaScript &mdash; no frameworks or build tools</li>
+          <li>Canvas API for all visualizations</li>
+          <li>CSS Custom Properties for dark/light theming</li>
+          <li>localStorage for progress tracking</li>
+          <li>Regex-based syntax highlighting</li>
+          <li>Hosted on GitHub Pages</li>
+        </ul>
+
+        <h2 style="font-size:var(--font-size-xl);font-weight:700;margin:var(--space-xl) 0 var(--space-md);">Topics Covered (V1)</h2>
+        <ul>
+          <li><strong>Arrays</strong> &mdash; Insert, delete, search operations with cell-based visualization</li>
+          <li><strong>Linked Lists</strong> &mdash; Node traversal, insert, delete with pointer arrow animations</li>
+          <li><strong>Bubble Sort</strong> &mdash; Bar chart sorting with compare/swap step-through</li>
+          <li><strong>Binary Search</strong> &mdash; Sorted array with low/mid/high pointer visualization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

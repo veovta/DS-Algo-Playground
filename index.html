@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DS-Algo-Playground</title>
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+  <style>
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .revealed { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-title">Overview</div>
+      <a href="index.html" class="sidebar__link sidebar__link--active">Home</a>
+      <a href="complexity.html" class="sidebar__link">Complexity Cheat Sheet</a>
+      <a href="about.html" class="sidebar__link">About</a>
+
+      <div class="sidebar__section-title">Data Structures</div>
+      <a href="topics/arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
+      <a href="topics/linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
+
+      <div class="sidebar__section-title">Sorting</div>
+      <a href="topics/bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
+
+      <div class="sidebar__section-title">Searching</div>
+      <a href="topics/binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
+    </nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Hero -->
+      <section class="hero reveal">
+        <h1 class="hero__title">DS-Algo Playground</h1>
+        <p class="hero__subtitle">Interactive visualizations, multi-language code examples, and quizzes to master Data Structures and Algorithms.</p>
+        <div style="display:flex;gap:var(--space-md);justify-content:center;flex-wrap:wrap;">
+          <a href="topics/arrays.html" class="btn btn--primary">Get Started</a>
+          <a href="complexity.html" class="btn btn--secondary">Cheat Sheet</a>
+        </div>
+      </section>
+
+      <!-- Progress Overview -->
+      <section class="reveal" style="margin:var(--space-2xl) 0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-md);">
+          <h2 style="font-size:var(--font-size-xl);font-weight:700;">Your Progress</h2>
+          <span class="progress-percent" style="font-weight:700;color:var(--accent-primary);">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-bar__fill" style="width:0%"></div>
+        </div>
+      </section>
+
+      <!-- Topic Cards Grid -->
+      <section class="reveal">
+        <h2 class="section-title">Topics</h2>
+        <div class="card-grid" id="topic-grid">
+          <!-- Arrays -->
+          <a href="topics/arrays.html" class="card">
+            <div class="card__icon" style="background:rgba(59,130,246,0.15);color:#3b82f6;">[]</div>
+            <h3 class="card__title">Arrays</h3>
+            <p class="card__desc">Contiguous memory, O(1) random access, dynamic resizing, and common array operations.</p>
+            <div class="card__footer">
+              <span class="badge badge--blue">Data Structure</span>
+            </div>
+          </a>
+          <!-- Linked Lists -->
+          <a href="topics/linked-lists.html" class="card">
+            <div class="card__icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;">&rarr;</div>
+            <h3 class="card__title">Linked Lists</h3>
+            <p class="card__desc">Node-pointer chains, O(1) insert/delete at head, traversal, and pointer manipulation.</p>
+            <div class="card__footer">
+              <span class="badge badge--purple">Data Structure</span>
+            </div>
+          </a>
+          <!-- Bubble Sort -->
+          <a href="topics/bubble-sort.html" class="card">
+            <div class="card__icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;">&UpDownArrow;</div>
+            <h3 class="card__title">Bubble Sort</h3>
+            <p class="card__desc">Simple comparison sort that repeatedly swaps adjacent elements. O(n&sup2;) average.</p>
+            <div class="card__footer">
+              <span class="badge badge--yellow">Sorting</span>
+            </div>
+          </a>
+          <!-- Binary Search -->
+          <a href="topics/binary-search.html" class="card">
+            <div class="card__icon" style="background:rgba(34,197,94,0.15);color:#22c55e;">&#128269;</div>
+            <h3 class="card__title">Binary Search</h3>
+            <p class="card__desc">Efficient O(log n) search on sorted arrays by repeatedly halving the search space.</p>
+            <div class="card__footer">
+              <span class="badge badge--green">Searching</span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

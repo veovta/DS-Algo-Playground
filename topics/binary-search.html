@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Search - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="binary-search">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-title">Overview</div>
+      <a href="../index.html" class="sidebar__link">Home</a>
+      <a href="../complexity.html" class="sidebar__link">Complexity Cheat Sheet</a>
+      <a href="../about.html" class="sidebar__link">About</a>
+
+      <div class="sidebar__section-title">Data Structures</div>
+      <a href="arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
+      <a href="linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
+
+      <div class="sidebar__section-title">Sorting</div>
+      <a href="bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
+
+      <div class="sidebar__section-title">Searching</div>
+      <a href="binary-search.html" class="sidebar__link sidebar__link--active" data-topic="binary-search">Binary Search</a>
+    </nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Binary Search</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Binary Search</h1>
+        <p class="topic-header__desc">An efficient divide-and-conquer algorithm that finds a target value within a sorted array by repeatedly halving the search space. Binary search is one of the most fundamental algorithms in computer science and a building block for many advanced techniques.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--green">Searching</span>
+          <span class="badge badge--blue">O(log n)</span>
+          <span class="badge badge--yellow">Sorted Input</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How Binary Search Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How Binary Search Works</h2>
+        <div class="topic-section__content">
+          <p>Binary search operates on a <strong>sorted</strong> array. The core idea is simple: instead of scanning every element one by one (linear search), we compare the target with the <strong>middle</strong> element and discard half of the remaining elements in a single step.</p>
+          <p>The algorithm maintains two pointers, <strong>low</strong> and <strong>high</strong>, that define the current search range. At each iteration it:</p>
+          <ul>
+            <li>Computes <code>mid = floor((low + high) / 2)</code>.</li>
+            <li>If <code>arr[mid]</code> equals the target, the search is complete.</li>
+            <li>If <code>arr[mid]</code> is less than the target, the target must lie in the right half, so set <code>low = mid + 1</code>.</li>
+            <li>If <code>arr[mid]</code> is greater than the target, the target must lie in the left half, so set <code>high = mid - 1</code>.</li>
+          </ul>
+          <p>This halving continues until the target is found or <code>low &gt; high</code>, meaning the element is not present. Because the search space is halved each time, binary search runs in <strong>O(log n)</strong> time &mdash; dramatically faster than linear search for large datasets.</p>
+          <p><strong>Key prerequisite:</strong> The array must be sorted before binary search can be applied. If the data is unsorted, you must sort it first (or use a different search strategy).</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Watch binary search in action. The <span style="color:var(--viz-pointer-low);font-weight:700;">blue</span> arrow marks <strong>low</strong>, the <span style="color:var(--viz-pointer-mid);font-weight:700;">yellow</span> arrow marks <strong>mid</strong>, and the <span style="color:var(--viz-pointer-high);font-weight:700;">red</span> arrow marks <strong>high</strong>. Eliminated regions are greyed out, and a found element glows green.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="binary-search-canvas"></canvas>
+          </div>
+
+          <div class="viz-explanation">Set a target and click Search to begin.</div>
+
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <div class="viz-ops">
+            <label class="viz-controls__label" for="bs-target-input">Target:</label>
+            <input type="number" id="bs-target-input" class="viz-ops__input" value="23" min="0" max="999">
+            <button id="bs-search-btn" class="btn btn--primary btn--sm">Search</button>
+            <button id="bs-randomize-btn" class="btn btn--secondary btn--sm">Randomize</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below is the iterative implementation of binary search in three languages. The iterative version is preferred in practice because it uses O(1) extra space and avoids the overhead of recursive function calls.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">def binary_search(arr, target):
+    """Return the index of target in sorted arr, or -1 if not found."""
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == target:
+            return mid          # Target found
+        elif arr[mid] < target:
+            low = mid + 1       # Search right half
+        else:
+            high = mid - 1      # Search left half
+
+    return -1                   # Target not in array
+
+
+# Example usage
+nums = [2, 5, 8, 12, 16, 23, 38, 45, 56, 72, 91]
+result = binary_search(nums, 23)
+print(f"Found at index: {result}")  # Output: Found at index: 5</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">public class BinarySearch {
+    /**
+     * Returns the index of target in sorted array, or -1 if not found.
+     */
+    public static int binarySearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;  // Avoids overflow
+
+            if (arr[mid] == target) {
+                return mid;             // Target found
+            } else if (arr[mid] < target) {
+                low = mid + 1;          // Search right half
+            } else {
+                high = mid - 1;         // Search left half
+            }
+        }
+
+        return -1;                      // Target not in array
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 5, 8, 12, 16, 23, 38, 45, 56, 72, 91};
+        int result = binarySearch(nums, 23);
+        System.out.println("Found at index: " + result);  // Output: 5
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+/**
+ * Returns the index of target in sorted vector, or -1 if not found.
+ */
+int binarySearch(const vector&lt;int&gt;&amp; arr, int target) {
+    int low = 0;
+    int high = static_cast&lt;int&gt;(arr.size()) - 1;
+
+    while (low &lt;= high) {
+        int mid = low + (high - low) / 2;  // Avoids overflow
+
+        if (arr[mid] == target) {
+            return mid;             // Target found
+        } else if (arr[mid] &lt; target) {
+            low = mid + 1;          // Search right half
+        } else {
+            high = mid - 1;         // Search left half
+        }
+    }
+
+    return -1;                      // Target not in array
+}
+
+int main() {
+    vector&lt;int&gt; nums = {2, 5, 8, 12, 16, 23, 38, 45, 56, 72, 91};
+    int result = binarySearch(nums, 23);
+    cout &lt;&lt; "Found at index: " &lt;&lt; result &lt;&lt; endl;  // Output: 5
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>Binary search is remarkably efficient. Each comparison eliminates half of the remaining candidates, yielding a logarithmic number of steps. The iterative version requires only a constant amount of extra memory for the three pointer variables.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>Time Complexity</th>
+                <th>Space Complexity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Best</td>
+                <td>O(1)</td>
+                <td>O(1)</td>
+                <td>Target is at the midpoint on the first comparison</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>O(log n)</td>
+                <td>O(1)</td>
+                <td>Target is found after halving the search space several times</td>
+              </tr>
+              <tr>
+                <td>Worst</td>
+                <td>O(log n)</td>
+                <td>O(1)</td>
+                <td>Target is at the boundary or not present; all halving steps are needed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content">
+          <p>For an array of 1,000,000 elements, binary search needs at most about 20 comparisons (log<sub>2</sub> 1,000,000 &asymp; 20), compared to up to 1,000,000 comparisons for linear search. This makes binary search the standard choice for searching in sorted collections.</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Practice Problems -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Practice Problems</h2>
+        <div class="topic-section__content">
+          <p>Strengthen your understanding of binary search by solving these classic problems:</p>
+        </div>
+        <div class="problems-list">
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Binary Search</span>
+            <a href="https://leetcode.com/problems/binary-search/" target="_blank" rel="noopener" class="problem-item__link">LeetCode #704</a>
+          </div>
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Search Insert Position</span>
+            <a href="https://leetcode.com/problems/search-insert-position/" target="_blank" rel="noopener" class="problem-item__link">LeetCode #35</a>
+          </div>
+          <div class="problem-item">
+            <span class="badge badge--yellow">Medium</span>
+            <span class="problem-item__name">Find First and Last Position of Element in Sorted Array</span>
+            <a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener" class="problem-item__link">LeetCode #34</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your knowledge of binary search with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the primary prerequisite for binary search to work correctly?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                The array must contain unique elements
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                The array must be sorted
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                The array must have an even number of elements
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                The array must be stored in contiguous memory
+              </div>
+            </div>
+            <div class="quiz__explanation">Binary search requires the input to be sorted so that it can reliably eliminate half of the remaining elements at each step. The algorithm compares the middle element with the target and decides which half to discard based on the sorted ordering. Duplicate elements, array size parity, and memory layout do not affect correctness.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What is the worst-case time complexity of binary search on an array of n elements?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(n)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(n log n)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(log n)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(1)
+              </div>
+            </div>
+            <div class="quiz__explanation">In the worst case, binary search halves the search space until only one element remains, which takes log<sub>2</sub>(n) comparisons. O(1) is the best case (element at the midpoint immediately), and O(n) would be linear search.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> In Java/C++, why is <code>mid = low + (high - low) / 2</code> preferred over <code>mid = (low + high) / 2</code>?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                It is faster to compute
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                It avoids integer overflow when low + high exceeds the maximum integer value
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                It produces a different midpoint that is more accurate
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                It works on unsorted arrays as well
+              </div>
+            </div>
+            <div class="quiz__explanation">When <code>low</code> and <code>high</code> are both large positive integers, their sum can exceed <code>Integer.MAX_VALUE</code> (2<sup>31</sup> - 1), causing integer overflow and producing a negative midpoint. The formula <code>low + (high - low) / 2</code> computes the same result without adding the two large numbers together, preventing the overflow.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> Given the sorted array [3, 7, 11, 15, 19, 23, 27], how many comparisons does binary search need to find the value 19?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                2
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                3
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                4
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                1
+              </div>
+            </div>
+            <div class="quiz__explanation">Trace through the algorithm: (1) low=0, high=6, mid=3 &rarr; arr[3]=15 &lt; 19, so low=4. (2) low=4, high=6, mid=5 &rarr; arr[5]=23 &gt; 19, so high=4. (3) low=4, high=4, mid=4 &rarr; arr[4]=19 == 19, found! That is 3 comparisons total. Each iteration performs exactly one comparison against the target.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> Which of the following is NOT a valid application of binary search?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Finding an element in a sorted array
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Finding the square root of a number to a given precision
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Finding the insertion point in a sorted array
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Finding the maximum element in an unsorted array
+              </div>
+            </div>
+            <div class="quiz__explanation">Binary search requires a sorted or monotonic structure to decide which half to discard. Finding the maximum of an unsorted array has no such structure and requires a full linear scan. In contrast, finding square roots (binary search on a continuous range), insertion points, and element lookups all exploit a sorted/monotonic property.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <div class="topic-nav">
+        <a href="bubble-sort.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">Bubble Sort</div>
+          </div>
+        </a>
+        <div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/binary-search-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

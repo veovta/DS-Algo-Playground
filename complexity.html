@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complexity Cheat Sheet - DS-Algo-Playground</title>
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-title">Overview</div>
+      <a href="index.html" class="sidebar__link">Home</a>
+      <a href="complexity.html" class="sidebar__link sidebar__link--active">Complexity Cheat Sheet</a>
+      <a href="about.html" class="sidebar__link">About</a>
+      <div class="sidebar__section-title">Data Structures</div>
+      <a href="topics/arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
+      <a href="topics/linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
+      <div class="sidebar__section-title">Sorting</div>
+      <a href="topics/bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
+      <div class="sidebar__section-title">Searching</div>
+      <a href="topics/binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
+    </nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+  <div class="sidebar-overlay"></div>
+
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Complexity Cheat Sheet</span>
+      </div>
+
+      <h1 class="section-title">Complexity Cheat Sheet</h1>
+
+      <div style="margin-bottom:var(--space-lg);">
+        <input type="text" id="complexity-search" class="search-input" placeholder="Filter by name..." style="max-width:300px;padding-left:var(--space-md);">
+      </div>
+
+      <h2 style="font-size:var(--font-size-lg);font-weight:700;margin-bottom:var(--space-md);">Data Structures</h2>
+      <div class="table-container" style="margin-bottom:var(--space-2xl);">
+        <table id="ds-table">
+          <thead>
+            <tr>
+              <th>Data Structure</th>
+              <th>Access</th>
+              <th>Search</th>
+              <th>Insertion</th>
+              <th>Deletion</th>
+              <th>Space</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h2 style="font-size:var(--font-size-lg);font-weight:700;margin-bottom:var(--space-md);">Sorting &amp; Searching Algorithms</h2>
+      <div class="table-container">
+        <table id="algo-table">
+          <thead>
+            <tr>
+              <th>Algorithm</th>
+              <th>Best</th>
+              <th>Average</th>
+              <th>Worst</th>
+              <th>Space</th>
+              <th>Stable</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:var(--space-md);font-size:var(--font-size-sm);color:var(--text-tertiary);">* = amortized or average case. Actual worst case may differ.</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function() {
+      fetch('data/complexity-data.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var dsData = data.filter(function(d) { return d.type === 'Data Structure'; });
+          var algoData = data.filter(function(d) { return d.type !== 'Data Structure'; });
+
+          function renderDS(items) {
+            var tbody = document.querySelector('#ds-table tbody');
+            tbody.innerHTML = items.map(function(d) {
+              return '<tr><td><strong>' + d.name + '</strong></td><td>' + d.access + '</td><td>' + d.search + '</td><td>' + d.insertion + '</td><td>' + d.deletion + '</td><td>' + d.spaceComplexity + '</td></tr>';
+            }).join('');
+          }
+
+          function renderAlgo(items) {
+            var tbody = document.querySelector('#algo-table tbody');
+            tbody.innerHTML = items.map(function(d) {
+              return '<tr><td><strong>' + d.name + '</strong></td><td>' + (d.best || 'N/A') + '</td><td>' + (d.average || 'N/A') + '</td><td>' + (d.worst || 'N/A') + '</td><td>' + d.spaceComplexity + '</td><td>' + (d.stable || 'N/A') + '</td></tr>';
+            }).join('');
+          }
+
+          renderDS(dsData);
+          renderAlgo(algoData);
+
+          document.getElementById('complexity-search').addEventListener('input', function() {
+            var q = this.value.toLowerCase();
+            renderDS(dsData.filter(function(d) { return d.name.toLowerCase().indexOf(q) !== -1; }));
+            renderAlgo(algoData.filter(function(d) { return d.name.toLowerCase().indexOf(q) !== -1; }));
+          });
+
+          // Sortable columns
+          document.querySelectorAll('#ds-table th, #algo-table th').forEach(function(th, i) {
+            th.addEventListener('click', function() {
+              var table = th.closest('table');
+              var tbody = table.querySelector('tbody');
+              var rows = Array.from(tbody.querySelectorAll('tr'));
+              var idx = Array.from(th.parentElement.children).indexOf(th);
+              var asc = th.getAttribute('data-sort') !== 'asc';
+              th.parentElement.querySelectorAll('th').forEach(function(t) { t.removeAttribute('data-sort'); });
+              th.setAttribute('data-sort', asc ? 'asc' : 'desc');
+              rows.sort(function(a, b) {
+                var at = a.children[idx].textContent;
+                var bt = b.children[idx].textContent;
+                return asc ? at.localeCompare(bt) : bt.localeCompare(at);
+              });
+              rows.forEach(function(r) { tbody.appendChild(r); });
+            });
+          });
+        });
+    })();
+  </script>
+</body>
+</html>

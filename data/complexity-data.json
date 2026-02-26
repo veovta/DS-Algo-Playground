@@ -1,0 +1,144 @@
+[
+  {
+    "name": "Array",
+    "type": "Data Structure",
+    "access": "O(1)",
+    "search": "O(n)",
+    "insertion": "O(n)",
+    "deletion": "O(n)",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Singly Linked List",
+    "type": "Data Structure",
+    "access": "O(n)",
+    "search": "O(n)",
+    "insertion": "O(1)",
+    "deletion": "O(1)",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Doubly Linked List",
+    "type": "Data Structure",
+    "access": "O(n)",
+    "search": "O(n)",
+    "insertion": "O(1)",
+    "deletion": "O(1)",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Stack",
+    "type": "Data Structure",
+    "access": "O(n)",
+    "search": "O(n)",
+    "insertion": "O(1)",
+    "deletion": "O(1)",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Queue",
+    "type": "Data Structure",
+    "access": "O(n)",
+    "search": "O(n)",
+    "insertion": "O(1)",
+    "deletion": "O(1)",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Hash Table",
+    "type": "Data Structure",
+    "access": "N/A",
+    "search": "O(1)*",
+    "insertion": "O(1)*",
+    "deletion": "O(1)*",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Binary Search Tree",
+    "type": "Data Structure",
+    "access": "O(log n)*",
+    "search": "O(log n)*",
+    "insertion": "O(log n)*",
+    "deletion": "O(log n)*",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Heap",
+    "type": "Data Structure",
+    "access": "O(1)",
+    "search": "O(n)",
+    "insertion": "O(log n)",
+    "deletion": "O(log n)",
+    "spaceComplexity": "O(n)"
+  },
+  {
+    "name": "Bubble Sort",
+    "type": "Sorting",
+    "best": "O(n)",
+    "average": "O(n\u00b2)",
+    "worst": "O(n\u00b2)",
+    "spaceComplexity": "O(1)",
+    "stable": "Yes"
+  },
+  {
+    "name": "Selection Sort",
+    "type": "Sorting",
+    "best": "O(n\u00b2)",
+    "average": "O(n\u00b2)",
+    "worst": "O(n\u00b2)",
+    "spaceComplexity": "O(1)",
+    "stable": "No"
+  },
+  {
+    "name": "Insertion Sort",
+    "type": "Sorting",
+    "best": "O(n)",
+    "average": "O(n\u00b2)",
+    "worst": "O(n\u00b2)",
+    "spaceComplexity": "O(1)",
+    "stable": "Yes"
+  },
+  {
+    "name": "Merge Sort",
+    "type": "Sorting",
+    "best": "O(n log n)",
+    "average": "O(n log n)",
+    "worst": "O(n log n)",
+    "spaceComplexity": "O(n)",
+    "stable": "Yes"
+  },
+  {
+    "name": "Quick Sort",
+    "type": "Sorting",
+    "best": "O(n log n)",
+    "average": "O(n log n)",
+    "worst": "O(n\u00b2)",
+    "spaceComplexity": "O(log n)",
+    "stable": "No"
+  },
+  {
+    "name": "Heap Sort",
+    "type": "Sorting",
+    "best": "O(n log n)",
+    "average": "O(n log n)",
+    "worst": "O(n log n)",
+    "spaceComplexity": "O(1)",
+    "stable": "No"
+  },
+  {
+    "name": "Linear Search",
+    "type": "Searching",
+    "best": "O(1)",
+    "average": "O(n)",
+    "worst": "O(n)",
+    "spaceComplexity": "O(1)"
+  },
+  {
+    "name": "Binary Search",
+    "type": "Searching",
+    "best": "O(1)",
+    "average": "O(log n)",
+    "worst": "O(log n)",
+    "spaceComplexity": "O(1)"
+  }
+]

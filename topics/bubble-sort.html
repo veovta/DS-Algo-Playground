@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubble Sort - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="bubble-sort">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-title">Overview</div>
+      <a href="../index.html" class="sidebar__link">Home</a>
+      <a href="../complexity.html" class="sidebar__link">Complexity Cheat Sheet</a>
+      <a href="../about.html" class="sidebar__link">About</a>
+
+      <div class="sidebar__section-title">Data Structures</div>
+      <a href="arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
+      <a href="linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
+
+      <div class="sidebar__section-title">Sorting</div>
+      <a href="bubble-sort.html" class="sidebar__link sidebar__link--active" data-topic="bubble-sort">Bubble Sort</a>
+
+      <div class="sidebar__section-title">Searching</div>
+      <a href="binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
+    </nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Bubble Sort</span>
+      </nav>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Bubble Sort</h1>
+        <p class="topic-header__desc">Bubble sort is a simple comparison-based sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. It gets its name because smaller elements "bubble" to the top of the list with each iteration.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--yellow">Sorting</span>
+          <span class="badge badge--red">O(n&sup2;)</span>
+          <span class="badge badge--green">Stable</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How Bubble Sort Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How Bubble Sort Works</h2>
+        <div class="topic-section__content">
+          <p>Bubble sort works by making multiple passes through an array. On each pass, it compares each pair of adjacent elements and swaps them if they are in the wrong order. After the first pass, the largest element is guaranteed to be at the end of the array. After the second pass, the second-largest is in place, and so on.</p>
+          <p><strong>Step-by-step process:</strong></p>
+          <ul>
+            <li><strong>Start at the beginning:</strong> Begin with the first element in the array. Compare it with the next element.</li>
+            <li><strong>Compare adjacent elements:</strong> If the current element is greater than the next element, swap them. Otherwise, move on.</li>
+            <li><strong>Continue through the array:</strong> Repeat this comparison for every adjacent pair until the end of the array. This completes one "pass."</li>
+            <li><strong>Largest element bubbles up:</strong> After each pass, the largest unsorted element is now in its correct position at the end of the unsorted portion.</li>
+            <li><strong>Repeat:</strong> Continue making passes through the array, each time ignoring the already-sorted elements at the end.</li>
+            <li><strong>Early exit optimization:</strong> If a complete pass is made with no swaps, the array is already sorted and the algorithm can terminate early. This optimization makes the best-case time complexity O(n) for an already-sorted array.</li>
+          </ul>
+          <p>While bubble sort is easy to understand and implement, it is not efficient for large datasets. Its O(n&sup2;) average and worst-case time complexity makes it impractical compared to algorithms like merge sort or quicksort for large arrays. However, its simplicity makes it an excellent teaching tool for understanding sorting algorithms.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Watch how bubble sort compares and swaps adjacent elements pass by pass. Yellow bars indicate the pair being compared, orange bars indicate a swap, and green bars are in their final sorted position.</p>
+        </div>
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="bubble-sort-canvas"></canvas>
+          </div>
+          <div class="viz-explanation">Press Play or Step to start the visualization.</div>
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21" transform="scale(-1,1) translate(-24,0)"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+          <div class="viz-ops">
+            <button class="btn btn--secondary btn--sm" id="bs-randomize-btn">Randomize</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below is an optimized bubble sort implementation in three languages. The optimization includes an early exit flag: if no swaps occur during a pass, the array is already sorted and we can stop immediately.</p>
+        </div>
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">def bubble_sort(arr):
+    """Optimized bubble sort with early exit."""
+    n = len(arr)
+    for i in range(n - 1):
+        swapped = False
+        # Last i elements are already in place
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        # If no swaps occurred, array is sorted
+        if not swapped:
+            break
+    return arr
+
+
+# Example usage
+numbers = [64, 34, 25, 12, 22, 11, 90, 45]
+print("Unsorted:", numbers)
+print("Sorted:  ", bubble_sort(numbers))</pre>
+            </div>
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">public class BubbleSort {
+
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            boolean swapped = false;
+            // Last i elements are already in place
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap arr[j] and arr[j+1]
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            // If no swaps occurred, array is sorted
+            if (!swapped) break;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90, 45};
+        System.out.print("Unsorted: ");
+        printArray(numbers);
+
+        bubbleSort(numbers);
+
+        System.out.print("Sorted:   ");
+        printArray(numbers);
+    }
+
+    private static void printArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]);
+            if (i < arr.length - 1) System.out.print(", ");
+        }
+        System.out.println();
+    }
+}</pre>
+            </div>
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+void bubbleSort(vector&lt;int&gt;&amp; arr) {
+    int n = arr.size();
+    for (int i = 0; i &lt; n - 1; i++) {
+        bool swapped = false;
+        // Last i elements are already in place
+        for (int j = 0; j &lt; n - 1 - i; j++) {
+            if (arr[j] &gt; arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+                swapped = true;
+            }
+        }
+        // If no swaps occurred, array is sorted
+        if (!swapped) break;
+    }
+}
+
+void printArray(const vector&lt;int&gt;&amp; arr) {
+    for (int i = 0; i &lt; arr.size(); i++) {
+        cout &lt;&lt; arr[i];
+        if (i &lt; arr.size() - 1) cout &lt;&lt; ", ";
+    }
+    cout &lt;&lt; endl;
+}
+
+int main() {
+    vector&lt;int&gt; numbers = {64, 34, 25, 12, 22, 11, 90, 45};
+    cout &lt;&lt; "Unsorted: ";
+    printArray(numbers);
+
+    bubbleSort(numbers);
+
+    cout &lt;&lt; "Sorted:   ";
+    printArray(numbers);
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>Bubble sort's performance depends on the initial order of the elements. The optimized version with the early-exit flag achieves O(n) in the best case when the array is already sorted, since only one pass with zero swaps is needed.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Complexity</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Best Case Time</td>
+                <td>O(n)</td>
+                <td>Array is already sorted (with early exit optimization)</td>
+              </tr>
+              <tr>
+                <td>Average Case Time</td>
+                <td>O(n&sup2;)</td>
+                <td>Elements are in random order</td>
+              </tr>
+              <tr>
+                <td>Worst Case Time</td>
+                <td>O(n&sup2;)</td>
+                <td>Array is sorted in reverse order</td>
+              </tr>
+              <tr>
+                <td>Space Complexity</td>
+                <td>O(1)</td>
+                <td>In-place sorting, only uses a temporary variable for swaps</td>
+              </tr>
+              <tr>
+                <td>Stable</td>
+                <td>Yes</td>
+                <td>Equal elements maintain their relative order</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 5: Practice Problems -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Practice Problems</h2>
+        <div class="topic-section__content">
+          <p>Strengthen your understanding of sorting by working through these problems. While bubble sort itself may not be the optimal solution, these problems will help you think about sorting concepts and when different approaches are appropriate.</p>
+        </div>
+        <div class="problems-list">
+          <div class="problem-item">
+            <span class="problem-item__name">Sort an Array</span>
+            <span class="badge badge--yellow">Medium</span>
+            <a href="https://leetcode.com/problems/sort-an-array/" target="_blank" rel="noopener" class="problem-item__link">LeetCode 912 &rarr;</a>
+          </div>
+          <div class="problem-item">
+            <span class="problem-item__name">Sort Colors</span>
+            <span class="badge badge--yellow">Medium</span>
+            <a href="https://leetcode.com/problems/sort-colors/" target="_blank" rel="noopener" class="problem-item__link">LeetCode 75 &rarr;</a>
+          </div>
+          <div class="problem-item">
+            <span class="problem-item__name">Squares of a Sorted Array</span>
+            <span class="badge badge--green">Easy</span>
+            <a href="https://leetcode.com/problems/squares-of-a-sorted-array/" target="_blank" rel="noopener" class="problem-item__link">LeetCode 977 &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your understanding of bubble sort with these questions.</p>
+        </div>
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the worst-case time complexity of bubble sort?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(n)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(n&sup2;)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(n log n)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(log n)
+              </div>
+            </div>
+            <div class="quiz__explanation">In the worst case (reverse-sorted array), bubble sort must compare every pair in each pass. There are n-1 passes and up to n-1 comparisons per pass, giving O(n&sup2;) total comparisons.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What optimization can make bubble sort's best-case time complexity O(n)?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Using a binary search to find the swap position
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Sorting from both ends simultaneously
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Adding a flag to detect if no swaps occurred during a pass
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Using a linked list instead of an array
+              </div>
+            </div>
+            <div class="quiz__explanation">By keeping a boolean flag that tracks whether any swaps were made during a pass, we can terminate early if the array is already sorted. If no swaps occur in a complete pass, the array is in order and we can stop, achieving O(n) for an already-sorted input.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> Is bubble sort a stable sorting algorithm?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Yes, because it only swaps adjacent elements when they are strictly out of order
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                No, because it moves elements across the array
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                It depends on the implementation
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Only when used with an early exit flag
+              </div>
+            </div>
+            <div class="quiz__explanation">Bubble sort is stable because it only swaps adjacent elements when arr[j] > arr[j+1] (strictly greater). Equal elements are never swapped, so their original relative order is preserved.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> After the first complete pass of bubble sort on the array [5, 3, 8, 1, 2], which element is guaranteed to be in its correct position?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                The smallest element (1)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                The largest element (8)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                The first element (5)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                No element is guaranteed to be in the correct position
+              </div>
+            </div>
+            <div class="quiz__explanation">After the first pass of bubble sort, the largest element always "bubbles up" to the last position. In this array, 8 will end up at index 4 (the end), which is its correct sorted position. The array after pass 1 would be [3, 5, 1, 2, 8].</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> How many passes does bubble sort need to completely sort the array [2, 1, 3, 4, 5] using the optimized version with early exit?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                4 passes
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                1 pass
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                5 passes
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                2 passes
+              </div>
+            </div>
+            <div class="quiz__explanation">Pass 1: Compares (2,1) and swaps to get [1, 2, 3, 4, 5]. The rest of the comparisons in pass 1 find no more swaps needed, but the pass still continues to the end. Pass 2: No swaps occur at all during the entire pass, so the early exit flag triggers and the algorithm terminates. Total: 2 passes.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Check Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <nav class="topic-nav">
+        <a href="linked-lists.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">Linked Lists</div>
+          </div>
+        </a>
+        <a href="binary-search.html" class="topic-nav__link" style="text-align:right;">
+          <div>
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">Binary Search</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/bubble-sort-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

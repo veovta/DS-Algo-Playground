@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arrays - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="arrays">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-title">Overview</div>
+      <a href="../index.html" class="sidebar__link">Home</a>
+      <a href="../complexity.html" class="sidebar__link">Complexity Cheat Sheet</a>
+      <a href="../about.html" class="sidebar__link">About</a>
+
+      <div class="sidebar__section-title">Data Structures</div>
+      <a href="arrays.html" class="sidebar__link sidebar__link--active" data-topic="arrays">Arrays</a>
+      <a href="linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
+
+      <div class="sidebar__section-title">Sorting</div>
+      <a href="bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
+
+      <div class="sidebar__section-title">Searching</div>
+      <a href="binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
+    </nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Arrays</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Arrays</h1>
+        <p class="topic-header__desc">An array is a fundamental data structure that stores elements in contiguous memory locations, enabling constant-time access by index and forming the backbone of most other data structures and algorithms.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--blue">Data Structure</span>
+          <span class="badge badge--green">O(1) Access</span>
+        </div>
+      </div>
+
+      <!-- Section 1: What is an Array? -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">What is an Array?</h2>
+        <div class="topic-section__content">
+          <p>An <strong>array</strong> is a collection of elements stored at contiguous (adjacent) memory locations. Because the elements are packed together in sequence, the address of any element can be computed from its index using a simple formula: <code>base_address + index * element_size</code>. This is what gives arrays their hallmark <strong>O(1) random access</strong>.</p>
+          <p>Arrays are among the oldest and most widely used data structures in computer science. Nearly every programming language provides a built-in array type. They are the foundation on which many higher-level structures &mdash; such as dynamic arrays (Python lists, Java ArrayLists), heaps, hash tables, and matrices &mdash; are built.</p>
+          <p>Key characteristics of arrays:</p>
+          <ul>
+            <li><strong>Fixed size (static arrays):</strong> The size is determined at creation time and cannot change. Languages like C and Java (primitive arrays) use fixed-size arrays.</li>
+            <li><strong>Dynamic resizing:</strong> Higher-level languages provide dynamic arrays (e.g., Python's <code>list</code>, C++'s <code>std::vector</code>, Java's <code>ArrayList</code>) that automatically grow when capacity is exceeded, typically doubling in size.</li>
+            <li><strong>Homogeneous elements:</strong> In statically typed languages, all elements must be the same type. Dynamically typed languages like Python allow mixed types.</li>
+            <li><strong>Zero-based indexing:</strong> Most languages index arrays starting from 0, so the first element is at index 0 and the last is at index <code>n - 1</code>.</li>
+            <li><strong>Cache-friendly:</strong> Because elements are stored contiguously, arrays exhibit excellent spatial locality, making sequential access very fast on modern CPUs.</li>
+          </ul>
+          <p>The main trade-off is that <strong>insertion and deletion</strong> in the middle of an array are expensive &mdash; O(n) &mdash; because elements must be shifted to maintain contiguity. When frequent insertions and deletions are needed, a linked list or other structure may be more appropriate.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="viz-container">
+          <!-- Canvas -->
+          <div class="viz-canvas-wrap">
+            <canvas id="arrays-canvas"></canvas>
+          </div>
+
+          <!-- Explanation -->
+          <div class="viz-explanation">Choose an operation and click a button to begin.</div>
+
+          <!-- Playback controls -->
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="prev" disabled aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play / Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" disabled aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <label class="viz-controls__label">Speed</label>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <!-- Operation inputs -->
+          <div class="viz-ops">
+            <input type="number" id="arr-value-input" class="viz-ops__input" placeholder="Value" aria-label="Value">
+            <input type="number" id="arr-index-input" class="viz-ops__input" placeholder="Index" aria-label="Index">
+            <button id="arr-insert-btn" class="btn btn--primary btn--sm">Insert</button>
+            <button id="arr-delete-btn" class="btn btn--danger btn--sm">Delete</button>
+            <button id="arr-search-btn" class="btn btn--secondary btn--sm">Search</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre"># --- Array Operations in Python ---
+
+# Create an array (Python list)
+arr = [5, 12, 8, 3, 19, 7]
+print("Original:", arr)
+
+# Access by index - O(1)
+print("Element at index 2:", arr[2])  # 8
+
+# Insert at a specific index - O(n)
+def insert_at(array, index, value):
+    """Insert value at the given index, shifting elements right."""
+    array.insert(index, value)
+    return array
+
+insert_at(arr, 2, 99)
+print("After insert 99 at index 2:", arr)
+
+# Delete at a specific index - O(n)
+def delete_at(array, index):
+    """Remove element at the given index, shifting elements left."""
+    if 0 <= index < len(array):
+        array.pop(index)
+    return array
+
+delete_at(arr, 2)
+print("After delete at index 2:", arr)
+
+# Linear search - O(n)
+def linear_search(array, target):
+    """Return the index of target, or -1 if not found."""
+    for i in range(len(array)):
+        if array[i] == target:
+            return i
+    return -1
+
+idx = linear_search(arr, 19)
+print("Search for 19: found at index", idx)</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">import java.util.ArrayList;
+import java.util.Arrays;
+
+public class ArrayOperations {
+
+    // Insert at a specific index - O(n)
+    public static int[] insertAt(int[] arr, int index, int value) {
+        int[] result = new int[arr.length + 1];
+        for (int i = 0; i < index; i++) {
+            result[i] = arr[i];
+        }
+        result[index] = value;
+        for (int i = index; i < arr.length; i++) {
+            result[i + 1] = arr[i];
+        }
+        return result;
+    }
+
+    // Delete at a specific index - O(n)
+    public static int[] deleteAt(int[] arr, int index) {
+        if (index < 0 || index >= arr.length) return arr;
+        int[] result = new int[arr.length - 1];
+        for (int i = 0; i < index; i++) {
+            result[i] = arr[i];
+        }
+        for (int i = index + 1; i < arr.length; i++) {
+            result[i - 1] = arr[i];
+        }
+        return result;
+    }
+
+    // Linear search - O(n)
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) return i;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {5, 12, 8, 3, 19, 7};
+        System.out.println("Original: " + Arrays.toString(arr));
+
+        // Access by index - O(1)
+        System.out.println("Element at index 2: " + arr[2]);
+
+        // Insert
+        arr = insertAt(arr, 2, 99);
+        System.out.println("After insert: " + Arrays.toString(arr));
+
+        // Delete
+        arr = deleteAt(arr, 2);
+        System.out.println("After delete: " + Arrays.toString(arr));
+
+        // Search
+        int idx = linearSearch(arr, 19);
+        System.out.println("Search for 19: index " + idx);
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+// Insert at a specific index - O(n)
+void insertAt(vector&lt;int&gt;&amp; arr, int index, int value) {
+    arr.insert(arr.begin() + index, value);
+}
+
+// Delete at a specific index - O(n)
+void deleteAt(vector&lt;int&gt;&amp; arr, int index) {
+    if (index &lt; 0 || index &gt;= (int)arr.size()) return;
+    arr.erase(arr.begin() + index);
+}
+
+// Linear search - O(n)
+int linearSearch(const vector&lt;int&gt;&amp; arr, int target) {
+    for (int i = 0; i &lt; (int)arr.size(); i++) {
+        if (arr[i] == target) return i;
+    }
+    return -1;
+}
+
+void printArray(const vector&lt;int&gt;&amp; arr) {
+    cout &lt;&lt; "[";
+    for (int i = 0; i &lt; (int)arr.size(); i++) {
+        if (i &gt; 0) cout &lt;&lt; ", ";
+        cout &lt;&lt; arr[i];
+    }
+    cout &lt;&lt; "]" &lt;&lt; endl;
+}
+
+int main() {
+    vector&lt;int&gt; arr = {5, 12, 8, 3, 19, 7};
+    cout &lt;&lt; "Original: ";
+    printArray(arr);
+
+    // Access by index - O(1)
+    cout &lt;&lt; "Element at index 2: " &lt;&lt; arr[2] &lt;&lt; endl;
+
+    // Insert
+    insertAt(arr, 2, 99);
+    cout &lt;&lt; "After insert: ";
+    printArray(arr);
+
+    // Delete
+    deleteAt(arr, 2);
+    cout &lt;&lt; "After delete: ";
+    printArray(arr);
+
+    // Search
+    int idx = linearSearch(arr, 19);
+    cout &lt;&lt; "Search for 19: index " &lt;&lt; idx &lt;&lt; endl;
+
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Time Complexity</th>
+                <th>Explanation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Access</strong></td>
+                <td>O(1)</td>
+                <td>Direct address calculation from base address and index.</td>
+              </tr>
+              <tr>
+                <td><strong>Search</strong></td>
+                <td>O(n)</td>
+                <td>Must scan elements one by one in the worst case (linear search).</td>
+              </tr>
+              <tr>
+                <td><strong>Insertion</strong></td>
+                <td>O(n)</td>
+                <td>Elements after the insertion point must be shifted right.</td>
+              </tr>
+              <tr>
+                <td><strong>Deletion</strong></td>
+                <td>O(n)</td>
+                <td>Elements after the deletion point must be shifted left.</td>
+              </tr>
+              <tr>
+                <td><strong>Space</strong></td>
+                <td>O(n)</td>
+                <td>Requires memory proportional to the number of elements stored.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content" style="margin-top:var(--space-md);">
+          <p><strong>Note:</strong> Appending to the end of a dynamic array (e.g., Python <code>list.append()</code>) is <strong>amortized O(1)</strong> because resizing doubles the capacity, so the expensive copy happens infrequently. However, inserting at an arbitrary position is always O(n) due to shifting.</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Practice Problems -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Practice Problems</h2>
+        <div class="problems-list">
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Two Sum</span>
+            <a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener" class="problem-item__link">LeetCode #1 &rarr;</a>
+          </div>
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Best Time to Buy and Sell Stock</span>
+            <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener" class="problem-item__link">LeetCode #121 &rarr;</a>
+          </div>
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Contains Duplicate</span>
+            <a href="https://leetcode.com/problems/contains-duplicate/" target="_blank" rel="noopener" class="problem-item__link">LeetCode #217 &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the time complexity of accessing an element in an array by its index?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a"><span class="quiz__option-radio"></span> O(n)</div>
+              <div class="quiz__option" data-value="b"><span class="quiz__option-radio"></span> O(1)</div>
+              <div class="quiz__option" data-value="c"><span class="quiz__option-radio"></span> O(log n)</div>
+              <div class="quiz__option" data-value="d"><span class="quiz__option-radio"></span> O(n log n)</div>
+            </div>
+            <div class="quiz__explanation">Accessing an array element by index is O(1) because the memory address is computed directly using the formula: base_address + index * element_size. No traversal is needed.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> Why is inserting an element in the middle of an array O(n)?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a"><span class="quiz__option-radio"></span> Because the array must be searched first</div>
+              <div class="quiz__option" data-value="b"><span class="quiz__option-radio"></span> Because a new array must always be allocated</div>
+              <div class="quiz__option" data-value="c"><span class="quiz__option-radio"></span> Because all elements after the insertion point must be shifted right</div>
+              <div class="quiz__option" data-value="d"><span class="quiz__option-radio"></span> Because elements must be sorted after insertion</div>
+            </div>
+            <div class="quiz__explanation">To maintain contiguous storage, every element from the insertion index onward must be moved one position to the right. In the worst case (inserting at index 0), all n elements must be shifted, giving O(n) time.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> What is the primary advantage of arrays over linked lists?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a"><span class="quiz__option-radio"></span> O(1) random access to any element by index</div>
+              <div class="quiz__option" data-value="b"><span class="quiz__option-radio"></span> O(1) insertion at any position</div>
+              <div class="quiz__option" data-value="c"><span class="quiz__option-radio"></span> Dynamic size without any overhead</div>
+              <div class="quiz__option" data-value="d"><span class="quiz__option-radio"></span> Lower memory usage per element</div>
+            </div>
+            <div class="quiz__explanation">Arrays provide O(1) random access because elements are stored contiguously and the address can be calculated directly. Linked lists require O(n) traversal to reach an arbitrary element. While arrays also tend to use less memory per element (no pointer overhead), the defining advantage is constant-time indexed access.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> In a zero-indexed array of 8 elements, what is the index of the last element?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a"><span class="quiz__option-radio"></span> 8</div>
+              <div class="quiz__option" data-value="b"><span class="quiz__option-radio"></span> 1</div>
+              <div class="quiz__option" data-value="c"><span class="quiz__option-radio"></span> 6</div>
+              <div class="quiz__option" data-value="d"><span class="quiz__option-radio"></span> 7</div>
+            </div>
+            <div class="quiz__explanation">With zero-based indexing, the first element is at index 0 and the last element is at index n - 1. For 8 elements: the last index is 8 - 1 = 7.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> What is the amortized time complexity of appending to the end of a dynamic array (e.g., Python list)?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a"><span class="quiz__option-radio"></span> O(n) always</div>
+              <div class="quiz__option" data-value="b"><span class="quiz__option-radio"></span> O(1) amortized</div>
+              <div class="quiz__option" data-value="c"><span class="quiz__option-radio"></span> O(log n)</div>
+              <div class="quiz__option" data-value="d"><span class="quiz__option-radio"></span> O(n log n)</div>
+            </div>
+            <div class="quiz__explanation">Dynamic arrays double their capacity when full. Most appends simply place the element at the end in O(1). Occasionally, the array must be resized (O(n) copy), but this happens so rarely that the average cost per operation, spread over a sequence of appends, is O(1) amortized.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <nav class="topic-nav">
+        <div></div>
+        <a href="linked-lists.html" class="topic-nav__link">
+          <div>
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">Linked Lists &rarr;</div>
+          </div>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/arrays-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

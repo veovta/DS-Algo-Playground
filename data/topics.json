@@ -1,0 +1,42 @@
+[
+  {
+    "id": "arrays",
+    "title": "Arrays",
+    "category": "Data Structures",
+    "url": "topics/arrays.html",
+    "icon": "[]",
+    "color": "#3b82f6",
+    "description": "Contiguous memory, O(1) random access, dynamic resizing, and common array operations.",
+    "tags": ["array", "list", "contiguous", "index", "random access"]
+  },
+  {
+    "id": "linked-lists",
+    "title": "Linked Lists",
+    "category": "Data Structures",
+    "url": "topics/linked-lists.html",
+    "icon": "\u27a1",
+    "color": "#8b5cf6",
+    "description": "Node-pointer chains, O(1) insert/delete at head, traversal, and pointer manipulation.",
+    "tags": ["linked list", "node", "pointer", "singly linked", "head"]
+  },
+  {
+    "id": "bubble-sort",
+    "title": "Bubble Sort",
+    "category": "Sorting Algorithms",
+    "url": "topics/bubble-sort.html",
+    "icon": "\u2195",
+    "color": "#f59e0b",
+    "description": "Simple comparison sort that repeatedly swaps adjacent elements. O(n\u00b2) average.",
+    "tags": ["sort", "bubble", "comparison", "swap", "quadratic"]
+  },
+  {
+    "id": "binary-search",
+    "title": "Binary Search",
+    "category": "Search Algorithms",
+    "url": "topics/binary-search.html",
+    "icon": "\ud83d\udd0d",
+    "color": "#22c55e",
+    "description": "Efficient O(log n) search on sorted arrays by repeatedly halving the search space.",
+    "tags": ["search", "binary", "sorted", "logarithmic", "divide and conquer"]
+  }
+]

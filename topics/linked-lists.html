@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linked Lists - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="linked-lists">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-title">Overview</div>
+      <a href="../index.html" class="sidebar__link">Home</a>
+      <a href="../complexity.html" class="sidebar__link">Complexity Cheat Sheet</a>
+      <a href="../about.html" class="sidebar__link">About</a>
+
+      <div class="sidebar__section-title">Data Structures</div>
+      <a href="arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
+      <a href="linked-lists.html" class="sidebar__link sidebar__link--active" data-topic="linked-lists">Linked Lists</a>
+
+      <div class="sidebar__section-title">Sorting</div>
+      <a href="bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
+
+      <div class="sidebar__section-title">Searching</div>
+      <a href="binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
+    </nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Linked Lists</span>
+      </nav>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Linked Lists</h1>
+        <p class="topic-header__desc">A linked list is a linear data structure where each element (node) contains a value and a reference (pointer) to the next node in the sequence. Unlike arrays, linked list elements are not stored in contiguous memory locations.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--purple">Data Structure</span>
+          <span class="badge badge--green">O(1) Insert</span>
+        </div>
+      </div>
+
+      <!-- Section 1: What is a Linked List? -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          What is a Linked List?
+        </h2>
+        <div class="topic-section__content">
+          <p>A <strong>singly linked list</strong> is a collection of nodes where each node stores two things: the <strong>data</strong> it holds, and a <strong>pointer</strong> (or reference) to the next node in the sequence. The first node is called the <strong>head</strong>, and the last node's next pointer is <code>null</code>, indicating the end of the list.</p>
+          <p>Unlike arrays, linked lists do not require contiguous blocks of memory. Each node can be stored anywhere in memory, and the pointers connect them in order. This makes insertions and deletions very efficient because you only need to update pointers, rather than shifting elements as you would in an array.</p>
+          <p>Key characteristics of singly linked lists:</p>
+          <ul>
+            <li><strong>Dynamic size</strong> &mdash; The list can grow or shrink at runtime without needing to pre-allocate a fixed block of memory.</li>
+            <li><strong>Efficient head insertion/deletion</strong> &mdash; Adding or removing a node at the head takes O(1) time because you only update the head pointer.</li>
+            <li><strong>Sequential access</strong> &mdash; To reach the n-th element, you must traverse from the head through n nodes. There is no random access like arrays provide.</li>
+            <li><strong>Extra memory per element</strong> &mdash; Each node stores a pointer in addition to its data, which adds memory overhead compared to arrays.</li>
+            <li><strong>No wasted capacity</strong> &mdash; Unlike dynamic arrays, there is no unused allocated space. Every allocated node holds data.</li>
+          </ul>
+          <p>Linked lists are foundational to many advanced data structures. Stacks and queues can be implemented with linked lists. Hash tables use linked lists (chaining) to handle collisions. Graphs often use adjacency lists, which are arrays of linked lists. Understanding linked lists builds intuition for pointer manipulation that transfers to trees, graphs, and other reference-based structures.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Interactive Visualization
+        </h2>
+        <div class="topic-section__content">
+          <p>Experiment with the linked list below. Enter a value and/or index, then click an operation button to see how it works step by step. Use the playback controls to step through or auto-play the animation.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="linked-list-canvas"></canvas>
+          </div>
+          <div class="viz-explanation">Singly linked list: 10 &rarr; 25 &rarr; 8 &rarr; 42 &rarr; 17. Use the operation buttons below to manipulate the list.</div>
+
+          <!-- Playback controls -->
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <!-- Operation controls -->
+          <div class="viz-ops">
+            <input type="number" id="ll-value-input" class="viz-ops__input" placeholder="Value" min="0" max="999">
+            <input type="number" id="ll-index-input" class="viz-ops__input" placeholder="Index" min="0" max="99">
+            <button id="ll-insert-head-btn" class="btn btn--primary btn--sm">Insert Head</button>
+            <button id="ll-insert-idx-btn" class="btn btn--secondary btn--sm">Insert At</button>
+            <button id="ll-delete-btn" class="btn btn--danger btn--sm">Delete</button>
+            <button id="ll-search-btn" class="btn btn--success btn--sm">Search</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Code Implementation
+        </h2>
+        <div class="topic-section__content">
+          <p>Below is a complete singly linked list implementation with insert, delete, search, and print operations in three languages.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_at_head(self, data):
+        """Insert a new node at the beginning. O(1)"""
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def insert_at_index(self, data, index):
+        """Insert a new node at the given index. O(n)"""
+        if index == 0:
+            self.insert_at_head(data)
+            return
+        new_node = Node(data)
+        current = self.head
+        for i in range(index - 1):
+            if current is None:
+                raise IndexError("Index out of bounds")
+            current = current.next
+        if current is None:
+            raise IndexError("Index out of bounds")
+        new_node.next = current.next
+        current.next = new_node
+
+    def delete_at_index(self, index):
+        """Delete the node at the given index. O(n)"""
+        if self.head is None:
+            raise IndexError("List is empty")
+        if index == 0:
+            self.head = self.head.next
+            return
+        current = self.head
+        for i in range(index - 1):
+            if current.next is None:
+                raise IndexError("Index out of bounds")
+            current = current.next
+        if current.next is None:
+            raise IndexError("Index out of bounds")
+        current.next = current.next.next
+
+    def search(self, value):
+        """Search for a value. Returns index or -1. O(n)"""
+        current = self.head
+        index = 0
+        while current is not None:
+            if current.data == value:
+                return index
+            current = current.next
+            index += 1
+        return -1
+
+    def print_list(self):
+        """Print the list in a readable format."""
+        elements = []
+        current = self.head
+        while current is not None:
+            elements.append(str(current.data))
+            current = current.next
+        print(" -> ".join(elements) + " -> None")
+
+
+# Example usage
+ll = LinkedList()
+for val in [17, 42, 8, 25, 10]:
+    ll.insert_at_head(val)
+
+ll.print_list()        # 10 -> 25 -> 8 -> 42 -> 17 -> None
+ll.insert_at_index(99, 2)
+ll.print_list()        # 10 -> 25 -> 99 -> 8 -> 42 -> 17 -> None
+ll.delete_at_index(3)
+ll.print_list()        # 10 -> 25 -> 99 -> 42 -> 17 -> None
+print(ll.search(42))   # 3
+print(ll.search(100))  # -1</pre>
+            </div>
+
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">public class LinkedList {
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    private Node head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    /** Insert a new node at the beginning. O(1) */
+    public void insertAtHead(int data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    /** Insert a new node at the given index. O(n) */
+    public void insertAtIndex(int data, int index) {
+        if (index == 0) {
+            insertAtHead(data);
+            return;
+        }
+        Node newNode = new Node(data);
+        Node current = head;
+        for (int i = 0; i < index - 1; i++) {
+            if (current == null)
+                throw new IndexOutOfBoundsException("Index out of bounds");
+            current = current.next;
+        }
+        if (current == null)
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        newNode.next = current.next;
+        current.next = newNode;
+    }
+
+    /** Delete the node at the given index. O(n) */
+    public void deleteAtIndex(int index) {
+        if (head == null)
+            throw new IllegalStateException("List is empty");
+        if (index == 0) {
+            head = head.next;
+            return;
+        }
+        Node current = head;
+        for (int i = 0; i < index - 1; i++) {
+            if (current.next == null)
+                throw new IndexOutOfBoundsException("Index out of bounds");
+            current = current.next;
+        }
+        if (current.next == null)
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        current.next = current.next.next;
+    }
+
+    /** Search for a value. Returns index or -1. O(n) */
+    public int search(int value) {
+        Node current = head;
+        int index = 0;
+        while (current != null) {
+            if (current.data == value)
+                return index;
+            current = current.next;
+            index++;
+        }
+        return -1;
+    }
+
+    /** Print the list in a readable format. */
+    public void printList() {
+        StringBuilder sb = new StringBuilder();
+        Node current = head;
+        while (current != null) {
+            sb.append(current.data);
+            sb.append(" -> ");
+            current = current.next;
+        }
+        sb.append("null");
+        System.out.println(sb.toString());
+    }
+
+    public static void main(String[] args) {
+        LinkedList ll = new LinkedList();
+        int[] values = {17, 42, 8, 25, 10};
+        for (int val : values) {
+            ll.insertAtHead(val);
+        }
+
+        ll.printList();            // 10 -> 25 -> 8 -> 42 -> 17 -> null
+        ll.insertAtIndex(99, 2);
+        ll.printList();            // 10 -> 25 -> 99 -> 8 -> 42 -> 17 -> null
+        ll.deleteAtIndex(3);
+        ll.printList();            // 10 -> 25 -> 99 -> 42 -> 17 -> null
+        System.out.println(ll.search(42));   // 3
+        System.out.println(ll.search(100));  // -1
+    }
+}</pre>
+            </div>
+
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    // Insert a new node at the beginning. O(1)
+    void insertAtHead(int data) {
+        Node* newNode = new Node(data);
+        newNode-&gt;next = head;
+        head = newNode;
+    }
+
+    // Insert a new node at the given index. O(n)
+    void insertAtIndex(int data, int index) {
+        if (index == 0) {
+            insertAtHead(data);
+            return;
+        }
+        Node* newNode = new Node(data);
+        Node* current = head;
+        for (int i = 0; i &lt; index - 1; i++) {
+            if (current == nullptr)
+                throw out_of_range("Index out of bounds");
+            current = current-&gt;next;
+        }
+        if (current == nullptr)
+            throw out_of_range("Index out of bounds");
+        newNode-&gt;next = current-&gt;next;
+        current-&gt;next = newNode;
+    }
+
+    // Delete the node at the given index. O(n)
+    void deleteAtIndex(int index) {
+        if (head == nullptr)
+            throw runtime_error("List is empty");
+        if (index == 0) {
+            Node* temp = head;
+            head = head-&gt;next;
+            delete temp;
+            return;
+        }
+        Node* current = head;
+        for (int i = 0; i &lt; index - 1; i++) {
+            if (current-&gt;next == nullptr)
+                throw out_of_range("Index out of bounds");
+            current = current-&gt;next;
+        }
+        if (current-&gt;next == nullptr)
+            throw out_of_range("Index out of bounds");
+        Node* temp = current-&gt;next;
+        current-&gt;next = current-&gt;next-&gt;next;
+        delete temp;
+    }
+
+    // Search for a value. Returns index or -1. O(n)
+    int search(int value) {
+        Node* current = head;
+        int index = 0;
+        while (current != nullptr) {
+            if (current-&gt;data == value)
+                return index;
+            current = current-&gt;next;
+            index++;
+        }
+        return -1;
+    }
+
+    // Print the list in a readable format.
+    void printList() {
+        Node* current = head;
+        while (current != nullptr) {
+            cout &lt;&lt; current-&gt;data &lt;&lt; " -> ";
+            current = current-&gt;next;
+        }
+        cout &lt;&lt; "nullptr" &lt;&lt; endl;
+    }
+
+    // Destructor to free memory
+    ~LinkedList() {
+        Node* current = head;
+        while (current != nullptr) {
+            Node* next = current-&gt;next;
+            delete current;
+            current = next;
+        }
+    }
+};
+
+int main() {
+    LinkedList ll;
+    int values[] = {17, 42, 8, 25, 10};
+    for (int val : values) {
+        ll.insertAtHead(val);
+    }
+
+    ll.printList();             // 10 -> 25 -> 8 -> 42 -> 17 -> nullptr
+    ll.insertAtIndex(99, 2);
+    ll.printList();             // 10 -> 25 -> 99 -> 8 -> 42 -> 17 -> nullptr
+    ll.deleteAtIndex(3);
+    ll.printList();             // 10 -> 25 -> 99 -> 42 -> 17 -> nullptr
+    cout &lt;&lt; ll.search(42) &lt;&lt; endl;   // 3
+    cout &lt;&lt; ll.search(100) &lt;&lt; endl;  // -1
+
+    return 0;
+}</pre>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          Complexity Analysis
+        </h2>
+        <div class="topic-section__content">
+          <p>The table below summarizes the time and space complexities for common singly linked list operations.</p>
+        </div>
+        <div class="table-container">
+          <table class="complexity-table">
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Time Complexity</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Access (by index)</td>
+                <td>O(n)</td>
+                <td>Must traverse from head to the target index</td>
+              </tr>
+              <tr>
+                <td>Search (by value)</td>
+                <td>O(n)</td>
+                <td>Linear scan; no random access</td>
+              </tr>
+              <tr>
+                <td>Insert at head</td>
+                <td>O(1)</td>
+                <td>Only the head pointer is updated</td>
+              </tr>
+              <tr>
+                <td>Insert at index</td>
+                <td>O(n)</td>
+                <td>Must traverse to the insertion point first</td>
+              </tr>
+              <tr>
+                <td>Delete (by index)</td>
+                <td>O(n)</td>
+                <td>Must find the predecessor node before relinking</td>
+              </tr>
+              <tr>
+                <td>Space</td>
+                <td>O(n)</td>
+                <td>One node allocated per element, plus one pointer per node</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 5: Practice Problems -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Practice Problems
+        </h2>
+        <div class="topic-section__content">
+          <p>Strengthen your understanding of linked lists with these classic problems.</p>
+        </div>
+        <div class="problems-list">
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Reverse Linked List</span>
+            <a class="problem-item__link" href="https://leetcode.com/problems/reverse-linked-list/" target="_blank" rel="noopener">LeetCode 206 &rarr;</a>
+          </div>
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Merge Two Sorted Lists</span>
+            <a class="problem-item__link" href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank" rel="noopener">LeetCode 21 &rarr;</a>
+          </div>
+          <div class="problem-item">
+            <span class="badge badge--green">Easy</span>
+            <span class="problem-item__name">Linked List Cycle</span>
+            <a class="problem-item__link" href="https://leetcode.com/problems/linked-list-cycle/" target="_blank" rel="noopener">LeetCode 141 &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          Quiz
+        </h2>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the time complexity of inserting a node at the head of a singly linked list?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>O(n)</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>O(1)</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>O(log n)</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>O(n log n)</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">Inserting at the head is O(1) because you only need to create the new node, set its next pointer to the current head, and update the head pointer. No traversal is required.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What does the last node's <code>next</code> pointer point to in a singly linked list?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>The head node</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>Itself</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>null (or None)</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>The previous node</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">In a singly linked list, the last node's next pointer is null (or None in Python), which signals the end of the list. If it pointed to the head, it would be a circular linked list.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> Which of the following is a key advantage of linked lists over arrays?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>O(1) insertion and deletion at the beginning</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>O(1) random access to any element</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>Better cache locality</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>Lower memory usage per element</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">Linked lists excel at O(1) insertion and deletion at the head since only pointer updates are needed. Arrays require shifting elements for these operations. However, arrays have better cache locality and O(1) random access, which linked lists lack.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> To delete a node at a given index in a singly linked list, you need to find which node first?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>The node at the given index</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>The tail node</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>The node two positions before the target</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>The node immediately before the target (predecessor)</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">To delete a node in a singly linked list, you must update the predecessor's next pointer to skip over the target node. Since there is no backward pointer, you must traverse to the node just before the target so you can relink its next pointer.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> How much additional memory does each node in a singly linked list require compared to just storing the data value?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>No additional memory</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>One pointer (reference) to the next node</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>Two pointers (next and previous)</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>One pointer plus an index field</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">Each node in a singly linked list stores one extra pointer (the next reference) in addition to the data. A doubly linked list would store two pointers (next and previous), but a singly linked list only needs one.</div>
+          </div>
+
+          <!-- Quiz actions -->
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Try Again</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <nav class="topic-nav">
+        <a href="arrays.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          <div>
+            <span class="topic-nav__label">Previous</span>
+            <span class="topic-nav__title">Arrays</span>
+          </div>
+        </a>
+        <a href="bubble-sort.html" class="topic-nav__link">
+          <div style="text-align:right;">
+            <span class="topic-nav__label">Next</span>
+            <span class="topic-nav__title">Bubble Sort</span>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/linked-lists-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

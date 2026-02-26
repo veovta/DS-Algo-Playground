@@ -1,0 +1,50 @@
+@media print {
+  .sidebar,
+  .sidebar-overlay,
+  .hamburger,
+  .main__header,
+  .viz-controls,
+  .viz-ops,
+  .quiz__actions,
+  .theme-toggle,
+  .search-container,
+  .header-actions,
+  .topic-nav,
+  .btn {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+  }
+
+  .main__content {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .code-block {
+    break-inside: avoid;
+    border: 1px solid #ddd;
+  }
+
+  .viz-container {
+    break-inside: avoid;
+  }
+
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+}
