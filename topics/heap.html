@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heap - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="heap">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Heap</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Heap</h1>
+        <p class="topic-header__desc">A heap is a specialized complete binary tree that satisfies the heap property. In a max-heap, every parent node is greater than or equal to its children, making the root the maximum element. Heaps are the backbone of priority queues and are used in algorithms like heap sort, Dijkstra's shortest path, and scheduling systems.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--blue">Data Structure</span>
+          <span class="badge badge--green">O(log n)</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How it Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How it Works</h2>
+        <div class="topic-section__content">
+          <p>A <strong>heap</strong> is a <strong>complete binary tree</strong> stored efficiently in an array. "Complete" means every level is fully filled except possibly the last, which is filled from left to right. This property guarantees the tree is balanced and allows a compact array representation with no wasted space.</p>
+
+          <p><strong>Heap Property:</strong> In a <strong>max-heap</strong>, the value of each node is greater than or equal to the values of its children. This ensures the maximum element is always at the root (index 0). A <strong>min-heap</strong> is the reverse &mdash; each parent is less than or equal to its children, putting the minimum at the root.</p>
+
+          <p><strong>Array Representation:</strong> Because the tree is complete, we can map nodes to array indices without any pointers:</p>
+          <ul>
+            <li>The <strong>root</strong> is at index <code>0</code>.</li>
+            <li>For a node at index <code>i</code>:
+              <ul>
+                <li><strong>Left child</strong> is at index <code>2i + 1</code></li>
+                <li><strong>Right child</strong> is at index <code>2i + 2</code></li>
+                <li><strong>Parent</strong> is at index <code>floor((i - 1) / 2)</code></li>
+              </ul>
+            </li>
+          </ul>
+
+          <p><strong>Key Operations:</strong></p>
+          <ul>
+            <li><strong>Insert:</strong> Add the new element at the end of the array (next available position in the tree), then <em>bubble up</em> (swap with parent) until the heap property is restored. Takes <strong>O(log n)</strong>.</li>
+            <li><strong>Extract-Max:</strong> The root holds the maximum. Swap it with the last element, remove the last element, then <em>sink down</em> (swap with the larger child) until the heap property is restored. Takes <strong>O(log n)</strong>.</li>
+            <li><strong>Heapify (Build Heap):</strong> Convert an arbitrary array into a valid max-heap by calling sink-down on every non-leaf node, starting from the last non-leaf and working up to the root. Despite appearances, this runs in <strong>O(n)</strong> time, not O(n log n).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>The <strong>tree view</strong> (top) shows the heap as a binary tree, while the <strong>array view</strong> (bottom) shows the same data in its underlying array form. Corresponding nodes and cells are highlighted together: <span style="color:var(--viz-active);font-weight:700;">red</span> for active/swapping, <span style="color:var(--viz-compare);font-weight:700;">yellow</span> for parent being compared, and <span style="color:var(--viz-sorted);font-weight:700;">green</span> for completed placement.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="heap-canvas" style="height:400px;"></canvas>
+          </div>
+
+          <div class="viz-explanation">Use the controls below to perform heap operations.</div>
+
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <div class="viz-ops">
+            <label class="viz-controls__label" for="heap-value-input">Value:</label>
+            <input type="number" id="heap-value-input" class="viz-ops__input" value="85" min="0" max="999">
+            <button id="heap-insert-btn" class="btn btn--primary btn--sm">Insert</button>
+            <button id="heap-extract-btn" class="btn btn--secondary btn--sm">Extract Max</button>
+            <button id="heap-randomize-btn" class="btn btn--secondary btn--sm">Randomize</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below are implementations of a max-heap with <code>insert</code> and <code>extract_max</code> operations. The array-based approach makes the code straightforward &mdash; parent and child indices are computed with simple arithmetic.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">class MaxHeap:
+    def __init__(self):
+        self.heap = []
+
+    def _parent(self, i):
+        return (i - 1) // 2
+
+    def _left(self, i):
+        return 2 * i + 1
+
+    def _right(self, i):
+        return 2 * i + 2
+
+    def _swap(self, i, j):
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+
+    def insert(self, value):
+        """Insert a value and bubble up to restore heap property."""
+        self.heap.append(value)
+        idx = len(self.heap) - 1
+        # Bubble up
+        while idx > 0 and self.heap[idx] > self.heap[self._parent(idx)]:
+            self._swap(idx, self._parent(idx))
+            idx = self._parent(idx)
+
+    def extract_max(self):
+        """Remove and return the maximum element (root)."""
+        if not self.heap:
+            raise IndexError("extract_max from empty heap")
+        max_val = self.heap[0]
+        last = self.heap.pop()
+        if self.heap:
+            self.heap[0] = last
+            self._sink_down(0)
+        return max_val
+
+    def _sink_down(self, idx):
+        """Sink a node down to its correct position."""
+        n = len(self.heap)
+        while True:
+            largest = idx
+            left = self._left(idx)
+            right = self._right(idx)
+            if left < n and self.heap[left] > self.heap[largest]:
+                largest = left
+            if right < n and self.heap[right] > self.heap[largest]:
+                largest = right
+            if largest == idx:
+                break
+            self._swap(idx, largest)
+            idx = largest
+
+    def peek(self):
+        """Return the maximum element without removing it."""
+        if not self.heap:
+            raise IndexError("peek from empty heap")
+        return self.heap[0]
+
+
+# Example usage
+h = MaxHeap()
+for val in [40, 70, 30, 90, 50, 80, 60]:
+    h.insert(val)
+
+print("Max:", h.peek())            # Output: Max: 90
+print("Extracted:", h.extract_max()) # Output: Extracted: 90
+print("New max:", h.peek())         # Output: New max: 80</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">import java.util.ArrayList;
+import java.util.List;
+
+public class MaxHeap {
+    private List&lt;Integer&gt; heap = new ArrayList&lt;&gt;();
+
+    private int parent(int i) { return (i - 1) / 2; }
+    private int left(int i)   { return 2 * i + 1; }
+    private int right(int i)  { return 2 * i + 2; }
+
+    private void swap(int i, int j) {
+        int tmp = heap.get(i);
+        heap.set(i, heap.get(j));
+        heap.set(j, tmp);
+    }
+
+    /** Insert a value and bubble up to restore heap property. */
+    public void insert(int value) {
+        heap.add(value);
+        int idx = heap.size() - 1;
+        while (idx &gt; 0 &amp;&amp; heap.get(idx) &gt; heap.get(parent(idx))) {
+            swap(idx, parent(idx));
+            idx = parent(idx);
+        }
+    }
+
+    /** Remove and return the maximum element (root). */
+    public int extractMax() {
+        if (heap.isEmpty()) throw new RuntimeException("Heap is empty");
+        int maxVal = heap.get(0);
+        int last = heap.remove(heap.size() - 1);
+        if (!heap.isEmpty()) {
+            heap.set(0, last);
+            sinkDown(0);
+        }
+        return maxVal;
+    }
+
+    /** Sink a node down to its correct position. */
+    private void sinkDown(int idx) {
+        int n = heap.size();
+        while (true) {
+            int largest = idx;
+            int l = left(idx), r = right(idx);
+            if (l &lt; n &amp;&amp; heap.get(l) &gt; heap.get(largest)) largest = l;
+            if (r &lt; n &amp;&amp; heap.get(r) &gt; heap.get(largest)) largest = r;
+            if (largest == idx) break;
+            swap(idx, largest);
+            idx = largest;
+        }
+    }
+
+    /** Return the maximum element without removing it. */
+    public int peek() {
+        if (heap.isEmpty()) throw new RuntimeException("Heap is empty");
+        return heap.get(0);
+    }
+
+    public static void main(String[] args) {
+        MaxHeap h = new MaxHeap();
+        int[] values = {40, 70, 30, 90, 50, 80, 60};
+        for (int v : values) h.insert(v);
+
+        System.out.println("Max: " + h.peek());            // 90
+        System.out.println("Extracted: " + h.extractMax()); // 90
+        System.out.println("New max: " + h.peek());         // 80
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stdexcept&gt;
+using namespace std;
+
+class MaxHeap {
+    vector&lt;int&gt; heap;
+
+    int parent(int i) { return (i - 1) / 2; }
+    int left(int i)   { return 2 * i + 1; }
+    int right(int i)  { return 2 * i + 2; }
+
+    void swap(int i, int j) { std::swap(heap[i], heap[j]); }
+
+    /** Sink a node down to its correct position. */
+    void sinkDown(int idx) {
+        int n = heap.size();
+        while (true) {
+            int largest = idx;
+            int l = left(idx), r = right(idx);
+            if (l &lt; n &amp;&amp; heap[l] &gt; heap[largest]) largest = l;
+            if (r &lt; n &amp;&amp; heap[r] &gt; heap[largest]) largest = r;
+            if (largest == idx) break;
+            swap(idx, largest);
+            idx = largest;
+        }
+    }
+
+public:
+    /** Insert a value and bubble up to restore heap property. */
+    void insert(int value) {
+        heap.push_back(value);
+        int idx = heap.size() - 1;
+        while (idx &gt; 0 &amp;&amp; heap[idx] &gt; heap[parent(idx)]) {
+            swap(idx, parent(idx));
+            idx = parent(idx);
+        }
+    }
+
+    /** Remove and return the maximum element (root). */
+    int extractMax() {
+        if (heap.empty()) throw runtime_error("Heap is empty");
+        int maxVal = heap[0];
+        heap[0] = heap.back();
+        heap.pop_back();
+        if (!heap.empty()) sinkDown(0);
+        return maxVal;
+    }
+
+    /** Return the maximum element without removing it. */
+    int peek() const {
+        if (heap.empty()) throw runtime_error("Heap is empty");
+        return heap[0];
+    }
+};
+
+int main() {
+    MaxHeap h;
+    int values[] = {40, 70, 30, 90, 50, 80, 60};
+    for (int v : values) h.insert(v);
+
+    cout &lt;&lt; "Max: " &lt;&lt; h.peek() &lt;&lt; endl;            // 90
+    cout &lt;&lt; "Extracted: " &lt;&lt; h.extractMax() &lt;&lt; endl; // 90
+    cout &lt;&lt; "New max: " &lt;&lt; h.peek() &lt;&lt; endl;         // 80
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>Since a heap is a complete binary tree, its height is always <strong>O(log n)</strong>. Both insert and extract operations traverse at most one root-to-leaf path, bounding their cost. The build-heap operation achieves O(n) through a clever bottom-up approach where most nodes are near the leaves and require very few swaps.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Time Complexity</th>
+                <th>Space Complexity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Insert</td>
+                <td>O(log n)</td>
+                <td>O(n)</td>
+                <td>Add element at the end, bubble up at most log n levels</td>
+              </tr>
+              <tr>
+                <td>Extract-Max</td>
+                <td>O(log n)</td>
+                <td>O(n)</td>
+                <td>Swap root with last, sink down at most log n levels</td>
+              </tr>
+              <tr>
+                <td>Peek</td>
+                <td>O(1)</td>
+                <td>O(n)</td>
+                <td>Maximum is always at index 0 (the root)</td>
+              </tr>
+              <tr>
+                <td>Build Heap</td>
+                <td>O(n)</td>
+                <td>O(n)</td>
+                <td>Bottom-up heapify; sum of sift-down costs converges to O(n)</td>
+              </tr>
+              <tr>
+                <td>Space</td>
+                <td>&mdash;</td>
+                <td>O(n)</td>
+                <td>Array of n elements; no additional pointer overhead</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content">
+          <p>Heaps are especially efficient as priority queues: they support insert and delete-max (or delete-min) in O(log n) time, with O(1) access to the extremal element. This makes them ideal for task schedulers, event-driven simulations, and graph algorithms like Dijkstra and Prim.</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your understanding of heaps with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> In a max-heap stored as an array, which element is guaranteed to be the largest?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                The last element in the array
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                The middle element of the array
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                The first element (index 0)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                It could be anywhere in the array
+              </div>
+            </div>
+            <div class="quiz__explanation">In a max-heap, the heap property guarantees that every parent is greater than or equal to its children. Since the root (index 0) is the ancestor of all other nodes, it must hold the largest value in the entire heap.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> For a node at index <code>i</code> in a zero-indexed heap array, where is its left child?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <code>2i</code>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <code>2i + 1</code>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <code>2i + 2</code>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <code>i / 2</code>
+              </div>
+            </div>
+            <div class="quiz__explanation">In a zero-indexed array representation of a complete binary tree, the left child of node at index <code>i</code> is at <code>2i + 1</code>, and the right child is at <code>2i + 2</code>. The formula <code>2i</code> is used when the array is 1-indexed (starting from index 1).</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> What is the time complexity of building a max-heap from an unsorted array of n elements?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(n)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(n log n)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(n<sup>2</sup>)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(log n)
+              </div>
+            </div>
+            <div class="quiz__explanation">Although building a heap involves calling sift-down for each non-leaf node, the total work is O(n). This is because most nodes are near the bottom of the tree and require very few swaps. A mathematical analysis shows the sum of sift-down costs across all levels converges to O(n), not the naive O(n log n) estimate.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> After inserting a new element into a max-heap, which operation restores the heap property?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Sink down from the root
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Rotate the tree
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Re-sort the entire array
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Bubble up from the inserted position
+              </div>
+            </div>
+            <div class="quiz__explanation">When a new element is added at the end of the heap array, it might be larger than its parent, violating the max-heap property. The bubble-up operation repeatedly swaps the element with its parent until the property is restored or the element reaches the root. Sink-down is used during extract-max, not insert.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> A max-heap has the array representation [100, 80, 90, 40, 50, 60, 30]. After extracting the maximum, what will the root be?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                80
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                30
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                90
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                60
+              </div>
+            </div>
+            <div class="quiz__explanation">Extract-max removes 100 (the root), swaps 30 (last element) into the root position, giving [30, 80, 90, 40, 50, 60]. Then sink-down: 30 is compared with children 80 and 90. Since 90 is the largest child, swap 30 and 90 &rarr; [90, 80, 30, 40, 50, 60]. Then 30 is compared with child 60, swap again &rarr; [90, 80, 60, 40, 50, 30]. The new root is 90.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <div class="topic-nav">
+        <a href="bst.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">Binary Search Tree</div>
+          </div>
+        </a>
+        <a href="bubble-sort.html" class="topic-nav__link topic-nav__link--next">
+          <div>
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">Bubble Sort</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/sidebar-nav.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/viz-utils.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/heap-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

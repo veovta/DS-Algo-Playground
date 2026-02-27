@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sliding Window - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="sliding-window">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Sliding Window</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Sliding Window</h1>
+        <p class="topic-header__desc">The sliding window technique is a powerful approach for solving problems that involve contiguous subarrays or substrings. By maintaining a window that slides across the data, it reduces brute-force quadratic solutions down to linear time, making it one of the most frequently tested patterns in coding interviews.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--blue">Technique</span>
+          <span class="badge badge--green">O(n)</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How Sliding Window Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How Sliding Window Works</h2>
+        <div class="topic-section__content">
+          <p>The sliding window technique maintains a <strong>window</strong> &mdash; a contiguous range of elements defined by two pointers (or indices) &mdash; and slides it across an array or string. Instead of recalculating results from scratch for every possible subarray, the window incrementally updates its state as it moves, adding the new element entering the window and removing the element leaving it.</p>
+          <p>There are two main variants of the sliding window:</p>
+          <ul>
+            <li><strong>Fixed-size window:</strong> The window size <code>k</code> is predetermined. As the window slides one position to the right, we add the new rightmost element and remove the old leftmost element. A classic example is finding the <strong>maximum sum subarray of size k</strong>.</li>
+            <li><strong>Variable-size window:</strong> The window expands and contracts dynamically based on a condition. We expand the right boundary to include more elements and shrink the left boundary when a constraint is violated. Examples include the <strong>longest substring without repeating characters</strong> and the <strong>minimum window substring</strong>.</li>
+          </ul>
+          <p><strong>Maximum sum subarray of size k:</strong> Given an array of integers and a window size <code>k</code>, find the subarray of length <code>k</code> with the largest sum. The brute-force approach sums every possible subarray of size <code>k</code> in O(n &times; k) time. With a sliding window, we compute the first window's sum, then slide the window by subtracting the element leaving the window and adding the new element &mdash; reducing time to O(n).</p>
+          <p><strong>Longest substring without repeating characters:</strong> Use a variable-size window with a hash set tracking characters in the current window. Expand the right pointer to add characters; when a duplicate is found, shrink from the left until the window is valid again. This runs in O(n) time.</p>
+          <p><strong>Minimum window substring:</strong> Given a string <code>s</code> and a target string <code>t</code>, find the smallest substring of <code>s</code> that contains all characters of <code>t</code>. Expand the right pointer until all target characters are covered, then shrink from the left to minimize the window size while maintaining coverage.</p>
+          <p>The key insight behind sliding window is that by leveraging the overlap between consecutive windows, we avoid redundant computation and achieve <strong>O(n)</strong> time complexity for problems that would otherwise require O(n<sup>2</sup>) or worse.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Watch the sliding window technique in action on the <strong>maximum sum subarray of size k</strong> problem. The highlighted region shows the current window, and the running sum updates as the window slides across the array.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="sliding-window-canvas"></canvas>
+          </div>
+
+          <div class="viz-explanation">Set the window size k and click Start to begin.</div>
+
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <div class="viz-ops">
+            <label class="viz-controls__label" for="sw-k-input">Window size k:</label>
+            <input type="number" class="viz-ops__input" id="sw-k-input" value="3" min="1" max="15" style="width:60px;">
+            <button class="btn btn--primary btn--sm" id="sw-start-btn">Start</button>
+            <button class="btn btn--secondary btn--sm" id="sw-randomize-btn">Randomize</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below is the implementation for finding the maximum sum subarray of size k using the sliding window technique. The window slides across the array in a single pass, maintaining a running sum by adding the incoming element and subtracting the outgoing element.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">def max_sum_subarray(arr, k):
+    """Return the maximum sum of any contiguous subarray of size k."""
+    n = len(arr)
+    if n < k:
+        return -1
+
+    # Compute the sum of the first window
+    window_sum = sum(arr[:k])
+    max_sum = window_sum
+
+    # Slide the window from left to right
+    for i in range(k, n):
+        window_sum += arr[i] - arr[i - k]   # Add incoming, remove outgoing
+        max_sum = max(max_sum, window_sum)
+
+    return max_sum
+
+
+# Example usage
+nums = [2, 1, 5, 1, 3, 2]
+k = 3
+result = max_sum_subarray(nums, k)
+print(f"Max sum of subarray of size {k}: {result}")  # Output: 9</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">public class SlidingWindow {
+    /**
+     * Returns the maximum sum of any contiguous subarray of size k.
+     */
+    public static int maxSumSubarray(int[] arr, int k) {
+        int n = arr.length;
+        if (n < k) return -1;
+
+        // Compute the sum of the first window
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) {
+            windowSum += arr[i];
+        }
+        int maxSum = windowSum;
+
+        // Slide the window from left to right
+        for (int i = k; i < n; i++) {
+            windowSum += arr[i] - arr[i - k];  // Add incoming, remove outgoing
+            maxSum = Math.max(maxSum, windowSum);
+        }
+
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 1, 5, 1, 3, 2};
+        int k = 3;
+        int result = maxSumSubarray(nums, k);
+        System.out.println("Max sum of subarray of size " + k + ": " + result);  // Output: 9
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+/**
+ * Returns the maximum sum of any contiguous subarray of size k.
+ */
+int maxSumSubarray(const vector&lt;int&gt;&amp; arr, int k) {
+    int n = static_cast&lt;int&gt;(arr.size());
+    if (n &lt; k) return -1;
+
+    // Compute the sum of the first window
+    int windowSum = 0;
+    for (int i = 0; i &lt; k; i++) {
+        windowSum += arr[i];
+    }
+    int maxSum = windowSum;
+
+    // Slide the window from left to right
+    for (int i = k; i &lt; n; i++) {
+        windowSum += arr[i] - arr[i - k];  // Add incoming, remove outgoing
+        maxSum = max(maxSum, windowSum);
+    }
+
+    return maxSum;
+}
+
+int main() {
+    vector&lt;int&gt; nums = {2, 1, 5, 1, 3, 2};
+    int k = 3;
+    int result = maxSumSubarray(nums, k);
+    cout &lt;&lt; "Max sum of subarray of size " &lt;&lt; k &lt;&lt; ": " &lt;&lt; result &lt;&lt; endl;  // Output: 9
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>The sliding window technique processes each element at most twice (once when it enters the window and once when it leaves), resulting in linear time complexity. Only a constant number of variables are needed to track the window state, so space usage is minimal.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>Time Complexity</th>
+                <th>Space Complexity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Best</td>
+                <td>O(n)</td>
+                <td>O(1)</td>
+                <td>The window slides across the entire array in a single pass</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>O(n)</td>
+                <td>O(1)</td>
+                <td>Each element is added and removed from the window exactly once</td>
+              </tr>
+              <tr>
+                <td>Worst</td>
+                <td>O(n)</td>
+                <td>O(1)</td>
+                <td>Even in the worst case, the window performs a single linear scan</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content">
+          <p>Compared to the brute-force approach that examines all O(n &times; k) subarrays, the sliding window technique is a significant improvement. For variable-size windows (e.g., longest substring without repeating characters), space may increase to O(min(n, m)) where m is the character set size, but time remains O(n).</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your knowledge of the sliding window technique with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the main advantage of the sliding window technique over the brute-force approach?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                It uses less memory by avoiding arrays entirely
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                It avoids redundant computation by reusing the overlap between consecutive windows
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                It sorts the array first to enable binary search
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                It uses divide-and-conquer to split the problem in half
+              </div>
+            </div>
+            <div class="quiz__explanation">The sliding window technique exploits the overlap between consecutive subarrays. When the window slides one position, only one element is added and one is removed, so the result is updated incrementally rather than recomputed from scratch. This reduces time complexity from O(n &times; k) to O(n).</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> Given the array [4, 2, 1, 7, 8, 1, 2, 8, 1, 0] and k = 3, what is the maximum sum of a subarray of size 3?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                12
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                15
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                16
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                11
+              </div>
+            </div>
+            <div class="quiz__explanation">Sliding the window across the array: [4,2,1]=7, [2,1,7]=10, [1,7,8]=16, [7,8,1]=16, [8,1,2]=11, [1,2,8]=11, [2,8,1]=11, [8,1,0]=9. The maximum sum is 16, achieved by the subarray [1,7,8] or [7,8,1].</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> Which of the following problems is best solved with a variable-size sliding window?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Longest substring without repeating characters
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Finding the kth largest element in an array
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Sorting an array of integers
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Finding the shortest path in a graph
+              </div>
+            </div>
+            <div class="quiz__explanation">The longest substring without repeating characters requires a window that grows when new unique characters are encountered and shrinks when a duplicate is found. This is a classic variable-size sliding window problem. The other problems require different techniques: heaps, comparison-based sorting, and BFS/Dijkstra respectively.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> In a fixed-size sliding window of size k, what happens at each step as the window moves one position to the right?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                All k elements in the window are re-summed from scratch
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                The window is split in half and each half is processed separately
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Two new elements are added and two old elements are removed
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                The new rightmost element is added and the old leftmost element is removed
+              </div>
+            </div>
+            <div class="quiz__explanation">When a fixed-size window slides one position to the right, exactly one element enters the window (the new rightmost element) and one element leaves (the old leftmost element). The running computation (e.g., sum) is updated by adding the incoming value and subtracting the outgoing value, making each step O(1).</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> What is the time complexity of finding the minimum window substring (smallest substring of s containing all characters of t)?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(n<sup>2</sup>)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(n + m) where n = |s| and m = |t|
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(n log n)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(n &times; m)
+              </div>
+            </div>
+            <div class="quiz__explanation">Using the sliding window approach with two pointers and a frequency map, each character in s is visited at most twice (once by the right pointer, once by the left pointer), and building the frequency map for t takes O(m) time. Therefore the total time complexity is O(n + m), which is optimal for this problem.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <div class="topic-nav">
+        <a href="two-pointers.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">Two Pointers</div>
+          </div>
+        </a>
+        <a href="dynamic-programming.html" class="topic-nav__link">
+          <div>
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">Dynamic Programming</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/sidebar-nav.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/viz-utils.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/sliding-window-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

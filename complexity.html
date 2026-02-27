@@ -16,19 +16,7 @@
         DS-Algo
       </a>
     </div>
-    <nav class="sidebar__nav">
-      <div class="sidebar__section-title">Overview</div>
-      <a href="index.html" class="sidebar__link">Home</a>
-      <a href="complexity.html" class="sidebar__link sidebar__link--active">Complexity Cheat Sheet</a>
-      <a href="about.html" class="sidebar__link">About</a>
-      <div class="sidebar__section-title">Data Structures</div>
-      <a href="topics/arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
-      <a href="topics/linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
-      <div class="sidebar__section-title">Sorting</div>
-      <a href="topics/bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
-      <div class="sidebar__section-title">Searching</div>
-      <a href="topics/binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
-    </nav>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
     <div class="sidebar__footer">
       <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
     </div>
@@ -99,6 +87,30 @@
       </div>
 
       <p style="margin-top:var(--space-md);font-size:var(--font-size-sm);color:var(--text-tertiary);">* = amortized or average case. Actual worst case may differ.</p>
+
+      <!-- Interactive Complexity Visualizer -->
+      <h2 style="font-size:var(--font-size-lg);font-weight:700;margin:var(--space-2xl) 0 var(--space-md);">Interactive Growth Rate Visualizer</h2>
+      <p style="margin-bottom:var(--space-md);color:var(--text-secondary);font-size:var(--font-size-sm);">See how different time complexities grow as input size increases. Toggle curves and drag the slider to explore.</p>
+
+      <div class="viz-container">
+        <div class="viz-canvas-wrap">
+          <canvas id="complexity-canvas" style="height:400px;"></canvas>
+        </div>
+        <div style="padding:var(--space-sm) var(--space-md);border-top:1px solid var(--border-color);display:flex;align-items:center;gap:var(--space-md);flex-wrap:wrap;">
+          <label style="font-size:var(--font-size-sm);color:var(--text-secondary);font-weight:600;">n =
+            <input type="range" id="complexity-n-slider" min="5" max="200" value="50" style="width:150px;accent-color:var(--accent-primary);vertical-align:middle;">
+            <span id="complexity-n-label" style="font-weight:700;color:var(--text-primary);">50</span>
+          </label>
+        </div>
+        <div style="padding:var(--space-sm) var(--space-md);border-top:1px solid var(--border-color);display:flex;align-items:center;gap:var(--space-md);flex-wrap:wrap;">
+          <label style="font-size:var(--font-size-sm);cursor:pointer;"><input type="checkbox" class="complexity-toggle" data-curve="o1" checked> <span style="color:#22c55e;font-weight:600;">O(1)</span></label>
+          <label style="font-size:var(--font-size-sm);cursor:pointer;"><input type="checkbox" class="complexity-toggle" data-curve="ologn" checked> <span style="color:#3b82f6;font-weight:600;">O(log n)</span></label>
+          <label style="font-size:var(--font-size-sm);cursor:pointer;"><input type="checkbox" class="complexity-toggle" data-curve="on" checked> <span style="color:#06b6d4;font-weight:600;">O(n)</span></label>
+          <label style="font-size:var(--font-size-sm);cursor:pointer;"><input type="checkbox" class="complexity-toggle" data-curve="onlogn" checked> <span style="color:#f59e0b;font-weight:600;">O(n log n)</span></label>
+          <label style="font-size:var(--font-size-sm);cursor:pointer;"><input type="checkbox" class="complexity-toggle" data-curve="on2" checked> <span style="color:#ef4444;font-weight:600;">O(n&sup2;)</span></label>
+          <label style="font-size:var(--font-size-sm);cursor:pointer;"><input type="checkbox" class="complexity-toggle" data-curve="o2n" checked> <span style="color:#a855f7;font-weight:600;">O(2^n)</span></label>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -119,9 +131,12 @@
 
   <script src="js/theme.js"></script>
   <script src="js/sidebar.js"></script>
+  <script src="js/sidebar-nav.js"></script>
   <script src="js/search.js"></script>
   <script src="js/progress.js"></script>
   <script src="js/keyboard.js"></script>
+  <script src="js/viz-utils.js"></script>
+  <script src="js/visualization-core.js"></script>
   <script src="js/main.js"></script>
   <script>
     (function() {
@@ -173,6 +188,175 @@
             });
           });
         });
+    })();
+  </script>
+  <script>
+    // Interactive Complexity Visualizer
+    (function() {
+      var canvas = document.getElementById('complexity-canvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var dpr = window.devicePixelRatio || 1;
+      var maxN = 50;
+
+      var curves = {
+        o1:     { label: 'O(1)',       color: '#22c55e', fn: function()  { return 1; }, visible: true },
+        ologn:  { label: 'O(log n)',   color: '#3b82f6', fn: function(n) { return Math.log2(Math.max(1, n)); }, visible: true },
+        on:     { label: 'O(n)',       color: '#06b6d4', fn: function(n) { return n; }, visible: true },
+        onlogn: { label: 'O(n log n)', color: '#f59e0b', fn: function(n) { return n * Math.log2(Math.max(1, n)); }, visible: true },
+        on2:    { label: 'O(n\u00b2)',      color: '#ef4444', fn: function(n) { return n * n; }, visible: true },
+        o2n:    { label: 'O(2^n)',     color: '#a855f7', fn: function(n) { return Math.pow(2, Math.min(n, 30)); }, visible: true }
+      };
+
+      function resize() {
+        var rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = canvas.offsetHeight * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        draw();
+      }
+
+      function draw() {
+        var w = canvas.width / dpr;
+        var h = canvas.height / dpr;
+        var pad = { top: 30, right: 100, bottom: 50, left: 60 };
+        var plotW = w - pad.left - pad.right;
+        var plotH = h - pad.top - pad.bottom;
+
+        var style = getComputedStyle(document.documentElement);
+        var textColor = style.getPropertyValue('--text-primary').trim() || '#1e293b';
+        var gridColor = style.getPropertyValue('--border-color').trim() || '#e2e8f0';
+        var bgColor = style.getPropertyValue('--bg-secondary').trim() || '#f5f7fa';
+        var fontSans = style.getPropertyValue('--font-sans').trim() || 'sans-serif';
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Find max Y for visible curves (cap at reasonable value)
+        var maxY = 10;
+        var keys = Object.keys(curves);
+        for (var k = 0; k < keys.length; k++) {
+          if (!curves[keys[k]].visible) continue;
+          var val = curves[keys[k]].fn(maxN);
+          if (isFinite(val) && val > maxY) maxY = val;
+        }
+        // Cap to prevent O(2^n) from squashing everything
+        var capY = Math.min(maxY, maxN * maxN * 1.5);
+        if (capY < 10) capY = 10;
+
+        // Grid lines
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 0.5;
+        var numGridY = 5;
+        for (var g = 0; g <= numGridY; g++) {
+          var gy = pad.top + plotH - (g / numGridY) * plotH;
+          ctx.beginPath();
+          ctx.moveTo(pad.left, gy);
+          ctx.lineTo(pad.left + plotW, gy);
+          ctx.stroke();
+          ctx.fillStyle = textColor;
+          ctx.font = '11px ' + fontSans;
+          ctx.textAlign = 'right';
+          ctx.textBaseline = 'middle';
+          var yVal = Math.round(capY * g / numGridY);
+          ctx.fillText(yVal >= 1000 ? (yVal / 1000).toFixed(0) + 'k' : String(yVal), pad.left - 8, gy);
+        }
+
+        // X axis labels
+        var numGridX = 5;
+        for (var gx = 0; gx <= numGridX; gx++) {
+          var xPos = pad.left + (gx / numGridX) * plotW;
+          ctx.beginPath();
+          ctx.moveTo(xPos, pad.top);
+          ctx.lineTo(xPos, pad.top + plotH);
+          ctx.stroke();
+          ctx.fillStyle = textColor;
+          ctx.font = '11px ' + fontSans;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'top';
+          ctx.fillText(String(Math.round(maxN * gx / numGridX)), xPos, pad.top + plotH + 6);
+        }
+
+        // Axis labels
+        ctx.fillStyle = textColor;
+        ctx.font = 'bold 12px ' + fontSans;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText('Input Size (n)', pad.left + plotW / 2, h - 14);
+
+        ctx.save();
+        ctx.translate(14, pad.top + plotH / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Operations', 0, 0);
+        ctx.restore();
+
+        // Draw curves
+        for (var c = 0; c < keys.length; c++) {
+          var curve = curves[keys[c]];
+          if (!curve.visible) continue;
+
+          ctx.strokeStyle = curve.color;
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          var started = false;
+
+          for (var n = 1; n <= maxN; n++) {
+            var y = curve.fn(n);
+            if (!isFinite(y)) break;
+            var px = pad.left + (n / maxN) * plotW;
+            var py = pad.top + plotH - (Math.min(y, capY) / capY) * plotH;
+            py = Math.max(pad.top, py);
+            if (!started) { ctx.moveTo(px, py); started = true; }
+            else ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+
+          // Legend label at end of curve
+          if (started) {
+            var lastY = Math.min(curve.fn(maxN), capY);
+            var ly = pad.top + plotH - (lastY / capY) * plotH;
+            ly = Math.max(pad.top + 10, Math.min(pad.top + plotH - 10, ly));
+            ctx.fillStyle = curve.color;
+            ctx.font = 'bold 12px ' + fontSans;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(curve.label, pad.left + plotW + 8, ly);
+          }
+        }
+
+        // Border
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(pad.left, pad.top, plotW, plotH);
+      }
+
+      // Slider
+      var slider = document.getElementById('complexity-n-slider');
+      var label = document.getElementById('complexity-n-label');
+      if (slider) {
+        slider.addEventListener('input', function() {
+          maxN = parseInt(slider.value, 10);
+          if (label) label.textContent = String(maxN);
+          draw();
+        });
+      }
+
+      // Toggles
+      document.querySelectorAll('.complexity-toggle').forEach(function(cb) {
+        cb.addEventListener('change', function() {
+          var key = cb.getAttribute('data-curve');
+          if (curves[key]) {
+            curves[key].visible = cb.checked;
+            draw();
+          }
+        });
+      });
+
+      window.addEventListener('resize', resize);
+      // Delay init to ensure layout is settled
+      setTimeout(resize, 100);
+
+      DSA.complexityViz = { init: function() {} };
     })();
   </script>
 </body>

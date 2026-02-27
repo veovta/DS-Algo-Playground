@@ -20,9 +20,59 @@
     "tags": ["linked list", "node", "pointer", "singly linked", "head"]
   },
   {
+    "id": "stack",
+    "title": "Stack",
+    "category": "Data Structures",
+    "url": "topics/stack.html",
+    "icon": "\u2b62",
+    "color": "#06b6d4",
+    "description": "LIFO data structure with O(1) push, pop, and peek operations.",
+    "tags": ["stack", "lifo", "push", "pop", "peek"]
+  },
+  {
+    "id": "queue",
+    "title": "Queue",
+    "category": "Data Structures",
+    "url": "topics/queue.html",
+    "icon": "\u2b80",
+    "color": "#14b8a6",
+    "description": "FIFO data structure with O(1) enqueue and dequeue operations.",
+    "tags": ["queue", "fifo", "enqueue", "dequeue", "front", "rear"]
+  },
+  {
+    "id": "hash-table",
+    "title": "Hash Table",
+    "category": "Data Structures",
+    "url": "topics/hash-table.html",
+    "icon": "#",
+    "color": "#f97316",
+    "description": "Key-value storage with O(1) average lookup, insertion, and deletion using hash functions.",
+    "tags": ["hash", "table", "map", "dictionary", "collision", "chaining"]
+  },
+  {
+    "id": "bst",
+    "title": "Binary Search Tree",
+    "category": "Data Structures",
+    "url": "topics/bst.html",
+    "icon": "\u25b3",
+    "color": "#ec4899",
+    "description": "Hierarchical structure enabling O(log n) search, insert, and delete with ordered traversals.",
+    "tags": ["tree", "binary", "bst", "inorder", "preorder", "postorder"]
+  },
+  {
+    "id": "heap",
+    "title": "Heap",
+    "category": "Data Structures",
+    "url": "topics/heap.html",
+    "icon": "\u25b2",
+    "color": "#a855f7",
+    "description": "Complete binary tree maintaining heap property. Supports O(log n) insert and extract-max/min.",
+    "tags": ["heap", "priority queue", "max heap", "min heap", "heapify"]
+  },
+  {
     "id": "bubble-sort",
     "title": "Bubble Sort",
-    "category": "Sorting Algorithms",
+    "category": "Sorting",
     "url": "topics/bubble-sort.html",
     "icon": "\u2195",
     "color": "#f59e0b",
@@ -30,13 +80,113 @@
     "tags": ["sort", "bubble", "comparison", "swap", "quadratic"]
   },
   {
+    "id": "selection-sort",
+    "title": "Selection Sort",
+    "category": "Sorting",
+    "url": "topics/selection-sort.html",
+    "icon": "\u2714",
+    "color": "#eab308",
+    "description": "Finds the minimum element and places it at the beginning. O(n\u00b2) in all cases.",
+    "tags": ["sort", "selection", "minimum", "comparison", "quadratic"]
+  },
+  {
+    "id": "insertion-sort",
+    "title": "Insertion Sort",
+    "category": "Sorting",
+    "url": "topics/insertion-sort.html",
+    "icon": "\u21b3",
+    "color": "#d97706",
+    "description": "Builds sorted array one element at a time by inserting into correct position. O(n\u00b2) average.",
+    "tags": ["sort", "insertion", "shift", "comparison", "adaptive"]
+  },
+  {
+    "id": "merge-sort",
+    "title": "Merge Sort",
+    "category": "Sorting",
+    "url": "topics/merge-sort.html",
+    "icon": "\u2194",
+    "color": "#16a34a",
+    "description": "Divide-and-conquer sort with guaranteed O(n log n) time. Stable and predictable.",
+    "tags": ["sort", "merge", "divide and conquer", "stable", "recursive"]
+  },
+  {
+    "id": "quick-sort",
+    "title": "Quick Sort",
+    "category": "Sorting",
+    "url": "topics/quick-sort.html",
+    "icon": "\u21c5",
+    "color": "#059669",
+    "description": "Efficient in-place sort using pivot partitioning. O(n log n) average, O(n\u00b2) worst.",
+    "tags": ["sort", "quick", "partition", "pivot", "in-place"]
+  },
+  {
     "id": "binary-search",
     "title": "Binary Search",
-    "category": "Search Algorithms",
+    "category": "Searching",
     "url": "topics/binary-search.html",
     "icon": "\ud83d\udd0d",
     "color": "#22c55e",
     "description": "Efficient O(log n) search on sorted arrays by repeatedly halving the search space.",
     "tags": ["search", "binary", "sorted", "logarithmic", "divide and conquer"]
+  },
+  {
+    "id": "bfs",
+    "title": "BFS (Breadth-First)",
+    "category": "Searching",
+    "url": "topics/bfs.html",
+    "icon": "\u2263",
+    "color": "#2563eb",
+    "description": "Level-by-level graph traversal using a queue. Finds shortest unweighted paths.",
+    "tags": ["graph", "bfs", "breadth first", "queue", "shortest path", "traversal"]
+  },
+  {
+    "id": "dfs",
+    "title": "DFS (Depth-First)",
+    "category": "Searching",
+    "url": "topics/dfs.html",
+    "icon": "\u2261",
+    "color": "#7c3aed",
+    "description": "Explores graph branches as deep as possible using a stack or recursion.",
+    "tags": ["graph", "dfs", "depth first", "stack", "backtracking", "traversal"]
+  },
+  {
+    "id": "two-pointers",
+    "title": "Two Pointers",
+    "category": "Techniques",
+    "url": "topics/two-pointers.html",
+    "icon": "\u21d4",
+    "color": "#0ea5e9",
+    "description": "Efficient pattern using two indices to scan arrays from both ends or at different speeds.",
+    "tags": ["two pointers", "technique", "sorted array", "pair sum"]
+  },
+  {
+    "id": "sliding-window",
+    "title": "Sliding Window",
+    "category": "Techniques",
+    "url": "topics/sliding-window.html",
+    "icon": "\u25a1",
+    "color": "#6366f1",
+    "description": "Maintains a window over a contiguous subarray to solve range-based problems efficiently.",
+    "tags": ["sliding window", "technique", "subarray", "contiguous"]
+  },
+  {
+    "id": "dynamic-programming",
+    "title": "Dynamic Programming",
+    "category": "Techniques",
+    "url": "topics/dynamic-programming.html",
+    "icon": "\u25a4",
+    "color": "#dc2626",
+    "description": "Solves complex problems by breaking them into overlapping subproblems with memoization.",
+    "tags": ["dynamic programming", "dp", "memoization", "tabulation", "optimal substructure"]
+  },
+  {
+    "id": "recursion",
+    "title": "Recursion",
+    "category": "Techniques",
+    "url": "topics/recursion.html",
+    "icon": "\u21ba",
+    "color": "#be185d",
+    "description": "Function calling itself to solve problems. Visualize call stacks and memoization.",
+    "tags": ["recursion", "call stack", "base case", "fibonacci", "memoization"]
   }
 ]

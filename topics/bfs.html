@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFS (Breadth-First Search) - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="bfs">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>BFS (Breadth-First Search)</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">BFS (Breadth-First Search)</h1>
+        <p class="topic-header__desc">Breadth-First Search explores a graph level by level, visiting all neighbors of a node before moving deeper. It uses a <strong>queue</strong> (FIFO) to track which node to visit next, guaranteeing the shortest path in unweighted graphs.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--green">Searching</span>
+          <span class="badge badge--blue">O(V+E)</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How BFS Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How BFS Works</h2>
+        <div class="topic-section__content">
+          <p>BFS starts at a chosen <strong>source node</strong> and explores all nodes at the current depth before moving on to nodes at the next depth level. It relies on a <strong>queue</strong> data structure to maintain the order of exploration.</p>
+          <p>The algorithm proceeds as follows:</p>
+          <ul>
+            <li><strong>Enqueue</strong> the starting node and mark it as visited (or "discovered").</li>
+            <li>While the queue is not empty, <strong>dequeue</strong> the front node.</li>
+            <li>For each unvisited neighbor of the dequeued node, mark it as visited and <strong>enqueue</strong> it.</li>
+            <li>Repeat until the queue is empty &mdash; every reachable node has been visited.</li>
+          </ul>
+          <p>Because BFS visits nodes in order of their distance from the source, it naturally finds the <strong>shortest path</strong> (in terms of number of edges) from the source to any reachable node. This makes it ideal for problems like finding the shortest route in an unweighted maze or computing the minimum number of moves in a puzzle.</p>
+          <p><strong>Key insight:</strong> The queue ensures that all nodes at distance <em>d</em> are processed before any node at distance <em>d+1</em>, which is why BFS is also called <em>level-order traversal</em> when applied to trees.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Watch BFS traverse a graph level by level. <span style="color:var(--viz-cell-bg);font-weight:700;">White</span> nodes are unvisited, <span style="color:var(--viz-compare);font-weight:700;">yellow</span> nodes are in the queue (discovered), and <span style="color:var(--viz-sorted);font-weight:700;">green</span> nodes have been fully visited. The queue contents are shown on the right.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="bfs-canvas"></canvas>
+          </div>
+
+          <div class="viz-explanation">Click Start to begin BFS traversal from node 0.</div>
+
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <div class="viz-ops">
+            <button id="bfs-start-btn" class="btn btn--primary btn--sm">Start BFS</button>
+            <button id="bfs-reset-btn" class="btn btn--secondary btn--sm">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below is the standard BFS implementation using an adjacency list representation. The algorithm uses a queue to process nodes level by level and a visited set to avoid revisiting nodes.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">from collections import deque
+
+def bfs(graph, start):
+    """Perform BFS from start node. Returns list of visited nodes in BFS order."""
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    order = []
+
+    while queue:
+        node = queue.popleft()       # Dequeue from front
+        order.append(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)  # Enqueue at back
+
+    return order
+
+
+# Example usage
+graph = {
+    0: [1, 2],
+    1: [0, 3, 4],
+    2: [0, 5, 6],
+    3: [1],
+    4: [1],
+    5: [2],
+    6: [2]
+}
+print(bfs(graph, 0))  # Output: [0, 1, 2, 3, 4, 5, 6]</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">import java.util.*;
+
+public class BFS {
+    /**
+     * Performs BFS from start node. Returns visited nodes in BFS order.
+     */
+    public static List&lt;Integer&gt; bfs(Map&lt;Integer, List&lt;Integer&gt;&gt; graph, int start) {
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+        List&lt;Integer&gt; order = new ArrayList&lt;&gt;();
+
+        visited.add(start);
+        queue.add(start);
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();      // Dequeue from front
+            order.add(node);
+
+            for (int neighbor : graph.get(node)) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);  // Enqueue at back
+                }
+            }
+        }
+
+        return order;
+    }
+
+    public static void main(String[] args) {
+        Map&lt;Integer, List&lt;Integer&gt;&gt; graph = new HashMap&lt;&gt;();
+        graph.put(0, Arrays.asList(1, 2));
+        graph.put(1, Arrays.asList(0, 3, 4));
+        graph.put(2, Arrays.asList(0, 5, 6));
+        graph.put(3, Arrays.asList(1));
+        graph.put(4, Arrays.asList(1));
+        graph.put(5, Arrays.asList(2));
+        graph.put(6, Arrays.asList(2));
+
+        System.out.println(bfs(graph, 0));
+        // Output: [0, 1, 2, 3, 4, 5, 6]
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_set&gt;
+using namespace std;
+
+/**
+ * Performs BFS from start node. Returns visited nodes in BFS order.
+ */
+vector&lt;int&gt; bfs(const vector&lt;vector&lt;int&gt;&gt;&amp; graph, int start) {
+    unordered_set&lt;int&gt; visited;
+    queue&lt;int&gt; q;
+    vector&lt;int&gt; order;
+
+    visited.insert(start);
+    q.push(start);
+
+    while (!q.empty()) {
+        int node = q.front();       // Dequeue from front
+        q.pop();
+        order.push_back(node);
+
+        for (int neighbor : graph[node]) {
+            if (visited.find(neighbor) == visited.end()) {
+                visited.insert(neighbor);
+                q.push(neighbor);   // Enqueue at back
+            }
+        }
+    }
+
+    return order;
+}
+
+int main() {
+    vector&lt;vector&lt;int&gt;&gt; graph = {
+        {1, 2},    // 0
+        {0, 3, 4}, // 1
+        {0, 5, 6}, // 2
+        {1},       // 3
+        {1},       // 4
+        {2},       // 5
+        {2}        // 6
+    };
+
+    vector&lt;int&gt; result = bfs(graph, 0);
+    for (int node : result) {
+        cout &lt;&lt; node &lt;&lt; " ";
+    }
+    // Output: 0 1 2 3 4 5 6
+    cout &lt;&lt; endl;
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>BFS visits every vertex exactly once and examines every edge exactly once (in an undirected graph, each edge is checked from both endpoints). The queue operations (enqueue and dequeue) are O(1), so the overall complexity depends on the number of vertices and edges.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Complexity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Time</td>
+                <td>O(V + E)</td>
+                <td>Each vertex is enqueued/dequeued once; each edge is checked once</td>
+              </tr>
+              <tr>
+                <td>Space</td>
+                <td>O(V)</td>
+                <td>The queue and visited set each hold at most V entries</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content">
+          <p>Here, <strong>V</strong> is the number of vertices and <strong>E</strong> is the number of edges. BFS is optimal for unweighted shortest-path queries because it explores all possibilities at distance <em>d</em> before considering distance <em>d+1</em>. For weighted graphs, Dijkstra's algorithm (a priority-queue extension of BFS) is used instead.</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your understanding of BFS with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> Which data structure does BFS use to determine the next node to visit?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Stack
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Priority Queue
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Queue (FIFO)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Hash Map
+              </div>
+            </div>
+            <div class="quiz__explanation">BFS uses a queue (First-In-First-Out) to ensure nodes are visited in the order they were discovered. This guarantees level-by-level traversal. A stack would give DFS behavior, a priority queue is used in Dijkstra's algorithm, and a hash map is used for tracking visited nodes, not for ordering traversal.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What is the time complexity of BFS on a graph with V vertices and E edges?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(V)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(V + E)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(V &times; E)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(V<sup>2</sup>)
+              </div>
+            </div>
+            <div class="quiz__explanation">BFS visits each vertex once (O(V)) and examines each edge once (O(E)), giving a total time complexity of O(V + E). O(V<sup>2</sup>) would be the case if using an adjacency matrix representation. O(V &times; E) is far too high for BFS.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> BFS guarantees finding the shortest path in which type of graph?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Unweighted graphs
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Weighted graphs with positive weights
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Graphs with negative edge weights
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                All types of graphs
+              </div>
+            </div>
+            <div class="quiz__explanation">BFS finds the shortest path in unweighted graphs because it explores all nodes at distance d before any node at distance d+1. For weighted graphs with positive weights, Dijkstra's algorithm is needed. For graphs with negative weights, Bellman-Ford is required.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> Given the graph {0:[1,2], 1:[0,3,4], 2:[0,5,6], 3:[1], 4:[1], 5:[2], 6:[2]}, what is the BFS traversal order starting from node 0?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                0, 1, 3, 4, 2, 5, 6
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                0, 2, 6, 5, 1, 4, 3
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                0, 1, 2, 5, 6, 3, 4
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                0, 1, 2, 3, 4, 5, 6
+              </div>
+            </div>
+            <div class="quiz__explanation">Starting at 0, BFS enqueues neighbors 1 and 2. It then dequeues 1, enqueuing 3 and 4. Then it dequeues 2, enqueuing 5 and 6. The remaining nodes are dequeued in order: 3, 4, 5, 6. The full order is 0, 1, 2, 3, 4, 5, 6. Option (a) is a DFS order, not BFS.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> What happens if you run BFS on a disconnected graph?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                It crashes with an error
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                It visits all nodes in the graph
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                It only visits nodes reachable from the starting node
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                It enters an infinite loop
+              </div>
+            </div>
+            <div class="quiz__explanation">A single BFS run from one source only visits nodes in the same connected component as the source. Nodes in other components remain unvisited. To visit all nodes in a disconnected graph, you must run BFS from each unvisited node (sometimes called "BFS for all components").</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <div class="topic-nav">
+        <a href="binary-search.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">Binary Search</div>
+          </div>
+        </a>
+        <a href="dfs.html" class="topic-nav__link">
+          <div>
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">DFS (Depth-First Search)</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/sidebar-nav.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/viz-utils.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/bfs-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

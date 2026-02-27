@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursion - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="recursion">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Recursion</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Recursion</h1>
+        <p class="topic-header__desc">Recursion is a technique where a function calls itself to solve smaller instances of the same problem. Every recursive function needs a <strong>base case</strong> to stop the recursion and a <strong>recursive case</strong> that breaks the problem down. Recursion is the foundation for divide-and-conquer algorithms, tree traversals, backtracking, and dynamic programming.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--blue">Technique</span>
+          <span class="badge badge--green">Fundamental</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How Recursion Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How Recursion Works</h2>
+        <div class="topic-section__content">
+          <p>A recursive function solves a problem by reducing it to one or more smaller sub-problems of the same type. Every correct recursive function has two essential parts:</p>
+          <ul>
+            <li><strong>Base case:</strong> The simplest instance of the problem that can be answered directly without further recursion. Without a base case, recursion would continue indefinitely.</li>
+            <li><strong>Recursive case:</strong> The function calls itself with a smaller or simpler input, making progress toward the base case with each call.</li>
+          </ul>
+          <p>When a function calls itself, the current execution context is pushed onto the <strong>call stack</strong>. Each frame on the stack holds the function's local variables and the point to resume execution after the recursive call returns. Once the base case is reached, frames begin to unwind (pop off the stack) and return their results back up the chain.</p>
+          <p><strong>Classic examples of recursion:</strong></p>
+          <ul>
+            <li><strong>Factorial:</strong> <code>n! = n * (n-1)!</code> with base case <code>0! = 1</code>.</li>
+            <li><strong>Fibonacci:</strong> <code>fib(n) = fib(n-1) + fib(n-2)</code> with base cases <code>fib(0) = 0</code> and <code>fib(1) = 1</code>.</li>
+            <li><strong>Tree traversal:</strong> Visit the current node, then recursively traverse left and right subtrees.</li>
+          </ul>
+          <p><strong>Stack overflow:</strong> If the recursion depth becomes too large (e.g., computing <code>fib(100000)</code> without optimization), the call stack exceeds its memory limit and the program crashes with a stack overflow error. Python's default recursion limit is 1000 frames; C++ and Java limits depend on the thread stack size.</p>
+          <p><strong>Tail recursion:</strong> A special form where the recursive call is the <em>last</em> operation in the function. Some compilers and interpreters can optimize tail-recursive functions into iterative loops, eliminating the extra stack frames entirely. This is called <em>tail-call optimization</em> (TCO). Languages like Scheme guarantee TCO, while Python does not support it natively.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Watch the recursive call tree for <code>fib(n)</code> being built step by step. Each node represents a function call. <span style="color:var(--viz-compare);font-weight:700;">Yellow</span> nodes are currently being computed, and <span style="color:var(--viz-sorted);font-weight:700;">green</span> nodes have returned their value. Observe how the naive approach recomputes the same sub-problems many times.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="recursion-canvas" style="height:400px;"></canvas>
+          </div>
+
+          <div class="viz-explanation">Set a value for n and click Visualize to see the recursive call tree for fib(n).</div>
+
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <div class="viz-ops">
+            <label class="viz-controls__label" for="rec-n-input">Visualize fib(n):</label>
+            <input type="number" class="viz-ops__input" id="rec-n-input" value="5" min="1" max="8" style="width:60px;">
+            <button class="btn btn--primary btn--sm" id="rec-start-btn">Visualize</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below are implementations of three classic recursive functions: naive Fibonacci, factorial, and memoized Fibonacci. The memoized version eliminates redundant computations by caching previously computed results.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">def fibonacci(n):
+    """Naive recursive Fibonacci - O(2^n) time."""
+    if n &lt;= 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+
+def factorial(n):
+    """Recursive factorial - O(n) time."""
+    if n &lt;= 1:
+        return 1
+    return n * factorial(n - 1)
+
+
+def fibonacci_memo(n, memo=None):
+    """Memoized Fibonacci - O(n) time, O(n) space."""
+    if memo is None:
+        memo = {}
+    if n &lt;= 0:
+        return 0
+    if n == 1:
+        return 1
+    if n in memo:
+        return memo[n]
+    memo[n] = fibonacci_memo(n - 1, memo) + fibonacci_memo(n - 2, memo)
+    return memo[n]
+
+
+# Example usage
+print(fibonacci(10))        # Output: 55
+print(factorial(5))         # Output: 120
+print(fibonacci_memo(50))   # Output: 12586269025 (instant with memoization)</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">import java.util.HashMap;
+import java.util.Map;
+
+public class Recursion {
+    /** Naive recursive Fibonacci - O(2^n) time */
+    public static int fibonacci(int n) {
+        if (n &lt;= 0) return 0;
+        if (n == 1) return 1;
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    /** Recursive factorial - O(n) time */
+    public static long factorial(int n) {
+        if (n &lt;= 1) return 1;
+        return n * factorial(n - 1);
+    }
+
+    /** Memoized Fibonacci - O(n) time, O(n) space */
+    private static Map&lt;Integer, Long&gt; memo = new HashMap&lt;&gt;();
+
+    public static long fibonacciMemo(int n) {
+        if (n &lt;= 0) return 0;
+        if (n == 1) return 1;
+        if (memo.containsKey(n)) return memo.get(n);
+        long result = fibonacciMemo(n - 1) + fibonacciMemo(n - 2);
+        memo.put(n, result);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(fibonacci(10));       // Output: 55
+        System.out.println(factorial(5));         // Output: 120
+        System.out.println(fibonacciMemo(50));    // Output: 12586269025
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+using namespace std;
+
+/** Naive recursive Fibonacci - O(2^n) time */
+int fibonacci(int n) {
+    if (n &lt;= 0) return 0;
+    if (n == 1) return 1;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+/** Recursive factorial - O(n) time */
+long long factorial(int n) {
+    if (n &lt;= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+/** Memoized Fibonacci - O(n) time, O(n) space */
+unordered_map&lt;int, long long&gt; memo;
+
+long long fibonacciMemo(int n) {
+    if (n &lt;= 0) return 0;
+    if (n == 1) return 1;
+    if (memo.count(n)) return memo[n];
+    memo[n] = fibonacciMemo(n - 1) + fibonacciMemo(n - 2);
+    return memo[n];
+}
+
+int main() {
+    cout &lt;&lt; fibonacci(10) &lt;&lt; endl;        // Output: 55
+    cout &lt;&lt; factorial(5) &lt;&lt; endl;          // Output: 120
+    cout &lt;&lt; fibonacciMemo(50) &lt;&lt; endl;     // Output: 12586269025
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>The complexity of recursive algorithms depends heavily on the number of recursive calls and whether sub-problems overlap. Naive Fibonacci is a classic example of exponential blowup due to redundant computation, while memoization reduces it to linear time.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Time Complexity</th>
+                <th>Space Complexity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Naive Fibonacci</td>
+                <td>O(2<sup>n</sup>)</td>
+                <td>O(n)</td>
+                <td>Each call branches into two; call stack depth is n</td>
+              </tr>
+              <tr>
+                <td>Memoized Fibonacci</td>
+                <td>O(n)</td>
+                <td>O(n)</td>
+                <td>Each sub-problem computed once; memo table and call stack each use O(n)</td>
+              </tr>
+              <tr>
+                <td>Factorial</td>
+                <td>O(n)</td>
+                <td>O(n)</td>
+                <td>Single recursive call per step; call stack depth is n</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content">
+          <p><strong>Why naive Fibonacci is O(2<sup>n</sup>):</strong> Each call to <code>fib(n)</code> makes two recursive calls, forming a binary tree of calls. The number of nodes in this tree grows exponentially. For example, <code>fib(5)</code> produces 15 function calls, while <code>fib(30)</code> produces over 2.6 million calls.</p>
+          <p><strong>Space complexity insight:</strong> Even though the call tree is exponential, the call stack at any point only holds the frames along the current path from root to leaf, which is at most O(n) deep. Memoization adds an O(n) hash table but eliminates the exponential time by ensuring each unique sub-problem is solved only once.</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your understanding of recursion with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What are the two essential components of every recursive function?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                A loop and a counter
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                A base case and a recursive case
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                A stack and a queue
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                An input array and a return value
+              </div>
+            </div>
+            <div class="quiz__explanation">Every recursive function requires a base case (the condition that stops recursion and returns a direct answer) and a recursive case (where the function calls itself with a smaller or simpler input). Without a base case, the function would recurse infinitely and cause a stack overflow.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What is the time complexity of the naive recursive Fibonacci algorithm?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(n)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(n log n)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(2<sup>n</sup>)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(n<sup>2</sup>)
+              </div>
+            </div>
+            <div class="quiz__explanation">The naive recursive Fibonacci makes two recursive calls at each level, creating a binary tree of calls. The total number of calls grows exponentially as O(2<sup>n</sup>). This is because the same sub-problems (like fib(3), fib(2), etc.) are recomputed many times. Memoization or dynamic programming reduces this to O(n).</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> What happens when a recursive function has no base case?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                It causes a stack overflow error
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                It returns zero
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                It runs in constant time
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                It automatically converts to iteration
+              </div>
+            </div>
+            <div class="quiz__explanation">Without a base case, the function calls itself indefinitely. Each call adds a new frame to the call stack, and when the stack exceeds its memory limit, the program crashes with a stack overflow error (or a RecursionError in Python). The base case is essential to ensure recursion terminates.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> What is tail recursion?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Recursion that processes the last element of an array first
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Recursion that uses two base cases
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Recursion where the function calls itself at the beginning
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Recursion where the recursive call is the last operation in the function
+              </div>
+            </div>
+            <div class="quiz__explanation">Tail recursion is a special form of recursion where the recursive call is the very last operation the function performs before returning. This means there is no pending work after the recursive call returns. Some compilers can optimize tail-recursive functions into iterative loops (tail-call optimization), eliminating the need for additional stack frames and preventing stack overflow.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> How does memoization improve recursive Fibonacci from O(2<sup>n</sup>) to O(n)?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                It removes the base case so the function runs faster
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                It caches results of sub-problems so each is computed only once
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                It converts the recursion into a for-loop automatically
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                It reduces the recursion depth to O(log n)
+              </div>
+            </div>
+            <div class="quiz__explanation">Memoization stores the result of each unique sub-problem (fib(0) through fib(n)) in a cache (dictionary or array). When a sub-problem is encountered again, the cached result is returned in O(1) instead of recomputing it. Since there are only n+1 unique sub-problems, each computed once, the total time becomes O(n). The recursion depth and cache each use O(n) space.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <div class="topic-nav">
+        <a href="dynamic-programming.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">Dynamic Programming</div>
+          </div>
+        </a>
+        <a href="arrays.html" class="topic-nav__link">
+          <div>
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">Arrays</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/sidebar-nav.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/viz-utils.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/recursion-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

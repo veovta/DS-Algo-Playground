@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="stack">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Stack</span>
+      </nav>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Stack</h1>
+        <p class="topic-header__desc">A stack is a linear data structure that follows the Last In, First Out (LIFO) principle. The last element added to the stack is the first one to be removed. Think of it like a stack of plates: you can only add or remove a plate from the top of the pile. Stacks are fundamental to many algorithms and are used in function call management, expression evaluation, undo mechanisms, and backtracking algorithms.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--purple">Data Structure</span>
+          <span class="badge badge--green">O(1)</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How Stack Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How Stack Works</h2>
+        <div class="topic-section__content">
+          <p>A stack operates on the LIFO (Last In, First Out) principle. It supports a small set of operations, all of which happen at the <strong>top</strong> of the stack. You never access or modify elements in the middle or bottom directly.</p>
+          <p><strong>Core operations:</strong></p>
+          <ul>
+            <li><strong>Push:</strong> Add an element to the top of the stack. The new element becomes the topmost item. This operation takes O(1) time because we only modify the top pointer.</li>
+            <li><strong>Pop:</strong> Remove and return the element from the top of the stack. The element below it becomes the new top. If the stack is empty, this results in a stack underflow error. This operation is O(1).</li>
+            <li><strong>Peek (or Top):</strong> Return the top element without removing it. This lets you inspect the top of the stack without modifying its contents. O(1) time.</li>
+            <li><strong>isEmpty:</strong> Check whether the stack has any elements. Returns true if the stack is empty, false otherwise. O(1) time.</li>
+          </ul>
+          <p><strong>Real-world analogies:</strong></p>
+          <ul>
+            <li><strong>Stack of plates:</strong> You always take the top plate off and add new plates on top.</li>
+            <li><strong>Undo in a text editor:</strong> Each action is pushed onto a stack. When you press undo, the most recent action is popped off and reversed.</li>
+            <li><strong>Browser back button:</strong> Each page you visit is pushed onto a history stack. Clicking "Back" pops the most recent page.</li>
+            <li><strong>Function call stack:</strong> When a program calls a function, it pushes a stack frame. When the function returns, the frame is popped.</li>
+          </ul>
+          <p>Stacks can be implemented using arrays or linked lists. Array-based stacks are simple and cache-friendly, while linked-list-based stacks never have a capacity limit (beyond available memory). Both provide O(1) push, pop, and peek operations.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Experiment with the stack below. Enter a value and click Push to add it to the top, or click Pop to remove the top element. Peek highlights the top element without removing it. Use the playback controls to step through each operation.</p>
+        </div>
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="stack-canvas"></canvas>
+          </div>
+          <div class="viz-explanation">Stack initialized with [10, 25, 8, 42]. Top element: 42. Use the buttons below to perform operations.</div>
+
+          <!-- Playback controls -->
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21" transform="scale(-1,1) translate(-24,0)"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <!-- Operation controls -->
+          <div class="viz-ops">
+            <input type="number" id="stack-value-input" class="viz-ops__input" placeholder="Value" min="0" max="999">
+            <button id="stack-push-btn" class="btn btn--primary btn--sm">Push</button>
+            <button id="stack-pop-btn" class="btn btn--danger btn--sm">Pop</button>
+            <button id="stack-peek-btn" class="btn btn--success btn--sm">Peek</button>
+            <button id="stack-isempty-btn" class="btn btn--secondary btn--sm">isEmpty</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below is a complete stack implementation using an array (or list) in three languages. The implementation includes push, pop, peek, isEmpty, and size operations with proper error handling for underflow conditions.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">class Stack:
+    def __init__(self):
+        """Initialize an empty stack."""
+        self.items = []
+
+    def push(self, value):
+        """Push a value onto the top of the stack. O(1)"""
+        self.items.append(value)
+
+    def pop(self):
+        """Remove and return the top element. O(1)"""
+        if self.is_empty():
+            raise IndexError("Stack underflow: cannot pop from empty stack")
+        return self.items.pop()
+
+    def peek(self):
+        """Return the top element without removing it. O(1)"""
+        if self.is_empty():
+            raise IndexError("Stack underflow: cannot peek empty stack")
+        return self.items[-1]
+
+    def is_empty(self):
+        """Check if the stack is empty. O(1)"""
+        return len(self.items) == 0
+
+    def size(self):
+        """Return the number of elements. O(1)"""
+        return len(self.items)
+
+    def __str__(self):
+        """String representation (top is rightmost)."""
+        return "Stack: " + str(self.items)
+
+
+# Example usage
+s = Stack()
+s.push(10)
+s.push(25)
+s.push(8)
+s.push(42)
+print(s)            # Stack: [10, 25, 8, 42]
+print(s.peek())     # 42
+print(s.pop())      # 42
+print(s.pop())      # 8
+print(s)            # Stack: [10, 25]
+print(s.is_empty()) # False
+print(s.size())     # 2</pre>
+            </div>
+
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">import java.util.ArrayList;
+
+public class Stack {
+
+    private ArrayList&lt;Integer&gt; items;
+
+    public Stack() {
+        items = new ArrayList&lt;&gt;();
+    }
+
+    /** Push a value onto the top of the stack. O(1) amortized */
+    public void push(int value) {
+        items.add(value);
+    }
+
+    /** Remove and return the top element. O(1) */
+    public int pop() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack underflow: cannot pop from empty stack");
+        }
+        return items.remove(items.size() - 1);
+    }
+
+    /** Return the top element without removing it. O(1) */
+    public int peek() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack underflow: cannot peek empty stack");
+        }
+        return items.get(items.size() - 1);
+    }
+
+    /** Check if the stack is empty. O(1) */
+    public boolean isEmpty() {
+        return items.size() == 0;
+    }
+
+    /** Return the number of elements. O(1) */
+    public int size() {
+        return items.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Stack: " + items.toString();
+    }
+
+    public static void main(String[] args) {
+        Stack s = new Stack();
+        s.push(10);
+        s.push(25);
+        s.push(8);
+        s.push(42);
+        System.out.println(s);            // Stack: [10, 25, 8, 42]
+        System.out.println(s.peek());     // 42
+        System.out.println(s.pop());      // 42
+        System.out.println(s.pop());      // 8
+        System.out.println(s);            // Stack: [10, 25]
+        System.out.println(s.isEmpty());  // false
+        System.out.println(s.size());     // 2
+    }
+}</pre>
+            </div>
+
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stdexcept&gt;
+using namespace std;
+
+class Stack {
+private:
+    vector&lt;int&gt; items;
+
+public:
+    // Push a value onto the top of the stack. O(1) amortized
+    void push(int value) {
+        items.push_back(value);
+    }
+
+    // Remove and return the top element. O(1)
+    int pop() {
+        if (isEmpty()) {
+            throw runtime_error("Stack underflow: cannot pop from empty stack");
+        }
+        int top = items.back();
+        items.pop_back();
+        return top;
+    }
+
+    // Return the top element without removing it. O(1)
+    int peek() const {
+        if (isEmpty()) {
+            throw runtime_error("Stack underflow: cannot peek empty stack");
+        }
+        return items.back();
+    }
+
+    // Check if the stack is empty. O(1)
+    bool isEmpty() const {
+        return items.empty();
+    }
+
+    // Return the number of elements. O(1)
+    int size() const {
+        return items.size();
+    }
+
+    // Print the stack contents
+    void print() const {
+        cout &lt;&lt; "Stack: [";
+        for (int i = 0; i &lt; items.size(); i++) {
+            cout &lt;&lt; items[i];
+            if (i &lt; items.size() - 1) cout &lt;&lt; ", ";
+        }
+        cout &lt;&lt; "]" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Stack s;
+    s.push(10);
+    s.push(25);
+    s.push(8);
+    s.push(42);
+    s.print();                              // Stack: [10, 25, 8, 42]
+    cout &lt;&lt; "Peek: " &lt;&lt; s.peek() &lt;&lt; endl;  // 42
+    cout &lt;&lt; "Pop: " &lt;&lt; s.pop() &lt;&lt; endl;     // 42
+    cout &lt;&lt; "Pop: " &lt;&lt; s.pop() &lt;&lt; endl;     // 8
+    s.print();                              // Stack: [10, 25]
+    cout &lt;&lt; "Empty: " &lt;&lt; s.isEmpty() &lt;&lt; endl; // 0 (false)
+    cout &lt;&lt; "Size: " &lt;&lt; s.size() &lt;&lt; endl;    // 2
+    return 0;
+}</pre>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>All primary stack operations operate on the top element only, making them constant time. Searching for an element requires scanning through the stack, which takes linear time.</p>
+        </div>
+        <div class="table-container">
+          <table class="complexity-table">
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Time Complexity</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Push</td>
+                <td>O(1)</td>
+                <td>Add element to top; only the top pointer is updated</td>
+              </tr>
+              <tr>
+                <td>Pop</td>
+                <td>O(1)</td>
+                <td>Remove element from top; only the top pointer is updated</td>
+              </tr>
+              <tr>
+                <td>Peek</td>
+                <td>O(1)</td>
+                <td>Read the top element without modification</td>
+              </tr>
+              <tr>
+                <td>Search</td>
+                <td>O(n)</td>
+                <td>Must scan from top to bottom to find an element</td>
+              </tr>
+              <tr>
+                <td>Space</td>
+                <td>O(n)</td>
+                <td>Proportional to the number of elements stored</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 5: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your understanding of stacks with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> Which principle does a stack follow?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>FIFO (First In, First Out)</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>FILO (First In, Last Out) only when sorted</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>LIFO (Last In, First Out)</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>Random access by index</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">A stack follows the LIFO (Last In, First Out) principle. The most recently added element is the first one to be removed. FIFO is the principle used by queues.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What is the time complexity of the push operation on a stack?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>O(n)</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>O(1)</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>O(log n)</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>O(n log n)</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">Push is O(1) because we only add the new element at the top of the stack. No traversal or shifting of existing elements is needed. For array-based stacks, this is O(1) amortized due to occasional resizing.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> If you push the elements 5, 10, 15, 20 onto an empty stack (in that order) and then pop twice, what is the top element?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>10</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>15</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>5</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>20</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">After pushing 5, 10, 15, 20, the stack (top to bottom) is [20, 15, 10, 5]. The first pop removes 20, the second pop removes 15. The top element is now 10.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> What happens when you try to pop from an empty stack?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>It returns null and continues normally</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>It returns the last element that was popped</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>It silently does nothing</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>It causes a stack underflow error</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">Attempting to pop from an empty stack results in a stack underflow error. A well-designed stack implementation should check isEmpty() before popping and either throw an exception or return a sentinel value to indicate the error.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> Which of the following is NOT a common application of stacks?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                <span>Function call management (call stack)</span>
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                <span>Undo/Redo functionality in editors</span>
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                <span>Scheduling tasks in order of arrival</span>
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                <span>Balancing parentheses in expressions</span>
+              </div>
+            </div>
+            <div class="quiz__explanation">Scheduling tasks in order of arrival follows FIFO (First In, First Out), which is the behavior of a queue, not a stack. Stacks are used for function call management, undo/redo, parenthesis balancing, expression evaluation, and backtracking algorithms like DFS.</div>
+          </div>
+
+          <!-- Quiz actions -->
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Check Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <nav class="topic-nav">
+        <a href="linked-lists.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          <div>
+            <span class="topic-nav__label">Previous</span>
+            <span class="topic-nav__title">Linked Lists</span>
+          </div>
+        </a>
+        <a href="queue.html" class="topic-nav__link">
+          <div style="text-align:right;">
+            <span class="topic-nav__label">Next</span>
+            <span class="topic-nav__title">Queue</span>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/sidebar-nav.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/viz-utils.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/stack-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

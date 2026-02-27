@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithm Race - DS-Algo-Playground</title>
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+  <style>
+    .race-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+    @media (max-width: 900px) { .race-grid { grid-template-columns: 1fr; } }
+    .race-lane { border: 1px solid var(--border-color); border-radius: var(--border-radius-lg); overflow: hidden; position: relative; }
+    .race-lane__header { padding: var(--space-xs) var(--space-md); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; background: var(--bg-secondary); }
+    .race-lane__title { font-size: var(--font-size-sm); font-weight: 700; }
+    .race-lane__steps { font-size: 12px; color: var(--text-tertiary); }
+    .race-lane canvas { display: block; width: 100%; height: 200px; background: var(--bg-secondary); }
+    .race-lane__bar { height: 4px; background: var(--bg-tertiary); }
+    .race-lane__bar-fill { height: 100%; background: var(--accent-primary); transition: width 0.15s; width: 0%; }
+    .race-lane--winner .race-lane__header { background: rgba(34,197,94,0.1); }
+    .race-lane--winner .race-lane__title { color: var(--accent-success); }
+    .race-shared { border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: var(--space-sm) var(--space-md); margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; }
+    .race-result { text-align: center; padding: var(--space-md); font-size: var(--font-size-lg); font-weight: 700; color: var(--accent-success); display: none; }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+  <div class="sidebar-overlay"></div>
+
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <nav class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Algorithm Race</span>
+      </nav>
+
+      <h1 class="section-title">Algorithm Race</h1>
+      <p style="margin-bottom:var(--space-lg);color:var(--text-secondary);">Watch sorting algorithms race side-by-side on the same random array. Who finishes first?</p>
+
+      <div class="race-shared">
+        <label style="font-size:var(--font-size-sm);font-weight:600;color:var(--text-secondary);">Array Size:</label>
+        <input type="range" id="race-size-slider" min="8" max="30" value="15" style="width:120px;accent-color:var(--accent-primary);">
+        <span id="race-size-label" style="font-weight:700;font-size:var(--font-size-sm);">15</span>
+        <button class="btn btn--primary btn--sm" id="race-start-btn">Start Race</button>
+        <button class="btn btn--secondary btn--sm" id="race-reset-btn">Reset</button>
+      </div>
+
+      <div class="race-result" id="race-result"></div>
+
+      <div class="race-grid" id="race-grid">
+        <div class="race-lane" data-algo="bubble">
+          <div class="race-lane__header">
+            <span class="race-lane__title">Bubble Sort</span>
+            <span class="race-lane__steps">0 steps</span>
+          </div>
+          <canvas></canvas>
+          <div class="race-lane__bar"><div class="race-lane__bar-fill"></div></div>
+        </div>
+        <div class="race-lane" data-algo="selection">
+          <div class="race-lane__header">
+            <span class="race-lane__title">Selection Sort</span>
+            <span class="race-lane__steps">0 steps</span>
+          </div>
+          <canvas></canvas>
+          <div class="race-lane__bar"><div class="race-lane__bar-fill"></div></div>
+        </div>
+        <div class="race-lane" data-algo="insertion">
+          <div class="race-lane__header">
+            <span class="race-lane__title">Insertion Sort</span>
+            <span class="race-lane__steps">0 steps</span>
+          </div>
+          <canvas></canvas>
+          <div class="race-lane__bar"><div class="race-lane__bar-fill"></div></div>
+        </div>
+        <div class="race-lane" data-algo="merge">
+          <div class="race-lane__header">
+            <span class="race-lane__title">Merge Sort</span>
+            <span class="race-lane__steps">0 steps</span>
+          </div>
+          <canvas></canvas>
+          <div class="race-lane__bar"><div class="race-lane__bar-fill"></div></div>
+        </div>
+        <div class="race-lane" data-algo="quick">
+          <div class="race-lane__header">
+            <span class="race-lane__title">Quick Sort</span>
+            <span class="race-lane__steps">0 steps</span>
+          </div>
+          <canvas></canvas>
+          <div class="race-lane__bar"><div class="race-lane__bar-fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/sidebar-nav.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/viz-utils.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+  (function() {
+    'use strict';
+    var dpr = window.devicePixelRatio || 1;
+    var arraySize = 15;
+    var sharedArray = [];
+    var lanes = [];
+    var timer = null;
+    var speed = 80;
+    var racing = false;
+
+    function css(prop) { return getComputedStyle(document.documentElement).getPropertyValue(prop).trim(); }
+
+    // Sorting step generators (return array of {array, comparing, sorted})
+    function bubbleSteps(arr) {
+      var s = [], a = arr.slice(), n = a.length, done = [];
+      for (var i = 0; i < n-1; i++) {
+        for (var j = 0; j < n-1-i; j++) {
+          s.push({ array: a.slice(), comparing: [j,j+1], sorted: done.slice() });
+          if (a[j]>a[j+1]) { var t=a[j]; a[j]=a[j+1]; a[j+1]=t; }
+        }
+        done.push(n-1-i);
+      }
+      for (var k=0;k<n;k++) if(done.indexOf(k)===-1) done.push(k);
+      s.push({ array: a.slice(), comparing: [], sorted: done });
+      return s;
+    }
+    function selectionSteps(arr) {
+      var s = [], a = arr.slice(), n = a.length, done = [];
+      for (var i = 0; i < n-1; i++) {
+        var m = i;
+        for (var j = i+1; j < n; j++) {
+          s.push({ array: a.slice(), comparing: [m,j], sorted: done.slice() });
+          if (a[j]<a[m]) m = j;
+        }
+        if (m!==i) { var t=a[i]; a[i]=a[m]; a[m]=t; }
+        done.push(i);
+      }
+      done.push(n-1);
+      s.push({ array: a.slice(), comparing: [], sorted: done });
+      return s;
+    }
+    function insertionSteps(arr) {
+      var s = [], a = arr.slice(), n = a.length, done = [0];
+      for (var i = 1; i < n; i++) {
+        var key = a[i], j = i-1;
+        while (j>=0 && a[j]>key) {
+          s.push({ array: a.slice(), comparing: [j,j+1], sorted: done.slice() });
+          a[j+1]=a[j]; j--;
+        }
+        a[j+1]=key; done.push(i);
+        s.push({ array: a.slice(), comparing: [j+1], sorted: done.slice() });
+      }
+      s.push({ array: a.slice(), comparing: [], sorted: done });
+      return s;
+    }
+    function mergeSteps(arr) {
+      var s = [], a = arr.slice(), done = [];
+      function ms(lo,hi) {
+        if (lo>=hi) return;
+        var mid = Math.floor((lo+hi)/2);
+        ms(lo,mid); ms(mid+1,hi);
+        var L=a.slice(lo,mid+1), R=a.slice(mid+1,hi+1), i=0,j=0,k=lo;
+        while (i<L.length && j<R.length) {
+          s.push({ array: a.slice(), comparing: [lo+i,mid+1+j], sorted: done.slice() });
+          if (L[i]<=R[j]) a[k++]=L[i++]; else a[k++]=R[j++];
+        }
+        while (i<L.length) a[k++]=L[i++];
+        while (j<R.length) a[k++]=R[j++];
+      }
+      ms(0,a.length-1);
+      for (var i=0;i<a.length;i++) done.push(i);
+      s.push({ array: a.slice(), comparing: [], sorted: done });
+      return s;
+    }
+    function quickSteps(arr) {
+      var s = [], a = arr.slice(), done = [];
+      function qs(lo,hi) {
+        if (lo>=hi) { if(lo===hi) done.push(lo); return; }
+        var p=a[hi], i=lo;
+        for (var j=lo;j<hi;j++) {
+          s.push({ array: a.slice(), comparing: [j,hi], sorted: done.slice() });
+          if (a[j]<p) { var t=a[i]; a[i]=a[j]; a[j]=t; i++; }
+        }
+        var t2=a[i]; a[i]=a[hi]; a[hi]=t2; done.push(i);
+        qs(lo,i-1); qs(i+1,hi);
+      }
+      qs(0,a.length-1);
+      for (var i=0;i<a.length;i++) if(done.indexOf(i)===-1) done.push(i);
+      s.push({ array: a.slice(), comparing: [], sorted: done });
+      return s;
+    }
+
+    var algoMap = { bubble: bubbleSteps, selection: selectionSteps, insertion: insertionSteps, merge: mergeSteps, quick: quickSteps };
+    var algoNames = { bubble: 'Bubble Sort', selection: 'Selection Sort', insertion: 'Insertion Sort', merge: 'Merge Sort', quick: 'Quick Sort' };
+
+    function resizeCanvas(canvas) {
+      var rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+    }
+
+    function renderBars(ctx, canvas, step) {
+      var w = canvas.width/dpr, h = canvas.height/dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.clearRect(0,0,w,h);
+      if (!step) return;
+      var arr = step.array, n = arr.length;
+      var maxV = Math.max.apply(null,arr)||1;
+      var pad=20, bH=h-pad*2;
+      var gap = Math.max(1, w*0.015);
+      var bw = (w-pad*2-gap*(n-1))/n;
+      for (var i=0;i<n;i++) {
+        var barH = (arr[i]/maxV)*bH;
+        var x = pad+i*(bw+gap), y = h-pad-barH;
+        var color = css('--viz-default')||'#3b82f6';
+        if (step.sorted && step.sorted.indexOf(i)!==-1) color = css('--viz-sorted')||'#22c55e';
+        if (step.comparing && step.comparing.indexOf(i)!==-1) color = css('--viz-compare')||'#f59e0b';
+        ctx.fillStyle = color;
+        ctx.fillRect(x,y,bw,barH);
+      }
+    }
+
+    function genArray() {
+      sharedArray = [];
+      for (var i=0;i<arraySize;i++) sharedArray.push(5+Math.floor(Math.random()*96));
+    }
+
+    function setupLanes() {
+      lanes = [];
+      var laneEls = document.querySelectorAll('.race-lane');
+      laneEls.forEach(function(el) {
+        var algo = el.getAttribute('data-algo');
+        var canvas = el.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+        resizeCanvas(canvas);
+        var steps = algoMap[algo](sharedArray);
+        lanes.push({ el: el, algo: algo, canvas: canvas, ctx: ctx, steps: steps, idx: 0, done: false });
+        renderBars(ctx, canvas, steps[0]);
+        el.querySelector('.race-lane__steps').textContent = steps.length + ' steps';
+        el.querySelector('.race-lane__bar-fill').style.width = '0%';
+        el.classList.remove('race-lane--winner');
+      });
+      document.getElementById('race-result').style.display = 'none';
+    }
+
+    function tick() {
+      var allDone = true;
+      for (var i=0;i<lanes.length;i++) {
+        var l = lanes[i];
+        if (l.done) continue;
+        l.idx++;
+        if (l.idx >= l.steps.length-1) {
+          l.idx = l.steps.length-1;
+          l.done = true;
+        } else {
+          allDone = false;
+        }
+        renderBars(l.ctx, l.canvas, l.steps[l.idx]);
+        var pct = Math.round(100*l.idx/(l.steps.length-1));
+        l.el.querySelector('.race-lane__bar-fill').style.width = pct + '%';
+        l.el.querySelector('.race-lane__steps').textContent = (l.idx+1) + '/' + l.steps.length;
+      }
+      if (allDone) {
+        clearInterval(timer);
+        racing = false;
+        // Find winner (fewest total steps)
+        var minSteps = Infinity, winner = null;
+        for (var j=0;j<lanes.length;j++) {
+          if (lanes[j].steps.length < minSteps) { minSteps = lanes[j].steps.length; winner = lanes[j]; }
+        }
+        if (winner) {
+          winner.el.classList.add('race-lane--winner');
+          var res = document.getElementById('race-result');
+          res.textContent = algoNames[winner.algo] + ' wins with ' + winner.steps.length + ' steps!';
+          res.style.display = 'block';
+        }
+      }
+    }
+
+    function startRace() {
+      if (racing) { clearInterval(timer); racing = false; return; }
+      genArray();
+      setupLanes();
+      racing = true;
+      timer = setInterval(tick, speed);
+    }
+
+    function resetRace() {
+      clearInterval(timer);
+      racing = false;
+      genArray();
+      setupLanes();
+    }
+
+    // Wire UI
+    document.getElementById('race-start-btn').addEventListener('click', startRace);
+    document.getElementById('race-reset-btn').addEventListener('click', resetRace);
+    var sizeSlider = document.getElementById('race-size-slider');
+    var sizeLabel = document.getElementById('race-size-label');
+    sizeSlider.addEventListener('input', function() {
+      arraySize = parseInt(sizeSlider.value, 10);
+      sizeLabel.textContent = String(arraySize);
+    });
+
+    window.addEventListener('resize', function() {
+      lanes.forEach(function(l) {
+        resizeCanvas(l.canvas);
+        renderBars(l.ctx, l.canvas, l.steps[l.idx]);
+      });
+    });
+
+    genArray();
+    setupLanes();
+
+    DSA.raceViz = { init: function() {} };
+  })();
+  </script>
+</body>
+</html>

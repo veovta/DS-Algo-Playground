@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bubble Sort - DS-Algo-Playground</title>
+  <title>Selection Sort - DS-Algo-Playground</title>
   <link rel="icon" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/print.css" media="print">
 </head>
-<body data-topic="bubble-sort">
+<body data-topic="selection-sort">
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar__header">
@@ -47,35 +47,35 @@
       <nav class="breadcrumbs">
         <a href="../index.html">Home</a>
         <span class="breadcrumbs__sep">/</span>
-        <span>Bubble Sort</span>
+        <span>Selection Sort</span>
       </nav>
 
       <!-- Topic Header -->
       <div class="topic-header">
-        <h1 class="topic-header__title">Bubble Sort</h1>
-        <p class="topic-header__desc">Bubble sort is a simple comparison-based sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. It gets its name because smaller elements "bubble" to the top of the list with each iteration.</p>
+        <h1 class="topic-header__title">Selection Sort</h1>
+        <p class="topic-header__desc">Selection sort is a simple comparison-based sorting algorithm that divides the array into a sorted and an unsorted region. It repeatedly finds the minimum element from the unsorted region and places it at the beginning of the unsorted portion, growing the sorted region one element at a time. While not efficient for large datasets, its simplicity and minimal number of swaps make it easy to understand and useful in memory-constrained environments.</p>
         <div class="topic-header__badges">
           <span class="badge badge--yellow">Sorting</span>
           <span class="badge badge--red">O(n&sup2;)</span>
-          <span class="badge badge--green">Stable</span>
+          <span class="badge badge--red">Not Stable</span>
         </div>
       </div>
 
-      <!-- Section 1: How Bubble Sort Works -->
+      <!-- Section 1: How Selection Sort Works -->
       <section class="topic-section">
-        <h2 class="topic-section__title">How Bubble Sort Works</h2>
+        <h2 class="topic-section__title">How Selection Sort Works</h2>
         <div class="topic-section__content">
-          <p>Bubble sort works by making multiple passes through an array. On each pass, it compares each pair of adjacent elements and swaps them if they are in the wrong order. After the first pass, the largest element is guaranteed to be at the end of the array. After the second pass, the second-largest is in place, and so on.</p>
+          <p>Selection sort works by maintaining two sub-arrays within the given array: a sorted sub-array at the front and an unsorted sub-array for the remaining elements. In each pass, it selects the smallest element from the unsorted sub-array and swaps it with the first unsorted element, effectively extending the sorted portion by one.</p>
           <p><strong>Step-by-step process:</strong></p>
           <ul>
-            <li><strong>Start at the beginning:</strong> Begin with the first element in the array. Compare it with the next element.</li>
-            <li><strong>Compare adjacent elements:</strong> If the current element is greater than the next element, swap them. Otherwise, move on.</li>
-            <li><strong>Continue through the array:</strong> Repeat this comparison for every adjacent pair until the end of the array. This completes one "pass."</li>
-            <li><strong>Largest element bubbles up:</strong> After each pass, the largest unsorted element is now in its correct position at the end of the unsorted portion.</li>
-            <li><strong>Repeat:</strong> Continue making passes through the array, each time ignoring the already-sorted elements at the end.</li>
-            <li><strong>Early exit optimization:</strong> If a complete pass is made with no swaps, the array is already sorted and the algorithm can terminate early. This optimization makes the best-case time complexity O(n) for an already-sorted array.</li>
+            <li><strong>Start at position 0:</strong> Consider the entire array as unsorted. Set the current position to 0.</li>
+            <li><strong>Find the minimum:</strong> Scan through all elements from the current position to the end of the array to find the element with the smallest value.</li>
+            <li><strong>Swap into place:</strong> Swap the minimum element found with the element at the current position. This places the smallest unsorted element at the front of the unsorted region.</li>
+            <li><strong>Advance the boundary:</strong> Move the boundary between sorted and unsorted regions one position to the right. The element just placed is now part of the sorted sub-array.</li>
+            <li><strong>Repeat:</strong> Continue this process for each position from 0 to n-2. After n-1 passes, the entire array is sorted.</li>
+            <li><strong>No early exit:</strong> Unlike bubble sort, selection sort always performs O(n&sup2;) comparisons regardless of the initial order of elements. However, it makes at most O(n) swaps, which is optimal for situations where writes are expensive.</li>
           </ul>
-          <p>While bubble sort is easy to understand and implement, it is not efficient for large datasets. Its O(n&sup2;) average and worst-case time complexity makes it impractical compared to algorithms like merge sort or quicksort for large arrays. However, its simplicity makes it an excellent teaching tool for understanding sorting algorithms.</p>
+          <p>Selection sort is not stable because the swap operation can change the relative order of equal elements. For example, sorting [3a, 2, 3b] will swap 3a with 2 to get [2, 3a, 3b], but then on the next step 3a and 3b are already in place -- however in other configurations the long-distance swap can reorder equal elements. Despite this, selection sort is a great teaching tool and performs well when auxiliary memory is limited since it only requires O(1) extra space.</p>
         </div>
       </section>
 
@@ -83,11 +83,11 @@
       <section class="topic-section">
         <h2 class="topic-section__title">Interactive Visualization</h2>
         <div class="topic-section__content">
-          <p>Watch how bubble sort compares and swaps adjacent elements pass by pass. Yellow bars indicate the pair being compared, orange bars indicate a swap, and green bars are in their final sorted position.</p>
+          <p>Watch how selection sort finds the minimum element in the unsorted portion and swaps it into position. Yellow bars indicate the element currently being scanned, orange bars indicate the current minimum found so far (or a swap in progress), and green bars are in their final sorted position.</p>
         </div>
         <div class="viz-container">
           <div class="viz-canvas-wrap">
-            <canvas id="bubble-sort-canvas"></canvas>
+            <canvas id="selection-sort-canvas"></canvas>
           </div>
           <div class="viz-explanation">Press Play or Step to start the visualization.</div>
           <div class="viz-controls">
@@ -111,7 +111,9 @@
             <span class="viz-step-info">No steps</span>
           </div>
           <div class="viz-ops">
-            <button class="btn btn--secondary btn--sm" id="bs-randomize-btn">Randomize</button>
+            <input type="text" id="ss-array-input" class="input input--sm" placeholder="e.g. 64, 25, 12, 22, 11" style="width:220px;">
+            <button class="btn btn--secondary btn--sm" id="ss-load-btn">Load</button>
+            <button class="btn btn--secondary btn--sm" id="ss-randomize-btn">Randomize</button>
           </div>
         </div>
       </section>
@@ -120,7 +122,7 @@
       <section class="topic-section">
         <h2 class="topic-section__title">Code Implementation</h2>
         <div class="topic-section__content">
-          <p>Below is an optimized bubble sort implementation in three languages. The optimization includes an early exit flag: if no swaps occur during a pass, the array is already sorted and we can stop immediately.</p>
+          <p>Below is a standard selection sort implementation in three languages. The algorithm always performs n-1 passes regardless of the input, making its time complexity O(n&sup2;) in all cases. However, it performs at most n-1 swaps, which is significantly fewer than bubble sort or insertion sort in most scenarios.</p>
         </div>
         <div class="code-block">
           <div class="code-block__header">
@@ -133,55 +135,54 @@
           </div>
           <div class="code-block__body">
             <div class="code-block__panel code-block__panel--active" data-lang="python">
-              <pre class="code-block__pre">def bubble_sort(arr):
-    """Optimized bubble sort with early exit."""
+              <pre class="code-block__pre">def selection_sort(arr):
+    """Selection sort: find minimum and swap into position."""
     n = len(arr)
     for i in range(n - 1):
-        swapped = False
-        # Last i elements are already in place
-        for j in range(n - 1 - i):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
-        # If no swaps occurred, array is sorted
-        if not swapped:
-            break
+        # Find the index of the minimum element in arr[i:]
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        # Swap the found minimum with the first unsorted element
+        if min_idx != i:
+            arr[i], arr[min_idx] = arr[min_idx], arr[i]
     return arr
 
 
 # Example usage
-numbers = [64, 34, 25, 12, 22, 11, 90, 45]
+numbers = [64, 25, 12, 22, 11, 90, 34, 45]
 print("Unsorted:", numbers)
-print("Sorted:  ", bubble_sort(numbers))</pre>
+print("Sorted:  ", selection_sort(numbers))</pre>
             </div>
             <div class="code-block__panel" data-lang="java">
-              <pre class="code-block__pre">public class BubbleSort {
+              <pre class="code-block__pre">public class SelectionSort {
 
-    public static void bubbleSort(int[] arr) {
+    public static void selectionSort(int[] arr) {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
-            boolean swapped = false;
-            // Last i elements are already in place
-            for (int j = 0; j < n - 1 - i; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    // Swap arr[j] and arr[j+1]
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                    swapped = true;
+            // Find the index of the minimum element in arr[i:]
+            int minIdx = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIdx]) {
+                    minIdx = j;
                 }
             }
-            // If no swaps occurred, array is sorted
-            if (!swapped) break;
+            // Swap the found minimum with the first unsorted element
+            if (minIdx != i) {
+                int temp = arr[i];
+                arr[i] = arr[minIdx];
+                arr[minIdx] = temp;
+            }
         }
     }
 
     public static void main(String[] args) {
-        int[] numbers = {64, 34, 25, 12, 22, 11, 90, 45};
+        int[] numbers = {64, 25, 12, 22, 11, 90, 34, 45};
         System.out.print("Unsorted: ");
         printArray(numbers);
 
-        bubbleSort(numbers);
+        selectionSort(numbers);
 
         System.out.print("Sorted:   ");
         printArray(numbers);
@@ -201,19 +202,20 @@ print("Sorted:  ", bubble_sort(numbers))</pre>
 #include &lt;vector&gt;
 using namespace std;
 
-void bubbleSort(vector&lt;int&gt;&amp; arr) {
+void selectionSort(vector&lt;int&gt;&amp; arr) {
     int n = arr.size();
     for (int i = 0; i &lt; n - 1; i++) {
-        bool swapped = false;
-        // Last i elements are already in place
-        for (int j = 0; j &lt; n - 1 - i; j++) {
-            if (arr[j] &gt; arr[j + 1]) {
-                swap(arr[j], arr[j + 1]);
-                swapped = true;
+        // Find the index of the minimum element in arr[i:]
+        int minIdx = i;
+        for (int j = i + 1; j &lt; n; j++) {
+            if (arr[j] &lt; arr[minIdx]) {
+                minIdx = j;
             }
         }
-        // If no swaps occurred, array is sorted
-        if (!swapped) break;
+        // Swap the found minimum with the first unsorted element
+        if (minIdx != i) {
+            swap(arr[i], arr[minIdx]);
+        }
     }
 }
 
@@ -226,11 +228,11 @@ void printArray(const vector&lt;int&gt;&amp; arr) {
 }
 
 int main() {
-    vector&lt;int&gt; numbers = {64, 34, 25, 12, 22, 11, 90, 45};
+    vector&lt;int&gt; numbers = {64, 25, 12, 22, 11, 90, 34, 45};
     cout &lt;&lt; "Unsorted: ";
     printArray(numbers);
 
-    bubbleSort(numbers);
+    selectionSort(numbers);
 
     cout &lt;&lt; "Sorted:   ";
     printArray(numbers);
@@ -245,7 +247,7 @@ int main() {
       <section class="topic-section">
         <h2 class="topic-section__title">Complexity Analysis</h2>
         <div class="topic-section__content">
-          <p>Bubble sort's performance depends on the initial order of the elements. The optimized version with the early-exit flag achieves O(n) in the best case when the array is already sorted, since only one pass with zero swaps is needed.</p>
+          <p>Selection sort always performs the same number of comparisons regardless of the initial order. In every case, it scans the unsorted portion to find the minimum, resulting in n(n-1)/2 comparisons. The number of swaps, however, is at most n-1, making it efficient when write operations are costly.</p>
         </div>
         <div class="table-container complexity-table">
           <table>
@@ -259,8 +261,8 @@ int main() {
             <tbody>
               <tr>
                 <td>Best Case Time</td>
-                <td>O(n)</td>
-                <td>Array is already sorted (with early exit optimization)</td>
+                <td>O(n&sup2;)</td>
+                <td>Always scans entire unsorted portion, even if already sorted</td>
               </tr>
               <tr>
                 <td>Average Case Time</td>
@@ -279,49 +281,24 @@ int main() {
               </tr>
               <tr>
                 <td>Stable</td>
-                <td>Yes</td>
-                <td>Equal elements maintain their relative order</td>
+                <td>No</td>
+                <td>Long-distance swaps can change the relative order of equal elements</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- Section 5: Practice Problems -->
-      <section class="topic-section">
-        <h2 class="topic-section__title">Practice Problems</h2>
-        <div class="topic-section__content">
-          <p>Strengthen your understanding of sorting by working through these problems. While bubble sort itself may not be the optimal solution, these problems will help you think about sorting concepts and when different approaches are appropriate.</p>
-        </div>
-        <div class="problems-list">
-          <div class="problem-item">
-            <span class="problem-item__name">Sort an Array</span>
-            <span class="badge badge--yellow">Medium</span>
-            <a href="https://leetcode.com/problems/sort-an-array/" target="_blank" rel="noopener" class="problem-item__link">LeetCode 912 &rarr;</a>
-          </div>
-          <div class="problem-item">
-            <span class="problem-item__name">Sort Colors</span>
-            <span class="badge badge--yellow">Medium</span>
-            <a href="https://leetcode.com/problems/sort-colors/" target="_blank" rel="noopener" class="problem-item__link">LeetCode 75 &rarr;</a>
-          </div>
-          <div class="problem-item">
-            <span class="problem-item__name">Squares of a Sorted Array</span>
-            <span class="badge badge--green">Easy</span>
-            <a href="https://leetcode.com/problems/squares-of-a-sorted-array/" target="_blank" rel="noopener" class="problem-item__link">LeetCode 977 &rarr;</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 6: Quiz -->
+      <!-- Section 5: Quiz -->
       <section class="topic-section">
         <h2 class="topic-section__title">Quiz</h2>
         <div class="topic-section__content">
-          <p>Test your understanding of bubble sort with these questions.</p>
+          <p>Test your understanding of selection sort with these questions.</p>
         </div>
         <div class="quiz">
           <!-- Question 1 -->
-          <div class="quiz__question" data-answer="b">
-            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the worst-case time complexity of bubble sort?</p>
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the best-case time complexity of selection sort?</p>
             <div class="quiz__options">
               <div class="quiz__option" data-value="a">
                 <span class="quiz__option-radio"></span>
@@ -329,7 +306,31 @@ int main() {
               </div>
               <div class="quiz__option" data-value="b">
                 <span class="quiz__option-radio"></span>
+                O(n log n)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
                 O(n&sup2;)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(log n)
+              </div>
+            </div>
+            <div class="quiz__explanation">Unlike bubble sort which can exit early if no swaps are needed, selection sort always scans the entire unsorted portion to find the minimum. This means it performs n(n-1)/2 comparisons regardless of the input order, giving O(n&sup2;) in all cases.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> How many swaps does selection sort perform in the worst case for an array of n elements?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(n&sup2;)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(n)
               </div>
               <div class="quiz__option" data-value="c">
                 <span class="quiz__option-radio"></span>
@@ -337,47 +338,23 @@ int main() {
               </div>
               <div class="quiz__option" data-value="d">
                 <span class="quiz__option-radio"></span>
-                O(log n)
+                O(1)
               </div>
             </div>
-            <div class="quiz__explanation">In the worst case (reverse-sorted array), bubble sort must compare every pair in each pass. There are n-1 passes and up to n-1 comparisons per pass, giving O(n&sup2;) total comparisons.</div>
-          </div>
-
-          <!-- Question 2 -->
-          <div class="quiz__question" data-answer="c">
-            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What optimization can make bubble sort's best-case time complexity O(n)?</p>
-            <div class="quiz__options">
-              <div class="quiz__option" data-value="a">
-                <span class="quiz__option-radio"></span>
-                Using a binary search to find the swap position
-              </div>
-              <div class="quiz__option" data-value="b">
-                <span class="quiz__option-radio"></span>
-                Sorting from both ends simultaneously
-              </div>
-              <div class="quiz__option" data-value="c">
-                <span class="quiz__option-radio"></span>
-                Adding a flag to detect if no swaps occurred during a pass
-              </div>
-              <div class="quiz__option" data-value="d">
-                <span class="quiz__option-radio"></span>
-                Using a linked list instead of an array
-              </div>
-            </div>
-            <div class="quiz__explanation">By keeping a boolean flag that tracks whether any swaps were made during a pass, we can terminate early if the array is already sorted. If no swaps occur in a complete pass, the array is in order and we can stop, achieving O(n) for an already-sorted input.</div>
+            <div class="quiz__explanation">Selection sort performs exactly one swap per pass (or zero if the minimum is already in place). Since there are n-1 passes, the maximum number of swaps is n-1, which is O(n). This makes selection sort ideal when the cost of swapping is high.</div>
           </div>
 
           <!-- Question 3 -->
-          <div class="quiz__question" data-answer="a">
-            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> Is bubble sort a stable sorting algorithm?</p>
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> Is selection sort a stable sorting algorithm?</p>
             <div class="quiz__options">
               <div class="quiz__option" data-value="a">
                 <span class="quiz__option-radio"></span>
-                Yes, because it only swaps adjacent elements when they are strictly out of order
+                Yes, because it preserves the relative order of equal elements
               </div>
               <div class="quiz__option" data-value="b">
                 <span class="quiz__option-radio"></span>
-                No, because it moves elements across the array
+                No, because swapping can change the relative order of equal elements
               </div>
               <div class="quiz__option" data-value="c">
                 <span class="quiz__option-radio"></span>
@@ -385,58 +362,58 @@ int main() {
               </div>
               <div class="quiz__option" data-value="d">
                 <span class="quiz__option-radio"></span>
-                Only when used with an early exit flag
+                Yes, because it only swaps adjacent elements
               </div>
             </div>
-            <div class="quiz__explanation">Bubble sort is stable because it only swaps adjacent elements when arr[j] > arr[j+1] (strictly greater). Equal elements are never swapped, so their original relative order is preserved.</div>
+            <div class="quiz__explanation">Selection sort is not stable. When it swaps the minimum element with the element at the current position, it can move an element over others with the same value, changing their relative order. For example, sorting [3, 3, 1] swaps the first 3 to position 2, putting it after the second 3.</div>
           </div>
 
           <!-- Question 4 -->
-          <div class="quiz__question" data-answer="b">
-            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> After the first complete pass of bubble sort on the array [5, 3, 8, 1, 2], which element is guaranteed to be in its correct position?</p>
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> After the first pass of selection sort on the array [29, 10, 14, 37, 13], what is the state of the array?</p>
             <div class="quiz__options">
               <div class="quiz__option" data-value="a">
                 <span class="quiz__option-radio"></span>
-                The smallest element (1)
+                [10, 29, 14, 37, 13]
               </div>
               <div class="quiz__option" data-value="b">
                 <span class="quiz__option-radio"></span>
-                The largest element (8)
+                [10, 13, 14, 37, 29]
               </div>
               <div class="quiz__option" data-value="c">
                 <span class="quiz__option-radio"></span>
-                The first element (5)
+                [10, 14, 29, 37, 13]
               </div>
               <div class="quiz__option" data-value="d">
                 <span class="quiz__option-radio"></span>
-                No element is guaranteed to be in the correct position
+                [29, 10, 13, 14, 37]
               </div>
             </div>
-            <div class="quiz__explanation">After the first pass of bubble sort, the largest element always "bubbles up" to the last position. In this array, 8 will end up at index 4 (the end), which is its correct sorted position. The array after pass 1 would be [3, 5, 1, 2, 8].</div>
+            <div class="quiz__explanation">In the first pass, selection sort scans the entire array to find the minimum element, which is 10 at index 1. It then swaps 10 with the element at index 0 (which is 29), resulting in [10, 29, 14, 37, 13]. Only positions 0 and 1 are affected by the swap.</div>
           </div>
 
           <!-- Question 5 -->
           <div class="quiz__question" data-answer="d">
-            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> How many passes does bubble sort need to completely sort the array [2, 1, 3, 4, 5] using the optimized version with early exit?</p>
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> What is the primary advantage of selection sort over bubble sort?</p>
             <div class="quiz__options">
               <div class="quiz__option" data-value="a">
                 <span class="quiz__option-radio"></span>
-                4 passes
+                Selection sort has better time complexity
               </div>
               <div class="quiz__option" data-value="b">
                 <span class="quiz__option-radio"></span>
-                1 pass
+                Selection sort is a stable sorting algorithm
               </div>
               <div class="quiz__option" data-value="c">
                 <span class="quiz__option-radio"></span>
-                5 passes
+                Selection sort uses less memory
               </div>
               <div class="quiz__option" data-value="d">
                 <span class="quiz__option-radio"></span>
-                2 passes
+                Selection sort makes fewer swaps (at most n-1)
               </div>
             </div>
-            <div class="quiz__explanation">Pass 1: Compares (2,1) and swaps to get [1, 2, 3, 4, 5]. The rest of the comparisons in pass 1 find no more swaps needed, but the pass still continues to the end. Pass 2: No swaps occur at all during the entire pass, so the early exit flag triggers and the algorithm terminates. Total: 2 passes.</div>
+            <div class="quiz__explanation">Both selection sort and bubble sort have O(n&sup2;) time complexity and O(1) space. However, selection sort makes at most n-1 swaps total (one per pass), while bubble sort may make up to n(n-1)/2 swaps. This makes selection sort preferable when the cost of writing or swapping elements is high, such as with flash memory or large records.</div>
           </div>
 
           <div class="quiz__actions">
@@ -449,17 +426,17 @@ int main() {
 
       <!-- Topic Navigation -->
       <nav class="topic-nav">
-        <a href="linked-lists.html" class="topic-nav__link">
+        <a href="bubble-sort.html" class="topic-nav__link">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
           <div>
             <div class="topic-nav__label">Previous</div>
-            <div class="topic-nav__title">Linked Lists</div>
+            <div class="topic-nav__title">Bubble Sort</div>
           </div>
         </a>
-        <a href="binary-search.html" class="topic-nav__link" style="text-align:right;">
+        <a href="insertion-sort.html" class="topic-nav__link" style="text-align:right;">
           <div>
             <div class="topic-nav__label">Next</div>
-            <div class="topic-nav__title">Binary Search</div>
+            <div class="topic-nav__title">Insertion Sort</div>
           </div>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
         </a>
@@ -496,7 +473,7 @@ int main() {
   <script src="../js/quiz.js"></script>
   <script src="../js/viz-utils.js"></script>
   <script src="../js/visualization-core.js"></script>
-  <script src="../js/topics/bubble-sort-viz.js"></script>
+  <script src="../js/topics/selection-sort-viz.js"></script>
   <script src="../js/main.js"></script>
 </body>
 </html>

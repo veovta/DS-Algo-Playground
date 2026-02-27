@@ -121,6 +121,75 @@
   margin-left: auto;
 }
 
+/* User input bar */
+.viz-input-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.viz-input-bar__input {
+  flex: 1;
+  min-width: 140px;
+  max-width: 300px;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+}
+
+/* Challenge mode */
+.challenge-mode {
+  border-top: 1px solid var(--border-color);
+}
+
+.challenge-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.challenge-score {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.challenge-progress {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.challenge-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-success));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.challenge-feedback {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--accent-warning);
+  border-top: 1px solid var(--border-color);
+}
+
+.challenge-feedback--complete {
+  color: var(--accent-success);
+  font-weight: 600;
+}
+
 @media (max-width: 767px) {
   .viz-canvas-wrap canvas {
     height: 280px;

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Search Tree - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="bst">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Binary Search Tree</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">Binary Search Tree</h1>
+        <p class="topic-header__desc">A binary search tree (BST) is a hierarchical data structure where each node has at most two children, and for every node the left subtree contains only values less than the node, while the right subtree contains only values greater. This ordering property enables efficient search, insertion, and deletion operations that run in O(log n) time on average.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--blue">Data Structure</span>
+          <span class="badge badge--green">O(log n) avg</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How BST Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How BST Works</h2>
+        <div class="topic-section__content">
+          <p>A <strong>Binary Search Tree</strong> is a rooted binary tree that satisfies the <strong>BST property</strong>: for every node <em>N</em>, all values in <em>N</em>'s left subtree are strictly less than <em>N</em>'s value, and all values in <em>N</em>'s right subtree are strictly greater. This invariant is maintained after every insert and delete operation.</p>
+          <p>The key operations on a BST are:</p>
+          <ul>
+            <li><strong>Search:</strong> Start at the root. If the target equals the current node, you are done. If it is smaller, recurse left; if larger, recurse right. Each comparison eliminates roughly half the remaining nodes, yielding O(log n) average time.</li>
+            <li><strong>Insert:</strong> Follow the same path as search until you reach a null child pointer. Place the new node there. The tree grows by one leaf each time.</li>
+            <li><strong>Delete:</strong> There are three cases to handle:
+              <ul>
+                <li><em>Leaf node:</em> Simply remove it.</li>
+                <li><em>One child:</em> Replace the node with its single child.</li>
+                <li><em>Two children:</em> Find the <strong>inorder successor</strong> (smallest node in the right subtree), copy its value into the node being deleted, then delete the successor from the right subtree.</li>
+              </ul>
+            </li>
+            <li><strong>Inorder traversal:</strong> Visit left subtree, then the node, then right subtree. This produces values in sorted (ascending) order.</li>
+            <li><strong>Preorder traversal:</strong> Visit the node first, then left subtree, then right subtree. Useful for creating a copy of the tree.</li>
+          </ul>
+          <p><strong>Important caveat:</strong> If elements are inserted in sorted order, the BST degenerates into a linked list, and all operations become O(n). Self-balancing trees such as AVL trees and Red-Black trees address this problem by automatically rebalancing after mutations.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Explore BST operations below. <span style="color:var(--viz-active);font-weight:700;">Red</span> nodes are currently being visited or compared, and <span style="color:var(--viz-found);font-weight:700;">green</span> nodes have been found or just processed. Enter a value and choose an operation to watch the BST algorithm step by step.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="bst-canvas" style="height:400px;"></canvas>
+          </div>
+
+          <div class="viz-explanation">Binary Search Tree with values [50, 30, 70, 20, 40, 60, 80]. Use the buttons below to perform operations.</div>
+
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <div class="viz-ops">
+            <label class="viz-controls__label" for="bst-value-input">Value:</label>
+            <input type="number" id="bst-value-input" class="viz-ops__input" value="35" min="0" max="999">
+            <button id="bst-insert-btn" class="btn btn--primary btn--sm">Insert</button>
+            <button id="bst-search-btn" class="btn btn--secondary btn--sm">Search</button>
+            <button id="bst-delete-btn" class="btn btn--secondary btn--sm">Delete</button>
+            <button id="bst-inorder-btn" class="btn btn--secondary btn--sm">Inorder</button>
+            <button id="bst-preorder-btn" class="btn btn--secondary btn--sm">Preorder</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below are BST insert and search implementations in three languages. The recursive approach mirrors the tree's own structure and is the most natural way to express BST operations.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">class BSTNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+def insert(root, val):
+    """Insert a value into the BST and return the root."""
+    if root is None:
+        return BSTNode(val)
+    if val &lt; root.val:
+        root.left = insert(root.left, val)
+    elif val &gt; root.val:
+        root.right = insert(root.right, val)
+    return root
+
+
+def search(root, val):
+    """Return the node containing val, or None if not found."""
+    if root is None or root.val == val:
+        return root
+    if val &lt; root.val:
+        return search(root.left, val)
+    return search(root.right, val)
+
+
+def inorder(root):
+    """Return a list of values in sorted (inorder) order."""
+    if root is None:
+        return []
+    return inorder(root.left) + [root.val] + inorder(root.right)
+
+
+# Example usage
+root = None
+for v in [50, 30, 70, 20, 40, 60, 80]:
+    root = insert(root, v)
+
+print(inorder(root))         # [20, 30, 40, 50, 60, 70, 80]
+print(search(root, 40))      # &lt;BSTNode object&gt;
+print(search(root, 99))      # None</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">class BSTNode {
+    int val;
+    BSTNode left, right;
+
+    BSTNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class BST {
+    private BSTNode root;
+
+    /** Insert a value into the BST. */
+    public void insert(int val) {
+        root = insertRec(root, val);
+    }
+
+    private BSTNode insertRec(BSTNode node, int val) {
+        if (node == null) return new BSTNode(val);
+        if (val &lt; node.val)
+            node.left = insertRec(node.left, val);
+        else if (val &gt; node.val)
+            node.right = insertRec(node.right, val);
+        return node;
+    }
+
+    /** Search for a value. Returns true if found. */
+    public boolean search(int val) {
+        return searchRec(root, val);
+    }
+
+    private boolean searchRec(BSTNode node, int val) {
+        if (node == null) return false;
+        if (val == node.val) return true;
+        if (val &lt; node.val) return searchRec(node.left, val);
+        return searchRec(node.right, val);
+    }
+
+    public static void main(String[] args) {
+        BST tree = new BST();
+        int[] values = {50, 30, 70, 20, 40, 60, 80};
+        for (int v : values) tree.insert(v);
+
+        System.out.println(tree.search(40));  // true
+        System.out.println(tree.search(99));  // false
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+using namespace std;
+
+struct BSTNode {
+    int val;
+    BSTNode* left;
+    BSTNode* right;
+    BSTNode(int v) : val(v), left(nullptr), right(nullptr) {}
+};
+
+/** Insert a value into the BST and return the root. */
+BSTNode* insert(BSTNode* root, int val) {
+    if (!root) return new BSTNode(val);
+    if (val &lt; root-&gt;val)
+        root-&gt;left = insert(root-&gt;left, val);
+    else if (val &gt; root-&gt;val)
+        root-&gt;right = insert(root-&gt;right, val);
+    return root;
+}
+
+/** Search for a value. Returns the node or nullptr. */
+BSTNode* search(BSTNode* root, int val) {
+    if (!root || root-&gt;val == val) return root;
+    if (val &lt; root-&gt;val) return search(root-&gt;left, val);
+    return search(root-&gt;right, val);
+}
+
+/** Print inorder traversal. */
+void inorder(BSTNode* root) {
+    if (!root) return;
+    inorder(root-&gt;left);
+    cout &lt;&lt; root-&gt;val &lt;&lt; " ";
+    inorder(root-&gt;right);
+}
+
+int main() {
+    BSTNode* root = nullptr;
+    int values[] = {50, 30, 70, 20, 40, 60, 80};
+    for (int v : values) root = insert(root, v);
+
+    inorder(root);  // 20 30 40 50 60 70 80
+    cout &lt;&lt; endl;
+
+    cout &lt;&lt; (search(root, 40) ? "Found" : "Not found") &lt;&lt; endl;  // Found
+    cout &lt;&lt; (search(root, 99) ? "Found" : "Not found") &lt;&lt; endl;  // Not found
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>BST operation performance depends on the height of the tree. For a balanced tree with <em>n</em> nodes, the height is O(log n), giving logarithmic performance. In the worst case (a degenerate/skewed tree), the height becomes O(n), and every operation degrades to linear time.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Average Case</th>
+                <th>Worst Case</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Search</td>
+                <td>O(log n)</td>
+                <td>O(n)</td>
+                <td>Balanced tree halves search space each step; skewed tree traverses all nodes</td>
+              </tr>
+              <tr>
+                <td>Insert</td>
+                <td>O(log n)</td>
+                <td>O(n)</td>
+                <td>Follows search path to find insertion point at a leaf position</td>
+              </tr>
+              <tr>
+                <td>Delete</td>
+                <td>O(log n)</td>
+                <td>O(n)</td>
+                <td>Search for node plus possible successor lookup, both bounded by tree height</td>
+              </tr>
+              <tr>
+                <td>Space</td>
+                <td colspan="2">O(n)</td>
+                <td>Each of the n values is stored in exactly one node</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content">
+          <p>Self-balancing variants like <strong>AVL trees</strong> and <strong>Red-Black trees</strong> guarantee O(log n) height through rotations after insertions and deletions, ensuring worst-case O(log n) for all operations. In practice, randomly ordered insertions produce a tree with expected height of about 1.39 log<sub>2</sub>(n), which is close to optimal.</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your understanding of binary search trees with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> What is the BST property?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Every node has exactly two children
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                The tree is always perfectly balanced
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                For every node, all left-subtree values are less and all right-subtree values are greater
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Parent nodes are always larger than child nodes
+              </div>
+            </div>
+            <div class="quiz__explanation">The BST property states that for any node N, every value in its left subtree is strictly less than N's value, and every value in its right subtree is strictly greater. This enables efficient searching by eliminating half the tree at each step. A BST does not require perfect balance or exactly two children per node.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> What traversal of a BST produces values in sorted ascending order?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Preorder (Node, Left, Right)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Inorder (Left, Node, Right)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Postorder (Left, Right, Node)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Level-order (BFS)
+              </div>
+            </div>
+            <div class="quiz__explanation">Inorder traversal visits the left subtree first (all smaller values), then the current node, then the right subtree (all larger values). Because of the BST property, this produces values in sorted ascending order. Preorder and postorder produce different orderings, and level-order visits nodes breadth-first which does not guarantee sorted output.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> When deleting a node with two children from a BST, what is the standard approach?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Remove the node and attach both subtrees to its parent
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Replace the node with its left child
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Rebuild the entire tree without the deleted value
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Replace the node's value with its inorder successor, then delete the successor
+              </div>
+            </div>
+            <div class="quiz__explanation">When a node has two children, we find its inorder successor (the smallest node in its right subtree), copy that value into the node being deleted, and then recursively delete the successor from the right subtree. The successor is guaranteed to have at most one child (no left child), making it simpler to remove. This maintains the BST property.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> If you insert the values [1, 2, 3, 4, 5] into an initially empty BST in that order, what is the height of the resulting tree?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                4 (the tree degenerates into a right-skewed chain)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                2 (the tree is balanced)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                3
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                5
+              </div>
+            </div>
+            <div class="quiz__explanation">When values are inserted in sorted order, each new value is always greater than the current root, so it goes to the right child, then the right child of that, and so on. The result is a right-skewed chain: 1 &rarr; 2 &rarr; 3 &rarr; 4 &rarr; 5, with height 4 (counting edges from root to deepest leaf). This is the worst-case scenario for a BST and why self-balancing trees exist.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> What is the worst-case time complexity of searching in a BST with n nodes?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(1)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(log n)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(n)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(n log n)
+              </div>
+            </div>
+            <div class="quiz__explanation">In the worst case, a BST can degenerate into a linked list (e.g., when elements are inserted in sorted order). In this situation, the height of the tree equals n - 1, and a search must traverse every node, resulting in O(n) time. On average with random insertions, the height is O(log n), but the worst case is linear. Self-balancing BSTs guarantee O(log n) worst-case search.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <div class="topic-nav">
+        <a href="hash-table.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">Hash Table</div>
+          </div>
+        </a>
+        <a href="heap.html" class="topic-nav__link">
+          <div style="text-align:right;">
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">Heap</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/sidebar-nav.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/viz-utils.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/bst-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

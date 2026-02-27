@@ -79,7 +79,20 @@ var DSA = window.DSA || {};
 
     var overallBar = document.querySelector('.progress-bar__fill');
     if (overallBar) {
-      var allIds = ['arrays', 'linked-lists', 'bubble-sort', 'binary-search'];
+      // Dynamically collect all topic IDs from sidebar links
+      var allIds = [];
+      var topicLinks = document.querySelectorAll('.sidebar__link[data-topic]');
+      topicLinks.forEach(function(link) {
+        var tid = link.getAttribute('data-topic');
+        if (tid && allIds.indexOf(tid) === -1) allIds.push(tid);
+      });
+      // Fallback if sidebar not yet built
+      if (allIds.length === 0) {
+        allIds = ['arrays', 'linked-lists', 'stack', 'queue', 'hash-table', 'bst', 'heap',
+                  'bubble-sort', 'selection-sort', 'insertion-sort', 'merge-sort', 'quick-sort',
+                  'binary-search', 'bfs', 'dfs',
+                  'two-pointers', 'sliding-window', 'dynamic-programming', 'recursion'];
+      }
       var pct = getOverallPercent(allIds);
       overallBar.style.width = pct + '%';
       var label = document.querySelector('.progress-percent');

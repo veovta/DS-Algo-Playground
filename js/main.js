@@ -7,6 +7,7 @@ var DSA = window.DSA || {};
     // Core modules
     if (DSA.theme) DSA.theme.init();
     if (DSA.sidebar) DSA.sidebar.init();
+    if (DSA.sidebarNav) DSA.sidebarNav.init();
     if (DSA.search) DSA.search.init();
     if (DSA.progress) DSA.progress.init();
     if (DSA.keyboard) DSA.keyboard.init();
@@ -20,6 +21,24 @@ var DSA = window.DSA || {};
     if (DSA.linkedListsViz) DSA.linkedListsViz.init();
     if (DSA.bubbleSortViz) DSA.bubbleSortViz.init();
     if (DSA.binarySearchViz) DSA.binarySearchViz.init();
+    if (DSA.stackViz) DSA.stackViz.init();
+    if (DSA.queueViz) DSA.queueViz.init();
+    if (DSA.selectionSortViz) DSA.selectionSortViz.init();
+    if (DSA.insertionSortViz) DSA.insertionSortViz.init();
+    if (DSA.bstViz) DSA.bstViz.init();
+    if (DSA.mergeSortViz) DSA.mergeSortViz.init();
+    if (DSA.quickSortViz) DSA.quickSortViz.init();
+    if (DSA.hashTableViz) DSA.hashTableViz.init();
+    if (DSA.heapViz) DSA.heapViz.init();
+    if (DSA.bfsViz) DSA.bfsViz.init();
+    if (DSA.dfsViz) DSA.dfsViz.init();
+    if (DSA.twoPointersViz) DSA.twoPointersViz.init();
+    if (DSA.slidingWindowViz) DSA.slidingWindowViz.init();
+    if (DSA.dpViz) DSA.dpViz.init();
+    if (DSA.recursionViz) DSA.recursionViz.init();
+    if (DSA.complexityViz) DSA.complexityViz.init();
+    if (DSA.compareViz) DSA.compareViz.init();
+    if (DSA.raceViz) DSA.raceViz.init();
 
     // Scroll reveal animation
     initScrollReveal();

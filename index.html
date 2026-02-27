@@ -21,22 +21,7 @@
         DS-Algo
       </a>
     </div>
-    <nav class="sidebar__nav">
-      <div class="sidebar__section-title">Overview</div>
-      <a href="index.html" class="sidebar__link sidebar__link--active">Home</a>
-      <a href="complexity.html" class="sidebar__link">Complexity Cheat Sheet</a>
-      <a href="about.html" class="sidebar__link">About</a>
-
-      <div class="sidebar__section-title">Data Structures</div>
-      <a href="topics/arrays.html" class="sidebar__link" data-topic="arrays">Arrays</a>
-      <a href="topics/linked-lists.html" class="sidebar__link" data-topic="linked-lists">Linked Lists</a>
-
-      <div class="sidebar__section-title">Sorting</div>
-      <a href="topics/bubble-sort.html" class="sidebar__link" data-topic="bubble-sort">Bubble Sort</a>
-
-      <div class="sidebar__section-title">Searching</div>
-      <a href="topics/binary-search.html" class="sidebar__link" data-topic="binary-search">Binary Search</a>
-    </nav>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
     <div class="sidebar__footer">
       <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
     </div>
@@ -87,41 +72,119 @@
       <section class="reveal">
         <h2 class="section-title">Topics</h2>
         <div class="card-grid" id="topic-grid">
-          <!-- Arrays -->
           <a href="topics/arrays.html" class="card">
             <div class="card__icon" style="background:rgba(59,130,246,0.15);color:#3b82f6;">[]</div>
             <h3 class="card__title">Arrays</h3>
             <p class="card__desc">Contiguous memory, O(1) random access, dynamic resizing, and common array operations.</p>
-            <div class="card__footer">
-              <span class="badge badge--blue">Data Structure</span>
-            </div>
+            <div class="card__footer"><span class="badge badge--blue">Data Structure</span></div>
           </a>
-          <!-- Linked Lists -->
           <a href="topics/linked-lists.html" class="card">
             <div class="card__icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;">&rarr;</div>
             <h3 class="card__title">Linked Lists</h3>
             <p class="card__desc">Node-pointer chains, O(1) insert/delete at head, traversal, and pointer manipulation.</p>
-            <div class="card__footer">
-              <span class="badge badge--purple">Data Structure</span>
-            </div>
+            <div class="card__footer"><span class="badge badge--purple">Data Structure</span></div>
           </a>
-          <!-- Bubble Sort -->
+          <a href="topics/stack.html" class="card">
+            <div class="card__icon" style="background:rgba(6,182,212,0.15);color:#06b6d4;">&uarr;</div>
+            <h3 class="card__title">Stack</h3>
+            <p class="card__desc">LIFO data structure with O(1) push, pop, and peek operations.</p>
+            <div class="card__footer"><span class="badge badge--blue">Data Structure</span></div>
+          </a>
+          <a href="topics/queue.html" class="card">
+            <div class="card__icon" style="background:rgba(20,184,166,0.15);color:#14b8a6;">&rarr;</div>
+            <h3 class="card__title">Queue</h3>
+            <p class="card__desc">FIFO data structure with O(1) enqueue and dequeue operations.</p>
+            <div class="card__footer"><span class="badge badge--blue">Data Structure</span></div>
+          </a>
+          <a href="topics/hash-table.html" class="card">
+            <div class="card__icon" style="background:rgba(249,115,22,0.15);color:#f97316;">#</div>
+            <h3 class="card__title">Hash Table</h3>
+            <p class="card__desc">Key-value storage with O(1) average lookup using hash functions.</p>
+            <div class="card__footer"><span class="badge badge--blue">Data Structure</span></div>
+          </a>
+          <a href="topics/bst.html" class="card">
+            <div class="card__icon" style="background:rgba(236,72,153,0.15);color:#ec4899;">&#9651;</div>
+            <h3 class="card__title">Binary Search Tree</h3>
+            <p class="card__desc">Hierarchical structure enabling O(log n) search, insert, and delete.</p>
+            <div class="card__footer"><span class="badge badge--purple">Data Structure</span></div>
+          </a>
+          <a href="topics/heap.html" class="card">
+            <div class="card__icon" style="background:rgba(168,85,247,0.15);color:#a855f7;">&#9650;</div>
+            <h3 class="card__title">Heap</h3>
+            <p class="card__desc">Complete binary tree with O(log n) insert and extract-max/min.</p>
+            <div class="card__footer"><span class="badge badge--purple">Data Structure</span></div>
+          </a>
           <a href="topics/bubble-sort.html" class="card">
             <div class="card__icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;">&UpDownArrow;</div>
             <h3 class="card__title">Bubble Sort</h3>
             <p class="card__desc">Simple comparison sort that repeatedly swaps adjacent elements. O(n&sup2;) average.</p>
-            <div class="card__footer">
-              <span class="badge badge--yellow">Sorting</span>
-            </div>
+            <div class="card__footer"><span class="badge badge--yellow">Sorting</span></div>
           </a>
-          <!-- Binary Search -->
+          <a href="topics/selection-sort.html" class="card">
+            <div class="card__icon" style="background:rgba(234,179,8,0.15);color:#eab308;">&#10004;</div>
+            <h3 class="card__title">Selection Sort</h3>
+            <p class="card__desc">Finds the minimum element and places it at the beginning. O(n&sup2;).</p>
+            <div class="card__footer"><span class="badge badge--yellow">Sorting</span></div>
+          </a>
+          <a href="topics/insertion-sort.html" class="card">
+            <div class="card__icon" style="background:rgba(217,119,6,0.15);color:#d97706;">&#8627;</div>
+            <h3 class="card__title">Insertion Sort</h3>
+            <p class="card__desc">Builds sorted array one element at a time. O(n&sup2;) average, O(n) best.</p>
+            <div class="card__footer"><span class="badge badge--yellow">Sorting</span></div>
+          </a>
+          <a href="topics/merge-sort.html" class="card">
+            <div class="card__icon" style="background:rgba(22,163,74,0.15);color:#16a34a;">&harr;</div>
+            <h3 class="card__title">Merge Sort</h3>
+            <p class="card__desc">Divide-and-conquer sort with guaranteed O(n log n). Stable.</p>
+            <div class="card__footer"><span class="badge badge--yellow">Sorting</span></div>
+          </a>
+          <a href="topics/quick-sort.html" class="card">
+            <div class="card__icon" style="background:rgba(5,150,105,0.15);color:#059669;">&#8645;</div>
+            <h3 class="card__title">Quick Sort</h3>
+            <p class="card__desc">Efficient in-place sort using pivot partitioning. O(n log n) average.</p>
+            <div class="card__footer"><span class="badge badge--yellow">Sorting</span></div>
+          </a>
           <a href="topics/binary-search.html" class="card">
             <div class="card__icon" style="background:rgba(34,197,94,0.15);color:#22c55e;">&#128269;</div>
             <h3 class="card__title">Binary Search</h3>
-            <p class="card__desc">Efficient O(log n) search on sorted arrays by repeatedly halving the search space.</p>
-            <div class="card__footer">
-              <span class="badge badge--green">Searching</span>
-            </div>
+            <p class="card__desc">Efficient O(log n) search on sorted arrays by halving the search space.</p>
+            <div class="card__footer"><span class="badge badge--green">Searching</span></div>
+          </a>
+          <a href="topics/bfs.html" class="card">
+            <div class="card__icon" style="background:rgba(37,99,235,0.15);color:#2563eb;">&#8803;</div>
+            <h3 class="card__title">BFS</h3>
+            <p class="card__desc">Level-by-level graph traversal using a queue. Shortest unweighted paths.</p>
+            <div class="card__footer"><span class="badge badge--green">Searching</span></div>
+          </a>
+          <a href="topics/dfs.html" class="card">
+            <div class="card__icon" style="background:rgba(124,58,237,0.15);color:#7c3aed;">&#8801;</div>
+            <h3 class="card__title">DFS</h3>
+            <p class="card__desc">Explores graph branches as deep as possible using a stack or recursion.</p>
+            <div class="card__footer"><span class="badge badge--green">Searching</span></div>
+          </a>
+          <a href="topics/two-pointers.html" class="card">
+            <div class="card__icon" style="background:rgba(14,165,233,0.15);color:#0ea5e9;">&#8660;</div>
+            <h3 class="card__title">Two Pointers</h3>
+            <p class="card__desc">Scan arrays from both ends for pair-finding and partitioning problems.</p>
+            <div class="card__footer"><span class="badge badge--blue">Technique</span></div>
+          </a>
+          <a href="topics/sliding-window.html" class="card">
+            <div class="card__icon" style="background:rgba(99,102,241,0.15);color:#6366f1;">&#9633;</div>
+            <h3 class="card__title">Sliding Window</h3>
+            <p class="card__desc">Maintain a window over a contiguous subarray for range problems.</p>
+            <div class="card__footer"><span class="badge badge--blue">Technique</span></div>
+          </a>
+          <a href="topics/dynamic-programming.html" class="card">
+            <div class="card__icon" style="background:rgba(220,38,38,0.15);color:#dc2626;">&#9636;</div>
+            <h3 class="card__title">Dynamic Programming</h3>
+            <p class="card__desc">Break complex problems into overlapping subproblems with memoization.</p>
+            <div class="card__footer"><span class="badge badge--red">Technique</span></div>
+          </a>
+          <a href="topics/recursion.html" class="card">
+            <div class="card__icon" style="background:rgba(190,24,93,0.15);color:#be185d;">&#8634;</div>
+            <h3 class="card__title">Recursion</h3>
+            <p class="card__desc">Function calling itself. Visualize call stacks and memoization.</p>
+            <div class="card__footer"><span class="badge badge--red">Technique</span></div>
           </a>
         </div>
       </section>
@@ -149,9 +212,11 @@
 
   <script src="js/theme.js"></script>
   <script src="js/sidebar.js"></script>
+  <script src="js/sidebar-nav.js"></script>
   <script src="js/search.js"></script>
   <script src="js/progress.js"></script>
   <script src="js/keyboard.js"></script>
+  <script src="js/viz-utils.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

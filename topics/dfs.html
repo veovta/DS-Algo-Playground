@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DFS (Depth-First Search) - DS-Algo-Playground</title>
+  <link rel="icon" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body data-topic="dfs">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <a href="../index.html" class="sidebar__logo">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3b82f6"/><text x="16" y="22" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="white">&lt;/&gt;</text></svg>
+        DS-Algo
+      </a>
+    </div>
+    <nav id="sidebar-nav" class="sidebar__nav"></nav>
+    <div class="sidebar__footer">
+      <span style="font-size:var(--font-size-sm);color:var(--text-tertiary);">Press <strong>?</strong> for shortcuts</span>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header class="main__header">
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" placeholder="Search topics...">
+        <span class="search-shortcut">/</span>
+        <div class="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <div class="main__content">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs" style="margin-bottom:var(--space-lg);">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>DFS (Depth-First Search)</span>
+      </div>
+
+      <!-- Topic Header -->
+      <div class="topic-header">
+        <h1 class="topic-header__title">DFS (Depth-First Search)</h1>
+        <p class="topic-header__desc">Depth-First Search dives as deep as possible along each branch before backtracking. It uses a <strong>stack</strong> (LIFO) &mdash; either explicitly or via recursion's call stack &mdash; to track which node to explore next. DFS is the foundation for cycle detection, topological sorting, and many other graph algorithms.</p>
+        <div class="topic-header__badges">
+          <span class="badge badge--green">Searching</span>
+          <span class="badge badge--blue">O(V+E)</span>
+        </div>
+      </div>
+
+      <!-- Section 1: How DFS Works -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">How DFS Works</h2>
+        <div class="topic-section__content">
+          <p>DFS starts at a chosen <strong>source node</strong> and explores as far as possible along each branch before backtracking. Unlike BFS, which explores level by level, DFS goes deep first.</p>
+          <p>The iterative algorithm proceeds as follows:</p>
+          <ul>
+            <li><strong>Push</strong> the starting node onto the stack.</li>
+            <li>While the stack is not empty, <strong>pop</strong> the top node.</li>
+            <li>If the popped node has not been visited, mark it as visited.</li>
+            <li>For each unvisited neighbor, <strong>push</strong> it onto the stack.</li>
+            <li>Repeat until the stack is empty.</li>
+          </ul>
+          <p>The recursive version replaces the explicit stack with the call stack: for each unvisited neighbor of the current node, recursively call DFS. The base case is when a node has no unvisited neighbors.</p>
+          <p><strong>Key insight:</strong> Because DFS explores one entire branch before moving to the next, it is well-suited for problems that require exhaustive exploration, such as finding connected components, detecting cycles, computing strongly connected components (Tarjan's/Kosaraju's), and generating topological orderings of directed acyclic graphs (DAGs).</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Interactive Visualization -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Interactive Visualization</h2>
+        <div class="topic-section__content">
+          <p>Watch DFS traverse the same graph used in the BFS topic. <span style="color:var(--viz-cell-bg);font-weight:700;">White</span> nodes are unvisited, <span style="color:var(--viz-compare);font-weight:700;">yellow</span> nodes are on the stack, and <span style="color:var(--viz-sorted);font-weight:700;">green</span> nodes have been fully visited. The stack contents are shown vertically on the right.</p>
+        </div>
+
+        <div class="viz-container">
+          <div class="viz-canvas-wrap">
+            <canvas id="dfs-canvas"></canvas>
+          </div>
+
+          <div class="viz-explanation">Click Start to begin DFS traversal from node 0.</div>
+
+          <div class="viz-controls">
+            <div class="viz-controls__group">
+              <button class="viz-controls__btn" data-viz-action="play" aria-label="Play/Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="prev" aria-label="Previous step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="next" aria-label="Next step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <button class="viz-controls__btn" data-viz-action="reset" aria-label="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="viz-controls__sep"></div>
+            <span class="viz-controls__label">Speed</span>
+            <input type="range" class="viz-controls__speed" min="100" max="1000" value="500">
+            <span class="viz-step-info">No steps</span>
+          </div>
+
+          <div class="viz-ops">
+            <button id="dfs-start-btn" class="btn btn--primary btn--sm">Start DFS</button>
+            <button id="dfs-reset-btn" class="btn btn--secondary btn--sm">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Code Implementation -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Code Implementation</h2>
+        <div class="topic-section__content">
+          <p>Below are both the recursive and iterative implementations of DFS. The recursive version is more concise, while the iterative version avoids stack overflow on very deep graphs.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <div class="code-block__tabs">
+              <button class="code-block__tab code-block__tab--active" data-lang="python">Python</button>
+              <button class="code-block__tab" data-lang="java">Java</button>
+              <button class="code-block__tab" data-lang="cpp">C++</button>
+            </div>
+            <button class="code-block__copy">Copy</button>
+          </div>
+          <div class="code-block__body">
+            <!-- Python -->
+            <div class="code-block__panel code-block__panel--active" data-lang="python">
+              <pre class="code-block__pre">def dfs_recursive(graph, node, visited=None):
+    """Perform DFS recursively from the given node."""
+    if visited is None:
+        visited = set()
+    visited.add(node)
+    print(node, end=" ")
+
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs_recursive(graph, neighbor, visited)
+
+    return visited
+
+
+def dfs_iterative(graph, start):
+    """Perform DFS iteratively using an explicit stack."""
+    visited = set()
+    stack = [start]
+    order = []
+
+    while stack:
+        node = stack.pop()          # Pop from top
+        if node in visited:
+            continue
+        visited.add(node)
+        order.append(node)
+
+        # Push neighbors in reverse order so first neighbor is on top
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+    return order
+
+
+# Example usage
+graph = {
+    0: [1, 2],
+    1: [0, 3, 4],
+    2: [0, 5, 6],
+    3: [1],
+    4: [1],
+    5: [2],
+    6: [2]
+}
+print(dfs_iterative(graph, 0))  # Output: [0, 1, 3, 4, 2, 5, 6]</pre>
+            </div>
+            <!-- Java -->
+            <div class="code-block__panel" data-lang="java">
+              <pre class="code-block__pre">import java.util.*;
+
+public class DFS {
+    /** Recursive DFS */
+    public static void dfsRecursive(Map&lt;Integer, List&lt;Integer&gt;&gt; graph,
+                                     int node, Set&lt;Integer&gt; visited) {
+        visited.add(node);
+        System.out.print(node + " ");
+
+        for (int neighbor : graph.get(node)) {
+            if (!visited.contains(neighbor)) {
+                dfsRecursive(graph, neighbor, visited);
+            }
+        }
+    }
+
+    /** Iterative DFS using an explicit stack */
+    public static List&lt;Integer&gt; dfsIterative(Map&lt;Integer, List&lt;Integer&gt;&gt; graph,
+                                               int start) {
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+        List&lt;Integer&gt; order = new ArrayList&lt;&gt;();
+
+        stack.push(start);
+
+        while (!stack.isEmpty()) {
+            int node = stack.pop();     // Pop from top
+            if (visited.contains(node)) continue;
+
+            visited.add(node);
+            order.add(node);
+
+            List&lt;Integer&gt; neighbors = graph.get(node);
+            // Push in reverse so first neighbor is on top
+            for (int i = neighbors.size() - 1; i &gt;= 0; i--) {
+                if (!visited.contains(neighbors.get(i))) {
+                    stack.push(neighbors.get(i));
+                }
+            }
+        }
+
+        return order;
+    }
+
+    public static void main(String[] args) {
+        Map&lt;Integer, List&lt;Integer&gt;&gt; graph = new HashMap&lt;&gt;();
+        graph.put(0, Arrays.asList(1, 2));
+        graph.put(1, Arrays.asList(0, 3, 4));
+        graph.put(2, Arrays.asList(0, 5, 6));
+        graph.put(3, Arrays.asList(1));
+        graph.put(4, Arrays.asList(1));
+        graph.put(5, Arrays.asList(2));
+        graph.put(6, Arrays.asList(2));
+
+        System.out.println(dfsIterative(graph, 0));
+        // Output: [0, 1, 3, 4, 2, 5, 6]
+    }
+}</pre>
+            </div>
+            <!-- C++ -->
+            <div class="code-block__panel" data-lang="cpp">
+              <pre class="code-block__pre">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &lt;unordered_set&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+/** Recursive DFS */
+void dfsRecursive(const vector&lt;vector&lt;int&gt;&gt;&amp; graph, int node,
+                  unordered_set&lt;int&gt;&amp; visited) {
+    visited.insert(node);
+    cout &lt;&lt; node &lt;&lt; " ";
+
+    for (int neighbor : graph[node]) {
+        if (visited.find(neighbor) == visited.end()) {
+            dfsRecursive(graph, neighbor, visited);
+        }
+    }
+}
+
+/** Iterative DFS using an explicit stack */
+vector&lt;int&gt; dfsIterative(const vector&lt;vector&lt;int&gt;&gt;&amp; graph, int start) {
+    unordered_set&lt;int&gt; visited;
+    stack&lt;int&gt; stk;
+    vector&lt;int&gt; order;
+
+    stk.push(start);
+
+    while (!stk.empty()) {
+        int node = stk.top();       // Pop from top
+        stk.pop();
+
+        if (visited.count(node)) continue;
+
+        visited.insert(node);
+        order.push_back(node);
+
+        // Push neighbors in reverse order so first neighbor is on top
+        for (int i = graph[node].size() - 1; i &gt;= 0; i--) {
+            if (!visited.count(graph[node][i])) {
+                stk.push(graph[node][i]);
+            }
+        }
+    }
+
+    return order;
+}
+
+int main() {
+    vector&lt;vector&lt;int&gt;&gt; graph = {
+        {1, 2},    // 0
+        {0, 3, 4}, // 1
+        {0, 5, 6}, // 2
+        {1},       // 3
+        {1},       // 4
+        {2},       // 5
+        {2}        // 6
+    };
+
+    vector&lt;int&gt; result = dfsIterative(graph, 0);
+    for (int node : result) {
+        cout &lt;&lt; node &lt;&lt; " ";
+    }
+    // Output: 0 1 3 4 2 5 6
+    cout &lt;&lt; endl;
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Complexity Analysis -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Complexity Analysis</h2>
+        <div class="topic-section__content">
+          <p>Like BFS, DFS visits every vertex and edge exactly once. The main difference is the order of exploration, not the asymptotic cost. However, the recursive version may use O(V) stack space in the worst case (e.g., a linear chain graph), which can cause a stack overflow for very deep graphs.</p>
+        </div>
+        <div class="table-container complexity-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Complexity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Time</td>
+                <td>O(V + E)</td>
+                <td>Each vertex is visited once; each edge is examined once</td>
+              </tr>
+              <tr>
+                <td>Space</td>
+                <td>O(V)</td>
+                <td>The stack (explicit or call stack) holds at most V entries</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="topic-section__content">
+          <p><strong>DFS vs BFS:</strong> Both run in O(V+E) time, but DFS uses less memory on wide graphs (many neighbors per node) while BFS uses less memory on deep, narrow graphs. DFS does <strong>not</strong> guarantee shortest paths, but it is essential for topological sorting, cycle detection, finding bridges/articulation points, and solving maze/backtracking problems.</p>
+        </div>
+      </section>
+
+      <!-- Section 5: Quiz -->
+      <section class="topic-section">
+        <h2 class="topic-section__title">Quiz</h2>
+        <div class="topic-section__content">
+          <p>Test your understanding of DFS with these questions.</p>
+        </div>
+
+        <div class="quiz">
+          <!-- Question 1 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q1.</span> Which data structure does DFS use to determine the next node to visit?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Queue (FIFO)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Stack (LIFO)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Priority Queue
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Linked List
+              </div>
+            </div>
+            <div class="quiz__explanation">DFS uses a stack (Last-In-First-Out), either explicitly or implicitly via the function call stack during recursion. This ensures the most recently discovered node is explored first, giving the "depth-first" behavior. A queue would yield BFS behavior instead.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz__question" data-answer="c">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q2.</span> Which of the following is NOT a common application of DFS?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                Cycle detection
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                Topological sorting
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                Finding shortest paths in unweighted graphs
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                Finding connected components
+              </div>
+            </div>
+            <div class="quiz__explanation">Finding shortest paths in unweighted graphs is a BFS application, not DFS. DFS does not guarantee shortest paths because it may take a longer path to a node before discovering a shorter one. DFS is used for cycle detection, topological sorting, finding connected/strongly connected components, and backtracking problems.</div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz__question" data-answer="a">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q3.</span> Given the graph {0:[1,2], 1:[0,3,4], 2:[0,5,6], 3:[1], 4:[1], 5:[2], 6:[2]}, what is a valid DFS traversal order starting from node 0 (visiting neighbors in listed order)?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                0, 1, 3, 4, 2, 5, 6
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                0, 1, 2, 3, 4, 5, 6
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                0, 2, 1, 3, 4, 5, 6
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                0, 3, 1, 4, 2, 6, 5
+              </div>
+            </div>
+            <div class="quiz__explanation">Starting at 0, DFS visits neighbor 1 first, then goes deep: from 1 visits 3 (a leaf, backtracks), then 4 (a leaf, backtracks to 0), then 2, then 5 (leaf), then 6 (leaf). This gives: 0, 1, 3, 4, 2, 5, 6. Option (b) is the BFS order, not DFS.</div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz__question" data-answer="d">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q4.</span> What is the worst-case space complexity of recursive DFS on a graph with V vertices?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                O(1)
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                O(log V)
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                O(E)
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                O(V)
+              </div>
+            </div>
+            <div class="quiz__explanation">In the worst case (e.g., a graph shaped like a long chain: 0-1-2-...-V), the recursive DFS call stack grows to depth V, consuming O(V) space. This is why iterative DFS with an explicit stack is sometimes preferred for very large graphs, as it avoids the system stack size limit.</div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz__question" data-answer="b">
+            <p class="quiz__question-text"><span class="quiz__question-number">Q5.</span> How does DFS differ from BFS in terms of traversal order?</p>
+            <div class="quiz__options">
+              <div class="quiz__option" data-value="a">
+                <span class="quiz__option-radio"></span>
+                DFS visits nodes level by level, BFS goes deep first
+              </div>
+              <div class="quiz__option" data-value="b">
+                <span class="quiz__option-radio"></span>
+                DFS explores as deep as possible before backtracking, BFS visits all neighbors at the current depth first
+              </div>
+              <div class="quiz__option" data-value="c">
+                <span class="quiz__option-radio"></span>
+                DFS always finds the shortest path, BFS does not
+              </div>
+              <div class="quiz__option" data-value="d">
+                <span class="quiz__option-radio"></span>
+                DFS has better time complexity than BFS
+              </div>
+            </div>
+            <div class="quiz__explanation">DFS explores one branch as deeply as possible before backtracking to try the next branch, using a stack (LIFO). BFS visits all neighbors of the current node before moving to the next depth level, using a queue (FIFO). Both have the same O(V+E) time complexity, but BFS (not DFS) guarantees shortest paths in unweighted graphs.</div>
+          </div>
+
+          <div class="quiz__actions">
+            <button class="btn btn--primary quiz__submit">Submit Answers</button>
+            <button class="btn btn--secondary quiz__retry" style="display:none;">Retry</button>
+            <span class="quiz__score" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topic Navigation -->
+      <div class="topic-nav">
+        <a href="bfs.html" class="topic-nav__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+          <div>
+            <div class="topic-nav__label">Previous</div>
+            <div class="topic-nav__title">BFS (Breadth-First Search)</div>
+          </div>
+        </a>
+        <a href="two-pointers.html" class="topic-nav__link">
+          <div>
+            <div class="topic-nav__label">Next</div>
+            <div class="topic-nav__title">Two Pointers</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-overlay shortcuts-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Keyboard Shortcuts</h3>
+        <button class="modal__close" onclick="this.closest('.modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+      <div class="shortcuts-list">
+        <span class="shortcut-key">t</span><span>Toggle theme</span>
+        <span class="shortcut-key">/</span><span>Focus search</span>
+        <span class="shortcut-key">Space</span><span>Play / Pause visualization</span>
+        <span class="shortcut-key">&larr;</span><span>Step backward</span>
+        <span class="shortcut-key">&rarr;</span><span>Step forward</span>
+        <span class="shortcut-key">?</span><span>Show shortcuts</span>
+        <span class="shortcut-key">Esc</span><span>Close modal</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/sidebar-nav.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/keyboard.js"></script>
+  <script src="../js/code-block.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/viz-utils.js"></script>
+  <script src="../js/visualization-core.js"></script>
+  <script src="../js/topics/dfs-viz.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
